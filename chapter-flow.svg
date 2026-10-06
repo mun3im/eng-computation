@@ -79,8 +79,6 @@
   <text x="570" y="389" text-anchor="middle" class="enrich-label">Object-Oriented Python</text>
   <text x="570" y="408" text-anchor="middle" font-size="10" fill="#777">outside the taught weeks</text>
 
-  <path d="M700,330 L700,300" class="flow-line" marker-end="url(#arrow)"/>
-
   <rect x="440" y="440" width="260" height="60" class="enrich-box" rx="10"/>
   <text x="570" y="463" text-anchor="middle" class="enrich-title">Chapter 16 (integrative)</text>
   <text x="570" y="481" text-anchor="middle" class="enrich-label">Engineering Mini-Projects</text>
