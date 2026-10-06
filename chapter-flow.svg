@@ -71,7 +71,7 @@
   <path d="M870,165 L898,165" class="flow-line" marker-end="url(#arrow)"/>
 
   <!-- Enrichment chapters -->
-  <path d="M1035,240 L1035,280 L700,280 L700,320" class="flow-line" marker-end="url(#arrow)"/>
+  <path d="M1035,240 L1035,280 L570,280 L570,320" class="flow-line" marker-end="url(#arrow)"/>
 
   <rect x="440" y="330" width="260" height="90" class="enrich-box" rx="10"/>
   <text x="570" y="355" text-anchor="middle" class="enrich-title">Chapter 15 (enrichment)</text>
