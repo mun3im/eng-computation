@@ -1,0 +1,937 @@
+\documentclass[9pt,aspectratio=169,xcolor=table]{beamer}
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% Use roboto Font (recommended)
+\usepackage[sfdefault]{roboto}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% Define where theme files are located. ('/styles')
+\usepackage{styles/fluxmacros}
+\usefolder{styles}
+% Use Flux theme v0.1 beta
+% Available style: asphalt, blue, red, green, gray
+% "red" is the closest built-in style to maroon; its exact colours are
+% overridden with a true maroon palette just below, after the theme loads.
+\usetheme[style=red]{flux}
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% SKEE1033 maroon palette override.
+% The flux theme's colortheme defines primaryLight/primary/secondary/tertiary
+% as plain \definecolor calls (not \providecolor), so simply redefining them
+% here, AFTER \usetheme, wins -- xcolor allows redefinition and every
+% \setbeamercolor in beamercolorthemeflux.sty was already evaluated against
+% these names, so the redefinition propagates everywhere automatically.
+\definecolor{primaryLight}{HTML}{9B2242} % lighter maroon -- headers, accents
+\definecolor{primary}{HTML}{7B1E3A}      % core maroon -- titles, block headers
+\definecolor{secondary}{HTML}{3A5A6B}    % muted teal -- complementary accent
+\definecolor{tertiary}{HTML}{8C6A3F}     % warm bronze -- example/third accent
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% Extra packages
+\usepackage{booktabs}
+\usepackage{colortbl}
+\usepackage{ragged2e}
+\usepackage{amssymb}
+\usepackage{multirow}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, fit, backgrounds, calc, shapes.geometric}
+\setbeamertemplate{itemize items}[square]
+\usepackage[scaled=.92]{beramono}
+\usepackage{listings}
+\usepackage{array}
+% Table striping: odd rows white, even rows very light gray.
+\definecolor{stripe}{gray}{0.94}
+\newcommand{\striped}{\rowcolors{1}{white}{stripe}}
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% Code listing style (lightweight analogue of the book's skpython style).
+% This course is Python-only, so Python is set as the lstlisting default via
+% \lstset below -- every \begin{lstlisting} needs no language=... of its own.
+\definecolor{codebg}{HTML}{FBF2F4}
+\definecolor{codegreen}{rgb}{0,0.45,0}
+\definecolor{codestring}{rgb}{0.58,0.1,0.2}
+\lstdefinestyle{skpython}{
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{primary}\bfseries,
+    commentstyle=\itshape\color{codegreen},
+    stringstyle=\ttfamily\color{codestring},
+    backgroundcolor=\color{codebg},
+    breaklines=true,
+    keepspaces=true,
+    showspaces=false,
+    showstringspaces=false,
+    frame=single,
+    rulecolor=\color{primary!40},
+    numbers=none,
+}
+\lstset{language=Python, style=skpython}
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% TikZ block styles for the computation-cycle and control-structure diagrams
+\definecolor{cycfill}{HTML}{F3DCE4}
+\definecolor{cycline}{HTML}{7B1E3A}
+\definecolor{cycdofill}{HTML}{E8EEF0}
+\definecolor{cycdoline}{HTML}{3A5A6B}
+\tikzset{
+  cycstep/.style = {font=\sffamily\small, align=center, rounded corners=2pt,
+                     draw=cycline, fill=cycfill, line width=0.7pt,
+                     minimum height=7mm, minimum width=20mm, inner sep=3pt},
+  cycdo/.style   = {cycstep, fill=cycdofill, draw=cycdoline},
+  flow/.style    = {-{Stealth[length=2mm]}, thick, draw=cycline},
+}
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% SECTION SEPARATOR (ToC recap) %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\AtBeginSection[]
+{
+{
+    \setbeamercolor{background canvas}{bg=primaryLight!6}
+    \begin{frame}[plain]
+        \frametitle{Table of Contents}
+        \tableofcontents[currentsection]
+    \end{frame}
+}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% Information
+\title{Handling Imperfect Engineering Data}
+\subtitle{\emph{Engineering Computation with Python} --- Chapter 11}
+\author{Mun\'{i}m Zabidi}
+\institute{\color{primary}Faculty of Electrical Engineering, Universiti Teknologi Malaysia}
+\date{\today}
+\titlegraphic{assets/logoutmwhite.png}
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+\begin{document}
+
+\titlepage
+
+\begin{frame}{Table of Contents}
+    \tableofcontents
+\end{frame}
+
+%===============================================================================
+\section{Errors, Exceptions and try/except}
+%===============================================================================
+
+\begin{frame}{Two Different Things Go Wrong}
+    \leavevmode
+    This chapter deals with both.
+
+    \vspace{2mm}
+    \begin{columns}[t]
+        \begin{column}{.5\textwidth}
+            \begin{block}{An error in your \alert{code}}
+                \small A file that does not exist, a division by zero, a
+                value of the wrong type. Python detects these
+                \alert{immediately} and stops the program with an
+                exception --- unless you handle it.
+            \end{block}
+        \end{column}
+        \begin{column}{.5\textwidth}
+            \begin{alertblock}{A flaw in your \alert{data}}
+                \small A sensor dropout, a power-spike glitch, a
+                physically implausible value. Python does \alert{not}
+                detect these --- a corrupted reading is still a
+                perfectly valid floating-point number.
+            \end{alertblock}
+        \end{column}
+    \end{columns}
+
+    \vspace{3mm}
+    \begin{block}{The job split}
+        A robust program \alert{survives} the first kind of problem. A
+        careful engineer \alert{investigates and repairs} the second.
+    \end{block}
+\end{frame}
+
+\begin{frame}{What Is an Error?}
+    \leavevmode
+    In Python, errors fall into two broad categories:
+
+    \vspace{3mm}
+    \begin{columns}[t]
+        \begin{column}{.5\textwidth}
+            \begin{block}{Syntax errors}
+                \small Caught by Python \alert{before} the program even
+                runs. Code violates the grammatical rules of the
+                language.
+            \end{block}
+        \end{column}
+        \begin{column}{.5\textwidth}
+            \begin{block}{Exceptions}
+                \small Occur \alert{while} the program is running.
+                Something unexpected happens during execution, even
+                though the code is syntactically correct.
+            \end{block}
+        \end{column}
+    \end{columns}
+
+    \vspace{4mm}
+    \begin{alertblock}{Key fact}
+        Exceptions are a \alert{normal} part of real programs --- not
+        rare bugs. Any program that interacts with users, files, or
+        external systems should expect them and be designed to handle
+        them.
+    \end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{The try / except Anatomy}
+    \leavevmode
+    The basic structure for handling exceptions has four parts:
+
+\begin{lstlisting}
+try:
+    # risky code
+except ErrorType:
+    # handle the error
+else:
+    # runs if no error
+finally:
+    # always runs (cleanup)
+\end{lstlisting}
+
+    \vspace{1mm}
+    \begin{itemize}\small
+        \item \alert{try} --- code that might raise an exception.
+        \item \alert{except} --- catches and handles a specific
+              exception type, if one occurs.
+        \item \alert{else} --- runs only if \texttt{try} completed with
+              no exception.
+        \item \alert{finally} --- always runs, exception or not; the
+              right place for cleanup.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{What Is an Exception?}
+    \leavevmode
+    An exception is a runtime error object created when Python cannot
+    continue executing a piece of code normally.
+
+    \vspace{2mm}
+    \begin{columns}[t]
+        \begin{column}{.5\textwidth}
+            \begin{block}{Not handled}
+                \small The program \alert{crashes}.
+            \end{block}
+        \end{column}
+        \begin{column}{.5\textwidth}
+            \begin{block}{Handled}
+                \small The program \alert{recovers and continues}.
+            \end{block}
+        \end{column}
+    \end{columns}
+
+    \vspace{3mm}
+    \textbf{Typical situations that raise exceptions:}
+    \begin{itemize}
+        \item Dividing by zero.
+        \item Converting text to a number when the text is not a valid
+              number.
+        \item Opening a file that does not exist.
+    \end{itemize}
+\end{frame}
+
+%===============================================================================
+\section{Common Exception Types}
+%===============================================================================
+
+\begin{frame}{Common Exception Types: The Full Roster}
+    \leavevmode
+    \small
+    Python defines many built-in exception types. Each one tells you
+    specifically what went wrong.
+
+    \vspace{2mm}
+    \striped
+    \begin{center}
+    \scriptsize
+    \begin{tabular}{@{}ll@{}}
+    \toprule
+    \textbf{Exception} & \textbf{Meaning} \\
+    \midrule
+    \texttt{ValueError} & Correct type, invalid or inappropriate value \\
+    \texttt{TypeError} & Operation on an incompatible/unsupported type \\
+    \texttt{ZeroDivisionError} & Division (or modulo) by zero \\
+    \texttt{IndexError} & Sequence index out of range \\
+    \texttt{KeyError} & Dictionary key does not exist \\
+    \texttt{FileNotFoundError} & File or path could not be found \\
+    \texttt{ImportError} & Module or name cannot be found or loaded \\
+    \texttt{AttributeError} & Object has no such attribute/method \\
+    \texttt{NameError} & Name has not been defined \\
+    \texttt{SyntaxError} & Code violates Python's grammar rules \\
+    \texttt{IndentationError} & Incorrect or missing indentation \\
+    \texttt{RuntimeError} & Generic runtime failure (e.g.\ infinite recursion) \\
+    \bottomrule
+    \end{tabular}
+    \end{center}
+
+    \vspace{2mm}
+    {\scriptsize The next few slides look closely at the five you will
+    meet most often. The rest appear in the reference table at the end
+    of this section.}
+\end{frame}
+
+\begin{frame}[fragile]{ValueError}
+    \leavevmode
+    Correct \alert{type}, but an invalid or inappropriate \alert{value}.
+
+    \begin{columns}[t]
+        \begin{column}{.5\textwidth}
+\begin{lstlisting}
+x = int("abc")
+print(x)
+\end{lstlisting}
+            \texttt{\scriptsize ValueError: invalid literal for int()}
+        \end{column}
+        \begin{column}{.5\textwidth}
+            \small
+            \textbf{Common causes:}
+            \begin{itemize}\scriptsize
+                \item Converting invalid values
+                \item Passing an invalid value to a function
+                \item Incorrect input format
+                \item Values outside the expected range
+            \end{itemize}
+        \end{column}
+    \end{columns}
+
+    \vspace{2mm}
+    \begin{block}{How to fix}
+        \small Ensure the value matches the expected format; validate
+        user input before conversion; use \texttt{try}/\texttt{except}.
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{TypeError and ZeroDivisionError}
+    \leavevmode
+    \begin{columns}[t]
+        \begin{column}{.5\textwidth}
+            \textbf{TypeError} --- incompatible data types.
+\begin{lstlisting}
+x = 10
+y = "5"
+print(x + y)
+\end{lstlisting}
+            \texttt{\scriptsize TypeError: unsupported operand type(s)}
+        \end{column}
+        \begin{column}{.5\textwidth}
+            \textbf{ZeroDivisionError} --- division by zero.
+\begin{lstlisting}
+x = 10
+y = 0
+print(x / y)
+\end{lstlisting}
+            \texttt{\scriptsize ZeroDivisionError: division by zero}
+        \end{column}
+    \end{columns}
+
+    \vspace{2mm}
+    \begin{block}{How to fix}
+        \small Convert types properly (\texttt{int()}, \texttt{str()},
+        \texttt{float()}); check a value is nonzero before dividing;
+        use \texttt{type()} to debug.
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{IndexError and KeyError}
+    \leavevmode
+    \begin{columns}[t]
+        \begin{column}{.5\textwidth}
+            \textbf{IndexError} --- sequence index out of range.
+\begin{lstlisting}
+nums = [1, 2, 3]
+print(nums[5])
+\end{lstlisting}
+            \texttt{\scriptsize IndexError: list index out of range}
+        \end{column}
+        \begin{column}{.5\textwidth}
+            \textbf{KeyError} --- dictionary key does not exist.
+\begin{lstlisting}
+data = {"name": "Amanda"}
+print(data["email"])
+\end{lstlisting}
+            \texttt{\scriptsize KeyError: 'email'}
+        \end{column}
+    \end{columns}
+
+    \vspace{2mm}
+    \begin{block}{How to fix}
+        \small Check length with \texttt{len()} before indexing; check
+        key existence with \texttt{in}, or use \texttt{.get()} to avoid
+        the error entirely.
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{FileNotFoundError}
+    \leavevmode
+    Python cannot find or access the requested file.
+
+\begin{lstlisting}
+file = open("data.txt", "r")
+content = file.read()
+file.close()
+\end{lstlisting}
+    \texttt{FileNotFoundError: No such file or directory}
+
+    \vspace{3mm}
+    \textbf{Common causes:}
+    \begin{itemize}
+        \item File does not exist, or wrong name/extension.
+        \item Incorrect file path, or file in a different directory.
+    \end{itemize}
+
+    \vspace{2mm}
+    \begin{block}{How to fix}
+        \small Check the file name and extension; verify the path;
+        confirm the file exists; use an absolute path if needed.
+    \end{block}
+\end{frame}
+
+\begin{frame}{The Rest of the Roster (Reference)}
+    \leavevmode
+    \small
+    Six more exception types appear in the book, each with the same
+    pattern of common causes and fix. Quick summary:
+
+    \vspace{2mm}
+    \begin{itemize}\scriptsize
+        \item \alert{ImportError} --- a module or name cannot be found/loaded
+              (e.g.\ a typo: \texttt{from math import sqr}).
+        \item \alert{AttributeError} --- an object has no such
+              attribute/method (e.g.\ \texttt{(10).append(5)}).
+        \item \alert{NameError} --- a variable or function was never
+              defined, or is misspelled.
+        \item \alert{SyntaxError} --- caught before the program even
+              runs; a missing colon, bracket, or quote.
+        \item \alert{IndentationError} --- incorrect or missing
+              spacing; Python uses indentation to define structure.
+        \item \alert{RuntimeError} --- a generic failure during
+              execution, e.g.\ infinite recursion.
+    \end{itemize}
+
+    \vspace{2mm}
+    \begin{alertblock}{A related but distinct problem}
+        A \textbf{logical error} raises no exception at all --- the
+        code runs, but produces the \alert{wrong} output. These are
+        often the hardest bugs to find, because Python gives no error
+        message.
+    \end{alertblock}
+\end{frame}
+
+%===============================================================================
+\section{Writing Robust Code}
+%===============================================================================
+
+\begin{frame}[fragile]{Handling User Input Safely}
+    \leavevmode
+    A very common source of exceptions is user input:
+
+\begin{lstlisting}
+x = int(input("Enter a number"))
+\end{lstlisting}
+
+    \vspace{1mm}
+    This line can fail in more than one way:
+    \begin{itemize}
+        \item The user types text instead of a number
+              $\rightarrow$ \texttt{ValueError}.
+        \item The user presses Enter without typing anything
+              $\rightarrow$ \texttt{ValueError}.
+    \end{itemize}
+
+    \vspace{2mm}
+    \begin{block}{Multiple except clauses}
+        Different problems need different handlers --- several
+        \texttt{except} clauses can attach to one \texttt{try}, so the
+        program responds to each kind of error without crashing.
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Handling Multiple Exceptions at Once}
+    \leavevmode
+    The underlying lesson: programs must not blindly trust their
+    users.
+
+\begin{lstlisting}
+try:
+    x = int(input("Enter a number: "))
+    print(10 / x)
+except ValueError:
+    print("Please enter a valid number")
+except ZeroDivisionError:
+    print("Cannot divide by zero")
+\end{lstlisting}
+
+    \vspace{2mm}
+    \begin{block}{Files are external resources too}
+        They may not exist, paths may be wrong, permissions may be
+        denied. Exception handling around file operations protects
+        against corrupted or locked files and prevents data loss.
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{finally: Cleanup No Matter What}
+    \leavevmode
+    The file may fail to open, or fail partway through reading. The
+    \texttt{finally} block runs regardless --- the right place to close
+    a file.
+
+\begin{lstlisting}
+try:
+    f = open("data.txt", "r")
+    content = f.read()
+except FileNotFoundError:
+    print("File not found!")
+except IOError:
+    print("Error reading file!")
+finally:
+    print("Closing file...")
+    try:
+        f.close()
+    except:
+        pass
+\end{lstlisting}
+
+    {\scriptsize The nested \texttt{try} inside \texttt{finally} guards
+    against the case where \texttt{f} was never opened in the first
+    place.}
+\end{frame}
+
+%===============================================================================
+\section{Floating-Point Pitfalls}
+%===============================================================================
+
+\begin{frame}[fragile]{The Problem with Floating-Point Comparisons}
+    \leavevmode
+    Some errors are silent --- no exception is raised, yet the result
+    is wrong.
+
+\begin{lstlisting}
+a = 0.1 + 0.2
+if a == 0.3:
+    print("a is 0.3")
+\end{lstlisting}
+
+    \vspace{1mm}
+    \begin{alertblock}{This print statement never executes}
+        \texttt{0.1 + 0.2} does not exactly equal \texttt{0.3} in
+        floating-point arithmetic.
+    \end{alertblock}
+
+    \vspace{2mm}
+    \textbf{Why:} floats are stored in binary, not decimal; many
+    decimal numbers cannot be represented exactly; \texttt{==} checks
+    for an \alert{exact} match.
+\end{frame}
+
+\begin{frame}[fragile]{Epsilon-Based Comparison}
+    \leavevmode
+    Compare with a \alert{tolerance} rather than exact equality:
+    \[
+    |a - b| < \varepsilon \implies \text{treat } a \text{ and } b
+    \text{ as equal}
+    \]
+
+\begin{lstlisting}
+epsilon = 1e-9  # acceptable error margin
+a = 0.1 + 0.2
+b = 0.3
+if abs(a - b) < epsilon:
+    print("Equal within epsilon")
+\end{lstlisting}
+
+    \vspace{2mm}
+    {\small This works, but it is easy to misuse --- e.g.\ choosing an
+    epsilon inappropriate for the magnitude of the numbers compared.}
+\end{frame}
+
+\begin{frame}[fragile]{The Recommended Method: math.isclose()}
+    \leavevmode
+    Python's standard library handles this automatically --- safer and
+    clearer than writing manual checks.
+
+\begin{lstlisting}
+import math
+print(math.isclose(0.1 + 0.2, 0.3))              # True
+print(math.isclose(1.0001, 1.0))                 # False
+print(math.isclose(1.0001, 1.0, rel_tol=1e-3))   # True
+\end{lstlisting}
+
+    \vspace{2mm}
+    \begin{itemize}
+        \item \texttt{rel\_tol} --- relative tolerance (a fraction of
+              the larger value).
+        \item \texttt{abs\_tol} --- absolute tolerance, useful near
+              zero.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Error Handling: Key Takeaways}
+    \leavevmode
+    \small
+    \begin{itemize}
+        \item Errors are a normal part of real programs.
+        \item \texttt{try}/\texttt{except}/\texttt{finally} prevents
+              crashes and protects resources such as open files.
+        \item Catching a \alert{specific} exception type is far better
+              practice than a bare \texttt{except:}, which hides
+              faults you did not anticipate.
+        \item Floating-point numbers are inexact --- avoid \texttt{==};
+              use \texttt{math.isclose()}.
+    \end{itemize}
+
+    \vspace{3mm}
+    \begin{center}
+        \large\itshape\color{primary}
+        ``Good programs don't avoid errors --- they handle them.''
+    \end{center}
+\end{frame}
+
+%===============================================================================
+\section{Missing Data}
+%===============================================================================
+
+\begin{frame}[fragile]{The Anatomy of Missing Data: NaN}
+    \leavevmode
+    A missing value in a NumPy array of floats is represented by
+    \alert{NaN} (Not-a-Number), an IEEE 754 special value.
+
+\begin{lstlisting}
+import numpy as np
+
+x = np.array([1.0, 2.0, np.nan, 4.0])
+
+print(x + 1)          # [2. 3. nan 5.]  -- NaN spreads
+print(x == x)          # [True True False True] -- NaN != NaN
+print(np.mean(x))      # nan -- one bad value poisons the result
+\end{lstlisting}
+
+    \vspace{1mm}
+    \begin{alertblock}{The practical danger}
+        A single dropped sensor reading, left unhandled, silently
+        turns an entire statistical summary into \texttt{nan}.
+    \end{alertblock}
+\end{frame}
+
+\begin{frame}{Should This Gap Even Be Filled?}
+    \leavevmode
+    \small
+    Before reaching for \texttt{np.interp()}, pause: the right answer
+    depends on what the gap \alert{represents}.
+
+    \vspace{2mm}
+    \begin{itemize}
+        \item \textbf{Short gap, smooth signal?} Usually safe to
+              \alert{interpolate}.
+        \item \textbf{Isolated entry, not a time series?} No
+              "neighbours in time" --- a \alert{mean, median, or
+              model-based estimate} may fit better.
+        \item \textbf{Large fraction missing?} Filling it manufactures
+              more signal than was measured --- \alert{discard the
+              segment} or investigate the sensor instead.
+        \item \textbf{Is "missing" itself meaningful?} Then
+              \alert{keep it as missing and document why}.
+    \end{itemize}
+
+    \vspace{2mm}
+    \begin{block}{Notice}
+        Three of these four branches do \alert{not} end in
+        interpolation. Which tool to reach for matters more than
+        knowing any one tool well.
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Logical Masking and Filtering}
+    \leavevmode
+    Before a gap can be repaired, it must first be \alert{located}.
+    \texttt{np.isnan()} returns a Boolean array, \texttt{True} wherever
+    a value is \texttt{NaN}:
+
+\begin{lstlisting}
+raw_data = np.array([12.5, np.nan, 13.1, 12.9, np.nan, 13.4])
+
+is_missing = np.isnan(raw_data)
+print(is_missing)  # [False True False False True False]
+
+clean_data = raw_data[~np.isnan(raw_data)]
+print(clean_data)  # [12.5 13.1 12.9 13.4]
+\end{lstlisting}
+
+    \vspace{2mm}
+    {\small The \texttt{\textasciitilde} operator flips each Boolean,
+    turning "is missing" into "is not missing". Filtering shortens the
+    array and discards the \alert{position} of the missing readings ---
+    for a time series, that position is often exactly what you need.}
+\end{frame}
+
+\begin{frame}[fragile]{Repairing a Signal by Interpolation}
+    \leavevmode
+    \texttt{np.interp()} estimates each missing value from its
+    neighbours, preserving the full length and timing of the signal:
+
+\begin{lstlisting}
+np.interp(x[nans], x[~nans], y[~nans])
+\end{lstlisting}
+
+    \vspace{1mm}
+    \begin{itemize}\small
+        \item \texttt{x[nans]} --- positions where a value is missing.
+        \item \texttt{x[\textasciitilde nans]} --- positions with a
+              good value.
+        \item \texttt{y[\textasciitilde nans]} --- the good values
+              themselves.
+    \end{itemize}
+
+    \vspace{2mm}
+    \begin{alertblock}{EE Focus: Patching a Sensor Dropout}
+        A temperature sensor logging twice a second suffers a
+        3-second dropout (loose connector). Seven consecutive readings
+        are lost.
+    \end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{Worked Example: Sensor Dropout Repair}
+    \leavevmode
+\begin{lstlisting}
+t = np.arange(0, 20, 0.5)
+temp_true = 25 + 3 * np.sin(0.3 * t)
+
+temp_measured = temp_true.copy()
+dropout = (t >= 8) & (t <= 11)
+temp_measured[dropout] = np.nan
+
+nans = np.isnan(temp_measured)
+temp_repaired = temp_measured.copy()
+temp_repaired[nans] = np.interp(t[nans], t[~nans],
+                                 temp_measured[~nans])
+\end{lstlisting}
+    \texttt{\scriptsize Number of missing samples: 7 \quad Max repair error: 0.165 deg C}
+
+    \vspace{2mm}
+    \begin{block}{But not a universal rule}
+        Interpolation assumes the signal changes \alert{smoothly}
+        across the gap. If a step change happened inside the missing
+        interval, a straight line can manufacture a plausible but
+        false trajectory.
+    \end{block}
+\end{frame}
+
+%===============================================================================
+\section{Outliers}
+%===============================================================================
+
+\begin{frame}{What Is an Outlier?}
+    \leavevmode
+    A missing value is easy to define: the sensor recorded nothing. An
+    outlier is trickier --- the sensor \alert{did} record something;
+    the question is whether to trust it.
+
+    \vspace{2mm}
+    \begin{alertblock}{A statistical description, not a verdict}
+        An outlier is a measurement unusually far from the surrounding
+        data. That alone does not tell you whether it is a fault or
+        the most important sample in the dataset.
+    \end{alertblock}
+
+    \vspace{2mm}
+    {\small Distinguishing fault from genuine event is far more
+    important --- and far harder --- than choosing a detection
+    formula.}
+\end{frame}
+
+\begin{frame}{Three Kinds of Suspicious Reading}
+    \leavevmode
+    \small
+    \begin{block}{Type A --- Obvious measurement error}
+        A temperature trace near $26.5\,^{\circ}\text{C}$ shows one
+        sample at $91.3\,^{\circ}\text{C}$, then returns to
+        $26.7\,^{\circ}\text{C}$. Nothing heats and cools that fast ---
+        almost certainly a glitch.
+    \end{block}
+
+    \vspace{1mm}
+    \begin{block}{Type B --- Suspicious but uncertain}
+        One sample at $31.3\,^{\circ}\text{C}$. Could be a small
+        glitch, or the leading edge of a real transient. \alert{Do not
+        correct automatically.}
+    \end{block}
+
+    \vspace{1mm}
+    \begin{block}{Type C --- Genuine event}
+        $26 \to 27 \to 28 \to 45 \to 43 \to 35 \to 29\,^{\circ}\text{C}$
+        --- rises and falls smoothly. Very likely the most important
+        measurement in the dataset.
+    \end{block}
+\end{frame}
+
+\begin{frame}{Never Automatically Delete or Replace}
+    \leavevmode
+    A statistical test (Z-score, IQR --- Chapter~\ref{ch:data-analytics})
+    flags Type A, B, and C readings \alert{equally well}, because
+    statistically they all look the same: unusually far from the rest
+    of the data.
+
+    \vspace{3mm}
+    \begin{alertblock}{Only engineering judgement tells them apart}
+        Looking at neighbouring samples, the physical system, and
+        other measured channels is what distinguishes a fault from a
+        real event --- a formula alone cannot.
+    \end{alertblock}
+
+    \vspace{3mm}
+    \begin{center}
+        \Large\color{primary}\textbf{Detect $\to$ Flag $\to$
+        Investigate $\to$ Decide $\to$ Document}
+    \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Worked Example: Investigating a Suspicious Reading}
+    \leavevmode
+    The bench temperature log shows one sample far above its
+    neighbours:
+
+\begin{lstlisting}
+t = np.arange(0, 30, 1.0)
+temp = 25 + 1.5*np.sin(0.2*t) + np.random.normal(0, 0.1, t.size)
+temp[18] = 45.8  # a single sample looks far too high
+\end{lstlisting}
+
+    \vspace{1mm}
+    \textbf{The investigation, step by step:}
+    \begin{enumerate}\small
+        \item \alert{Plot it} --- the point clearly stands apart.
+        \item \alert{Compare with neighbours} --- no gradual rise or
+              fall leading up to it.
+        \item \alert{Check physical plausibility} --- is a
+              $20\,^{\circ}\text{C}$ jump in one second consistent
+              with the board's thermal mass? Usually not.
+        \item \alert{Check other channels} --- are voltage and current
+              normal at sample 18?
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{Only Then: Flag and Repair}
+    \leavevmode
+    Only once the reasoning points to a fault does it make sense to
+    flag and repair --- using the same tool already used for missing
+    data:
+
+\begin{lstlisting}
+is_suspect = np.zeros(t.size, dtype=bool)
+is_suspect[18] = True
+
+temp_flagged = temp.copy()
+temp_flagged[is_suspect] = np.nan
+
+temp_repaired = temp_flagged.copy()
+temp_repaired[is_suspect] = np.interp(
+    t[is_suspect], t[~is_suspect], temp_flagged[~is_suspect])
+\end{lstlisting}
+
+    \vspace{2mm}
+    \begin{alertblock}{The conclusion could reverse}
+        If voltage and current also rose at sample 18, this is a
+        genuine Type C event --- interpolating it away would erase the
+        most important measurement in the log.
+    \end{alertblock}
+\end{frame}
+
+\begin{frame}{Data Imputation: Three Strategies}
+    \leavevmode
+    \small
+    \textbf{Imputation} --- replacing a missing value with an estimate.
+    Interpolation is one way; it is not the only way.
+
+    \vspace{2mm}
+    \begin{columns}[t]
+        \begin{column}{.33\textwidth}
+            \begin{block}{Mean / median}
+                \scriptsize Fast and simple. Good when missing values
+                are scattered, not contiguous. A median resists
+                outliers better than a mean.
+            \end{block}
+        \end{column}
+        \begin{column}{.33\textwidth}
+            \begin{block}{Forward-fill}
+                \scriptsize Repeats the last known good value.
+                Suits signals that change only occasionally (a status
+                flag, a calibration value).
+            \end{block}
+        \end{column}
+        \begin{column}{.33\textwidth}
+            \begin{block}{Interpolation}
+                \scriptsize Estimates from neighbours. Suits a
+                smoothly varying signal with a short gap.
+            \end{block}
+        \end{column}
+    \end{columns}
+
+    \vspace{3mm}
+    {\small There is no universally "correct" choice --- it depends on
+    how the underlying quantity actually behaves between
+    measurements.}
+\end{frame}
+
+\begin{frame}{Quick Reference: Handling Imperfect Data}
+    \leavevmode
+    \small
+    \striped
+    \begin{center}
+    \scriptsize
+    \begin{tabular}{@{}p{1.8cm}p{2.6cm}p{3.0cm}p{3.6cm}@{}}
+    \toprule
+    \textbf{Problem} & \textbf{Example} & \textbf{First question} & \textbf{Possible action} \\
+    \midrule
+    Missing & No ADC reading & Why is it missing? & Leave, remove, or interpolate \\
+    Noise & Small random variation & Within expected uncertainty? & Usually retain \\
+    Outlier & One extreme reading & Is it physically valid? & Retain/flag/remove --- after investigating \\
+    Sensor failure & Impossible value & Is the system faulty? & Remove or mark invalid \\
+    Genuine event & Sudden but real change & Physically meaningful? & \textbf{Keep} \\
+    Long gap & Sensor offline & Can interpolation be trusted? & Usually do not interpolate blindly \\
+    \bottomrule
+    \end{tabular}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Chapter Summary}
+    \leavevmode
+    \small
+    \begin{itemize}
+        \item Errors in \textbf{code} are detected by Python; flaws in
+              \textbf{data} are not, because a corrupted reading is
+              still a valid number.
+        \item Catching a \alert{specific} exception beats a bare
+              \texttt{except:}, which hides faults you did not
+              anticipate.
+        \item Never compare floats with \texttt{==} --- use
+              \texttt{math.isclose()}.
+        \item \texttt{NaN} is contagious: one bad value poisons a mean.
+              \texttt{np.isnan()} locates it; NaN-aware functions skip
+              it --- skipping is not the same as repairing.
+        \item Deciding \alert{what} to do about a gap matters more than
+              knowing the functions.
+        \item An outlier is a statistical description, not a verdict:
+              \alert{Detect $\to$ Flag $\to$ Investigate $\to$ Decide
+              $\to$ Document}.
+    \end{itemize}
+
+    \vspace{3mm}
+    \begin{center}
+        \large\color{primary}\textbf{Next: Interpolation, Curve Fitting
+        and Calibration}
+    \end{center}
+\end{frame}
+
+\end{document}

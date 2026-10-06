@@ -1,0 +1,686 @@
+\documentclass[9pt,aspectratio=169,xcolor=table]{beamer}
+
+\usepackage[sfdefault]{roboto}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage{styles/fluxmacros}
+\usefolder{styles}
+\usetheme[style=red]{flux}
+
+\definecolor{primaryLight}{HTML}{9B2242}
+\definecolor{primary}{HTML}{7B1E3A}
+\definecolor{secondary}{HTML}{3A5A6B}
+\definecolor{tertiary}{HTML}{8C6A3F}
+
+\usepackage{booktabs}
+\usepackage{colortbl}
+\usepackage{ragged2e}
+\usepackage{amssymb}
+\usepackage{multirow}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, fit, backgrounds, calc, shapes.geometric}
+\setbeamertemplate{itemize items}[square]
+\usepackage[scaled=.92]{beramono}
+\usepackage{listings}
+\usepackage{array}
+\definecolor{stripe}{gray}{0.94}
+\newcommand{\striped}{\rowcolors{1}{white}{stripe}}
+
+\definecolor{codebg}{HTML}{FBF2F4}
+\definecolor{codegreen}{rgb}{0,0.45,0}
+\definecolor{codestring}{rgb}{0.58,0.1,0.2}
+\lstdefinestyle{skpython}{
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{primary}\bfseries,
+    commentstyle=\itshape\color{codegreen},
+    stringstyle=\ttfamily\color{codestring},
+    backgroundcolor=\color{codebg},
+    breaklines=true,
+    keepspaces=true,
+    showspaces=false,
+    showstringspaces=false,
+    frame=single,
+    rulecolor=\color{primary!40},
+    numbers=none,
+}
+\lstdefinestyle{skoutput}{
+    basicstyle=\ttfamily\footnotesize,
+    backgroundcolor=\color{secondary!8},
+    breaklines=true,
+    keepspaces=true,
+    showspaces=false,
+    showstringspaces=false,
+    frame=single,
+    rulecolor=\color{secondary!50},
+    numbers=none,
+}
+\lstset{language=Python, style=skpython}
+
+\definecolor{cycfill}{HTML}{F3DCE4}
+\definecolor{cycline}{HTML}{7B1E3A}
+\definecolor{cycdofill}{HTML}{E8EEF0}
+\definecolor{cycdoline}{HTML}{3A5A6B}
+\tikzset{
+  cycstep/.style = {font=\sffamily\small, align=center, rounded corners=2pt,
+                     draw=cycline, fill=cycfill, line width=0.7pt,
+                     minimum height=7mm, minimum width=20mm, inner sep=3pt},
+  cycdo/.style   = {cycstep, fill=cycdofill, draw=cycdoline},
+  flow/.style    = {-{Stealth[length=2mm]}, thick, draw=cycline},
+}
+
+\AtBeginSection[]
+{
+{
+    \setbeamercolor{background canvas}{bg=primaryLight!6}
+    \begin{frame}[plain]
+        \frametitle{Table of Contents}
+        \tableofcontents[currentsection]
+    \end{frame}
+}
+}
+
+\title{Functions and Reusable Calculations}
+\subtitle{\emph{Engineering Computation with Python} --- Chapter 5}
+\author{Mun\'{i}m Zabidi}
+\institute{\color{primary}Faculty of Electrical Engineering, Universiti Teknologi Malaysia}
+\date{\today}
+\titlegraphic{assets/logoutmwhite.png}
+
+\begin{document}
+
+\titlepage
+
+\begin{frame}{Table of Contents}
+    \tableofcontents
+\end{frame}
+
+%===============================================================================
+\section{What Is a Function?}
+%===============================================================================
+
+\begin{frame}{Why Functions?}
+    \leavevmode
+    So far every program has been written as one continuous script. That
+    works while a calculation is short, but engineering calculations are
+    \alert{repeated} --- the same conversion applied to twenty readings,
+    the same formula checked at a dozen operating points.
+
+    \vspace{3mm}
+    \begin{block}{A function}
+        Packages a calculation once, gives it a name, and lets the rest
+        of the program call it as often as needed.
+    \end{block}
+
+    \vspace{2mm}
+    \begin{itemize}\small
+        \item Makes code cleaner and easier to read
+        \item Improves reusability and maintainability
+        \item Hides complex implementation details
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Function vs. Script}
+    \leavevmode
+    \small
+    \striped
+    \begin{center}
+    \begin{tabular}{lll}
+        \toprule
+        \textbf{Aspect} & \textbf{Script} & \textbf{Function} \\
+        \midrule
+        Usage & Executes commands directly & Defines a reusable task \\
+        Input/output & Global variables, user input & Arguments, return values \\
+        Scope & Uses global variables & Uses local variables \\
+        \bottomrule
+    \end{tabular}
+    \end{center}
+
+    \vspace{4mm}
+    \begin{alertblock}{The key shift}
+        A script runs top to bottom, once. A function is written once
+        and \alert{called} as many times as needed, with different
+        inputs each time.
+    \end{alertblock}
+\end{frame}
+
+\begin{frame}{Types of Functions}
+    \leavevmode
+    \small
+    \striped
+    \begin{center}
+    \begin{tabular}{p{2.6cm}p{4.3cm}p{3.3cm}}
+        \toprule
+        \textbf{Type} & \textbf{Description} & \textbf{Example} \\
+        \midrule
+        Built-in & Predefined in Python & \texttt{print()}, \texttt{len()} \\
+        Library & From external modules & \texttt{math.sqrt()} \\
+        User-defined & Created by the programmer & \texttt{def greet():} \\
+        Nested (local) & Defined inside another function & see below \\
+        \bottomrule
+    \end{tabular}
+    \end{center}
+
+    \vspace{3mm}
+    {\small This chapter covers all four, with the focus on
+    \alert{writing your own}.}
+\end{frame}
+
+%===============================================================================
+\section{Pre-Defined Functions}
+%===============================================================================
+
+\begin{frame}[fragile]{Built-in Functions: Always Available}
+    \leavevmode
+    Built-in functions need \alert{no import} at all:
+
+\begin{lstlisting}
+readings = [12.0, 11.5, 13.2, 10.8]   # volts
+
+print(len(readings))                   # 4
+print(max(readings))                   # 13.2
+print(min(readings))                   # 10.8
+print(sum(readings) / len(readings))   # 11.875 -- the mean
+\end{lstlisting}
+
+    \vspace{1mm}
+    {\small \texttt{sum(x)/len(x)} is worth remembering: an average is
+    nothing more than a total divided by a count. Chapter 14 replaces
+    this with \texttt{np.mean()}.}
+\end{frame}
+
+\begin{frame}[fragile]{A Surprise in round()}
+    \leavevmode
+    Python rounds a value ending in exactly $.5$ to the nearest
+    \alert{even} number, not always upward:
+
+\begin{lstlisting}
+print(round(2.5))    # 2, not 3
+print(round(3.5))    # 4
+\end{lstlisting}
+
+    \vspace{3mm}
+    \begin{block}{Banker's rounding}
+        This exists so that rounding a large set of measurements does
+        not accumulate a systematic upward bias. Correct behaviour, not
+        a defect --- but it surprises almost everyone the first time.
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Library Functions}
+    \leavevmode
+    Library functions become available through \alert{importing}:
+
+\begin{lstlisting}
+import math
+print(math.sqrt(16))           # 4.0
+
+import numpy as np
+array = np.array([1, 2, 3])
+
+import random
+choice = random.choice(['apple', 'banana', 'cherry'])
+\end{lstlisting}
+
+    \vspace{1mm}
+    {\small Every library used in this course --- \texttt{math},
+    \texttt{numpy}, \texttt{pandas}, \texttt{random} --- follows this
+    same \texttt{import} pattern.}
+\end{frame}
+
+%===============================================================================
+\section{Writing Your Own Functions}
+%===============================================================================
+
+\begin{frame}[fragile]{Function Syntax}
+    \leavevmode
+    A user-defined function uses \texttt{def}, a name, parameters, a
+    colon, and an indented body. \texttt{return} sends a result back.
+
+\begin{lstlisting}
+def function_name(parameter1, parameter2):
+    """Description of what the function does"""
+    # Code block
+    return result
+\end{lstlisting}
+
+\begin{lstlisting}
+def add(a, b):
+    return a + b
+
+print(add(3, 7))  # 10
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Five Steps to Define a Function}
+    \leavevmode
+    \begin{enumerate}
+        \item \textbf{Define}: \texttt{def} keyword, name, parentheses
+        \item \textbf{Parameters} (optional): inputs inside the parentheses
+        \item \textbf{Colon \texttt{:}}: starts the function body
+        \item \textbf{Body}: indented code
+        \item \textbf{Return} (optional): sends back a result
+    \end{enumerate}
+
+    \vspace{3mm}
+    \begin{block}{Remember}
+        A function that never uses \texttt{return} still runs fine ---
+        it simply returns \texttt{None} to the caller.
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Single Input, Single Output}
+    \leavevmode
+    The simplest shape: one value in, one value out.
+
+\begin{lstlisting}
+def square(number):
+    return number ** 2
+
+print(square(4))  # 16
+\end{lstlisting}
+
+    \vspace{3mm}
+    {\small The four input/output shapes --- single/single,
+    single/multiple, multiple/single, multiple/multiple --- are all
+    equally valid in Python. The next few slides show each.}
+\end{frame}
+
+\begin{frame}[fragile]{Single Input, Multiple Output}
+    \leavevmode
+    Multiple return values are packed together as a \alert{tuple}:
+
+\begin{lstlisting}
+def analyze_number(num):
+    is_even = num % 2 == 0
+    square = num ** 2
+    return is_even, square
+
+even, sq = analyze_number(5)
+print(even, sq)
+# False 25
+\end{lstlisting}
+
+    \vspace{1mm}
+    {\small Returning several values at once is idiomatic in Python ---
+    and convenient for engineering results.}
+\end{frame}
+
+\begin{frame}[fragile]{Multiple Input, Multiple Output}
+    \leavevmode
+\begin{lstlisting}
+def calculate(a, b):
+    addition = a + b
+    subtraction = a - b
+    multiplication = a * b
+    division = a / b if b != 0 else None
+    return addition, subtraction, multiplication, division
+
+s, d, p, q = calculate(8, 2)
+print(s, d, p, q)
+# 10 6 16 4.0
+\end{lstlisting}
+
+    \vspace{1mm}
+    {\small Any combination of inputs and outputs is possible --- choose
+    the shape that matches the calculation.}
+\end{frame}
+
+\begin{frame}[fragile]{Selective Output Handling}
+    \leavevmode
+    The caller can choose to use only the outputs it needs:
+
+\begin{lstlisting}
+def motion(t):
+    distance = [0.0001 * i**2 for i in t]
+    acceleration = [0.0025 * i**2 for i in t]
+    return distance, acceleration
+
+distance, acceleration = motion(t)   # both
+distance = motion(t)[0]              # index into the tuple
+distance, _ = motion(t)              # discard the 2nd value
+_, acceleration = motion(t)          # discard the 1st value
+\end{lstlisting}
+
+    \vspace{1mm}
+    {\small The underscore \texttt{\_} is a common convention for
+    ``I don't need this value.''}
+\end{frame}
+
+\begin{frame}[fragile]{Local (Nested) Functions}
+    \leavevmode
+    A function defined \alert{inside} another function is a local
+    function --- accessible only from within the enclosing function.
+
+\begin{lstlisting}
+def process_order(quantity, price_per_item):
+    def calculate_total(qty, price):      # local function
+        total = qty * price
+        if total > 100:
+            return total * 0.9  # 10% discount
+        return total
+
+    total_price = calculate_total(quantity, price_per_item)
+    return f"Total Price: ${total_price:.2f}"
+
+print(process_order(10, 15))
+# Total Price: $135.00
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Multiple Local Functions and Default Arguments}
+    \leavevmode
+\begin{lstlisting}
+def process_order(quantity, price_per_item):
+    def calculate_total(qty, price):
+        total = qty * price
+        return total * 0.9 if total > 100 else total
+
+    def apply_tax(amount, tax_rate=0.05):  # default argument
+        return amount * (1 + tax_rate)
+
+    total_price = apply_tax(calculate_total(quantity, price_per_item))
+    return f"Total after tax: {total_price}"
+\end{lstlisting}
+
+    \vspace{1mm}
+    {\small \texttt{apply\_tax} has a \alert{default argument}: if
+    \texttt{tax\_rate} is not supplied, it defaults to \texttt{0.05}.}
+\end{frame}
+
+\begin{frame}[fragile]{Documenting a Function: Docstrings}
+    \leavevmode
+    A \alert{docstring} documents what a function does, what it expects,
+    and what it returns.
+
+\begin{lstlisting}
+def calculate_circle_area(radius):
+    """
+    Calculate the area of a circle given its radius.
+
+    Parameters:
+        radius (float): The radius of the circle.
+    Returns:
+        float: The area of the circle.
+    """
+    return math.pi * radius ** 2
+
+help(calculate_circle_area)
+\end{lstlisting}
+
+    \vspace{1mm}
+    {\small The difference between a function a colleague can use, and
+    one they must reverse-engineer.}
+\end{frame}
+
+%===============================================================================
+\section{Variable Scope}
+%===============================================================================
+
+\begin{frame}{What Is Scope?}
+    \leavevmode
+    Every variable lives within a certain \alert{scope} --- the region
+    of code where it can be seen or accessed.
+
+    \vspace{3mm}
+    \begin{columns}[t]
+        \begin{column}{.5\textwidth}
+            \begin{block}{Local}
+                \small Defined inside a function. Only works there.
+                Deleted when the function finishes.
+            \end{block}
+        \end{column}
+        \begin{column}{.5\textwidth}
+            \begin{block}{Global}
+                \small Defined outside all functions. Accessible
+                throughout the program, including inside functions.
+            \end{block}
+        \end{column}
+    \end{columns}
+
+    \vspace{3mm}
+    {\small This distinction causes some of the most confusing bugs
+    beginners encounter --- worth understanding carefully.}
+\end{frame}
+
+\begin{frame}[fragile]{Local Variables Disappear}
+    \leavevmode
+\begin{lstlisting}
+def greet():
+    name = "Alice"  # local variable
+    print(name)
+
+greet()
+print(name)  # NameError: name is not defined
+\end{lstlisting}
+
+    \vspace{2mm}
+    \begin{alertblock}{What happened}
+        \texttt{name} only exists while \texttt{greet()} is running.
+        Once the function finishes, it is \alert{deleted from memory}
+        --- the outer \texttt{print(name)} has nothing to find.
+    \end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{Global Variables Are Visible Everywhere}
+    \leavevmode
+\begin{lstlisting}
+name = "Bob"  # global variable
+
+def greet():
+    print(name)   # Python finds it in the global scope
+
+greet()        # Bob
+print(name)    # Bob
+\end{lstlisting}
+
+    \vspace{2mm}
+    \begin{block}{What happened}
+        There is no local \texttt{name} inside \texttt{greet()}, so
+        Python automatically looks outward and finds the global one.
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{The Same Name, Two Different Variables}
+    \leavevmode
+    When a function \alert{assigns} to a name, Python treats that name
+    as local for the \emph{entire} function body:
+
+\begin{lstlisting}
+count = 0  # global
+
+def increase():
+    count = 5  # creates a NEW local variable
+    print("Inside:", count)
+
+increase()
+print("Outside:", count)
+\end{lstlisting}
+\begin{lstlisting}[style=skoutput]
+Inside: 5
+Outside: 0
+\end{lstlisting}
+
+    \vspace{1mm}
+    {\small The local \texttt{count} \alert{shadows} the global one ---
+    but only inside the function.}
+\end{frame}
+
+\begin{frame}[fragile]{Modifying a Global: The Wrong Way}
+    \leavevmode
+\begin{lstlisting}
+count = 0  # global variable
+
+def increase():
+    count = count + 1  # tries to change count
+    print(count)
+
+increase()
+\end{lstlisting}
+\begin{lstlisting}[style=skoutput]
+UnboundLocalError: local variable 'count'
+referenced before assignment
+\end{lstlisting}
+
+    \vspace{1mm}
+    \begin{alertblock}{Why}
+        Python sees \texttt{count = ...} and assumes \texttt{count} is
+        local for the \alert{whole} function --- then tries to read it
+        before it has been created.
+    \end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{Modifying a Global: The Right Way}
+    \leavevmode
+    Use the \texttt{global} keyword to tell Python which \texttt{count}
+    you mean:
+
+\begin{lstlisting}
+count = 0  # global variable
+
+def increase():
+    global count   # use the global one, not a new local
+    count = count + 1
+    print(count)
+
+increase()
+print(count)
+\end{lstlisting}
+\begin{lstlisting}[style=skoutput]
+1
+1
+\end{lstlisting}
+
+    \vspace{1mm}
+    \begin{alertblock}{Rule of thumb}
+        Declare \texttt{global} where you intend to \alert{change} the
+        value, not merely read it. Prefer parameters and return values
+        where you can.
+    \end{alertblock}
+\end{frame}
+
+%===============================================================================
+\section{Testing Functions}
+%===============================================================================
+
+\begin{frame}[fragile]{Testing with assert}
+    \leavevmode
+    A test is simply a call whose result you already know, checked with
+    \texttt{assert}:
+
+\begin{lstlisting}
+def add(a, b):
+    return a + b
+
+assert add(2, 3) == 5
+assert add(-1, 1) == 0
+assert add(0, 0) == 0
+\end{lstlisting}
+
+    \vspace{2mm}
+    \begin{block}{Pass vs. fail}
+        If all assertions hold, nothing is printed. If one fails,
+        Python stops and tells you \alert{exactly which case} broke.
+    \end{block}
+\end{frame}
+
+\begin{frame}{Choosing Good Test Vectors}
+    \leavevmode
+    \small
+    \striped
+    \begin{center}
+    \begin{tabular}{p{2.6cm}p{3.0cm}p{3.6cm}}
+        \toprule
+        \textbf{Type} & \textbf{Example} & \textbf{Why important} \\
+        \midrule
+        Typical case & \texttt{add(2, 3)} & Normal usage \\
+        Edge case & \texttt{add(0, 0)} & Limits or boundaries \\
+        Negative case & \texttt{add(-5, 10)} & Behaviour with negatives \\
+        Unusual input & \texttt{add(999999, 1)} & Large values \\
+        \bottomrule
+    \end{tabular}
+    \end{center}
+
+    \vspace{3mm}
+    {\small Good test vectors cover a \alert{range} of situations, not
+    just the case you expect to work.}
+\end{frame}
+
+\begin{frame}[fragile]{Worked Example: An Off-by-One Bug}
+    \leavevmode
+    Children aged 12 and under get a discount. This implementation has
+    a subtle bug:
+
+\begin{lstlisting}
+def legoland_price(age, base_price=50.0):
+    if age < 12:   # BUG: 12-year-olds should ALSO get the discount
+        return base_price * 0.5
+    return base_price
+
+assert legoland_price(11) == 25.0           # passes
+assert legoland_price(12) == 25.0           # FAILS!
+assert legoland_price(13) == 50.0           # passes
+\end{lstlisting}
+
+    \vspace{1mm}
+    \begin{alertblock}{The fix}
+        Change \texttt{age < 12} to \texttt{age <= 12}. The failing
+        assertion at the \alert{boundary} (age 12) is exactly what
+        revealed the bug.
+    \end{alertblock}
+\end{frame}
+
+%===============================================================================
+\section{Summary}
+%===============================================================================
+
+\begin{frame}{What You Should Take Away}
+    \leavevmode
+    \small
+    \begin{itemize}
+        \item A \textbf{function} packages a calculation under a name so
+              it can be called repeatedly; a \textbf{script} executes
+              once.
+        \item Python has \textbf{built-in} functions (\texttt{print()},
+              \texttt{len()}), \textbf{library} functions
+              (\texttt{math.sqrt()}), and \textbf{user-defined}
+              functions you write with \texttt{def}.
+        \item A function can take any number of inputs and return any
+              number of outputs --- returning several values as a tuple
+              is idiomatic Python.
+        \item Variables inside a function are \textbf{local} and vanish
+              when it returns; this isolation prevents a function from
+              silently corrupting the rest of the program.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{What You Should Take Away (continued)}
+    \leavevmode
+    \small
+    \begin{itemize}
+        \item \textbf{Global} variables are visible everywhere, but
+              assigning to a name inside a function creates a
+              \emph{new local} variable unless you declare
+              \texttt{global} first.
+        \item A \textbf{docstring} documents a function for the next
+              person (often yourself) who has to use it.
+        \item Test with \texttt{assert} and good \textbf{test vectors}
+              --- typical, edge, negative, and unusual cases, especially
+              at boundaries.
+    \end{itemize}
+
+    \vspace{3mm}
+    \begin{alertblock}{Looking ahead}
+        Every function here took one value in and returned one value
+        out. A real instrument logs hundreds of readings --- Chapter 6
+        introduces the \alert{array}, which computes on many values at
+        once.
+    \end{alertblock}
+
+    \vspace{3mm}
+    \begin{center}
+        \large\color{primary}\textbf{Next: Arrays and Vectorized Computation}
+    \end{center}
+\end{frame}
+
+\end{document}

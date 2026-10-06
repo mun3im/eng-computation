@@ -1,0 +1,681 @@
+\documentclass[9pt,aspectratio=169,xcolor=table]{beamer}
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% Use roboto Font (recommended)
+\usepackage[sfdefault]{roboto}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% Define where theme files are located. ('/styles')
+\usepackage{styles/fluxmacros}
+\usefolder{styles}
+% Use Flux theme v0.1 beta
+% Available style: asphalt, blue, red, green, gray
+% "red" is the closest built-in style to maroon; its exact colours are
+% overridden with a true maroon palette just below, after the theme loads.
+\usetheme[style=red]{flux}
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% SKEE1033 maroon palette override.
+% The flux theme's colortheme defines primaryLight/primary/secondary/tertiary
+% as plain \definecolor calls (not \providecolor), so simply redefining them
+% here, AFTER \usetheme, wins -- xcolor allows redefinition and every
+% \setbeamercolor in beamercolorthemeflux.sty was already evaluated against
+% these names, so the redefinition propagates everywhere automatically.
+\definecolor{primaryLight}{HTML}{9B2242} % lighter maroon -- headers, accents
+\definecolor{primary}{HTML}{7B1E3A}      % core maroon -- titles, block headers
+\definecolor{secondary}{HTML}{3A5A6B}    % muted teal -- complementary accent
+\definecolor{tertiary}{HTML}{8C6A3F}     % warm bronze -- example/third accent
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% Extra packages
+\usepackage{booktabs}
+\usepackage{colortbl}
+\usepackage{ragged2e}
+\usepackage{amssymb}
+\usepackage{multirow}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, fit, backgrounds, calc, shapes.geometric}
+\setbeamertemplate{itemize items}[square]
+\usepackage[scaled=.92]{beramono}
+\usepackage{listings}
+\usepackage{array}
+% Table striping: odd rows white, even rows very light gray.
+\definecolor{stripe}{gray}{0.94}
+\newcommand{\striped}{\rowcolors{1}{white}{stripe}}
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% Code listing style (lightweight analogue of the book's skpython style).
+% This course is Python-only, so Python is set as the lstlisting default via
+% \lstset below -- every \begin{lstlisting} needs no language=... of its own.
+\definecolor{codebg}{HTML}{FBF2F4}
+\definecolor{codegreen}{rgb}{0,0.45,0}
+\definecolor{codestring}{rgb}{0.58,0.1,0.2}
+\lstdefinestyle{skpython}{
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{primary}\bfseries,
+    commentstyle=\itshape\color{codegreen},
+    stringstyle=\ttfamily\color{codestring},
+    backgroundcolor=\color{codebg},
+    breaklines=true,
+    keepspaces=true,
+    showspaces=false,
+    showstringspaces=false,
+    frame=single,
+    rulecolor=\color{primary!40},
+    numbers=none,
+}
+\lstset{language=Python, style=skpython}
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% TikZ block styles for the computation-cycle and control-structure diagrams
+\definecolor{cycfill}{HTML}{F3DCE4}
+\definecolor{cycline}{HTML}{7B1E3A}
+\definecolor{cycdofill}{HTML}{E8EEF0}
+\definecolor{cycdoline}{HTML}{3A5A6B}
+\tikzset{
+  cycstep/.style = {font=\sffamily\small, align=center, rounded corners=2pt,
+                     draw=cycline, fill=cycfill, line width=0.7pt,
+                     minimum height=7mm, minimum width=20mm, inner sep=3pt},
+  cycdo/.style   = {cycstep, fill=cycdofill, draw=cycdoline},
+  flow/.style    = {-{Stealth[length=2mm]}, thick, draw=cycline},
+}
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% SECTION SEPARATOR (ToC recap) %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\AtBeginSection[]
+{
+{
+    \setbeamercolor{background canvas}{bg=primaryLight!6}
+    \begin{frame}[plain]
+        \frametitle{Table of Contents}
+        \tableofcontents[currentsection]
+    \end{frame}
+}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% Information
+\title{Matrices and Circuit Equations}
+\subtitle{\emph{Engineering Computation with Python} --- Chapter 9}
+\author{Mun\'{i}m Zabidi}
+\institute{\color{primary}Faculty of Electrical Engineering, Universiti Teknologi Malaysia}
+\date{\today}
+\titlegraphic{assets/logoutmwhite.png}
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+\begin{document}
+
+\titlepage
+
+\begin{frame}{Table of Contents}
+    \tableofcontents
+\end{frame}
+
+%===============================================================================
+\section{Why Circuits Need Matrices}
+%===============================================================================
+
+\begin{frame}{A Two-Loop Circuit}
+    \leavevmode
+    A circuit with resistors $R_1, R_2, R_3$ and sources $V_1, V_2$.
+    Kirchhoff's voltage law around each loop gives two equations in the
+    two unknown loop currents $I_1, I_2$:
+    \[
+    \begin{aligned}
+    (R_1 + R_2)\,I_1 - R_2\,I_2 &= V_1, \\
+    -R_2\,I_1 + (R_2 + R_3)\,I_2 &= V_2 .
+    \end{aligned}
+    \]
+
+    \vspace{2mm}
+    \begin{alertblock}{The problem}
+        Solvable by substitution for two loops. Tedious for three.
+        \alert{Impractical} for ten.
+    \end{alertblock}
+\end{frame}
+
+\begin{frame}{The Same System, Written as a Matrix}
+    \leavevmode
+    All the information sits in a grid of coefficients and a column of
+    source voltages:
+    \[
+    \underbrace{\begin{bmatrix} R_1 + R_2 & -R_2 \\ -R_2 & R_2 + R_3 \end{bmatrix}}_{\mathbf{A}}
+    \underbrace{\begin{bmatrix} I_1 \\ I_2 \end{bmatrix}}_{\mathbf{x}}
+    =
+    \underbrace{\begin{bmatrix} V_1 \\ V_2 \end{bmatrix}}_{\mathbf{b}} .
+    \]
+
+    \vspace{2mm}
+    \begin{block}{$\mathbf{A}\mathbf{x} = \mathbf{b}$}
+        \textbf{A} holds what the circuit \alert{is}. \textbf{b} holds
+        what \alert{drives} it. \textbf{x} holds what you want to
+        \alert{find}.
+    \end{block}
+
+    \vspace{2mm}
+    {\small This pattern --- one matrix equation standing in for many
+    simultaneous equations --- is one of the most important in all of
+    engineering.}
+\end{frame}
+
+\begin{frame}[fragile]{Solving It in Python}
+    \leavevmode
+    No need to invert $\mathbf{A}$ by hand, no need to rearrange the
+    equations:
+
+\begin{lstlisting}
+R1, R2, R3 = 100.0, 220.0, 330.0    # ohms
+V1, V2 = 12.0, 5.0                  # volts
+
+A = np.array([[R1 + R2, -R2],
+              [-R2,     R2 + R3]])
+b = np.array([V1, V2])
+
+I = np.linalg.solve(A, b)
+print(f"I1 = {I[0]*1000:.3f} mA")
+print(f"I2 = {I[1]*1000:.3f} mA")
+\end{lstlisting}
+
+    \texttt{I1 = 60.345 mA} \quad \texttt{I2 = 33.229 mA}
+\end{frame}
+
+\begin{frame}[fragile]{Check, Then Interpret}
+    \leavevmode
+    \begin{columns}[t]
+        \begin{column}{.5\textwidth}
+            \begin{block}{Check}
+                Substitute back --- \alert{always}:
+\begin{lstlisting}
+print(A @ I)
+# Output: [12.  5.]
+\end{lstlisting}
+                Matches $V_1, V_2$. This is the single most valuable
+                habit in numerical linear algebra.
+            \end{block}
+        \end{column}
+        \begin{column}{.5\textwidth}
+            \begin{block}{Interpret}
+                \small Both currents positive: both loop currents flow
+                in the assumed direction. A negative result would just
+                mean the true current flows the other way.
+
+                \vspace{1mm}
+                Tens of mA is reasonable for this circuit.
+            \end{block}
+        \end{column}
+    \end{columns}
+
+    \vspace{3mm}
+    \begin{alertblock}{Predict before you run}
+        If $R_2$ --- shared between the loops --- were made very large,
+        what happens to $I_1$ and $I_2$? Predict, then set
+        \texttt{R2 = 1e6} and check.
+    \end{alertblock}
+\end{frame}
+
+%===============================================================================
+\section{Matrix Operations in Detail}
+%===============================================================================
+
+\begin{frame}{What Does ``Solving'' Mean?}
+    \leavevmode
+    \[
+    \begin{aligned}
+    3x_1 + 2x_2 &= 12, \\
+    x_1 + 4x_2 &= 10,
+    \end{aligned}
+    \qquad\Longleftrightarrow\qquad
+    \begin{bmatrix} 3 & 2 \\ 1 & 4 \end{bmatrix}
+    \begin{bmatrix} x_1 \\ x_2 \end{bmatrix}
+    =
+    \begin{bmatrix} 12 \\ 10 \end{bmatrix}.
+    \]
+
+    \vspace{2mm}
+    Solving means finding the single vector $\mathbf{x}$ that satisfies
+    \alert{all} the equations at once: $x_1 = 2.8$, $x_2 = 1.8$.
+
+    \vspace{2mm}
+    \begin{block}{What changes, what doesn't}
+        The matrix form does not change the arithmetic; it changes the
+        \alert{bookkeeping} --- a procedure written once works for two
+        unknowns or two hundred.
+    \end{block}
+\end{frame}
+
+\begin{frame}{Why Not Just Invert the Matrix?}
+    \leavevmode
+    Algebraically, $\mathbf{x} = \mathbf{A}^{-1}\mathbf{b}$ is correct.
+    It is nevertheless the \alert{wrong} way to compute the answer:
+
+    \vspace{2mm}
+    \begin{columns}[t]
+        \begin{column}{.5\textwidth}
+            \begin{block}{It is slower}
+                \small Forming the full inverse computes far more than
+                the problem requires. Solving directly does roughly a
+                third of the work for a large system.
+            \end{block}
+        \end{column}
+        \begin{column}{.5\textwidth}
+            \begin{block}{It is less accurate}
+                \small Inversion introduces rounding at every step,
+                which then propagates through the multiplication by
+                $\mathbf{b}$.
+            \end{block}
+        \end{column}
+    \end{columns}
+
+    \vspace{3mm}
+    \begin{alertblock}{The rule throughout this course}
+        Use \texttt{np.linalg.solve(A, b)}, never
+        \texttt{np.linalg.inv(A) @ b}.
+    \end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{When There Is No Solution}
+    \leavevmode
+    If one equation is a multiple of another:
+    \[
+    \begin{bmatrix} 1 & 2 \\ 2 & 4 \end{bmatrix}
+    \]
+    the two rows carry the same information --- no unique $\mathbf{x}$
+    exists. This matrix is \alert{singular}; its determinant is zero.
+
+\begin{lstlisting}
+S = np.array([[1.0, 2.0],
+              [2.0, 4.0]])
+b = np.array([1.0, 2.0])
+
+print(np.linalg.det(S))      # 0.0  -- singular
+x = np.linalg.solve(S, b)    # raises LinAlgError
+\end{lstlisting}
+
+    \begin{block}{In a circuit problem}
+        A singular \textbf{A} almost always means the equations were
+        set up wrongly --- not that the circuit is impossible. The
+        error is a useful early warning.
+    \end{block}
+\end{frame}
+
+\begin{frame}{Matrix Multiplication, Reviewed}
+    \leavevmode
+    \[
+    m = \begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix}
+    \]
+    Computed element by element:
+
+    \begin{center}
+    \small
+    \begin{tabular}{lll}
+        \toprule
+        \textbf{Result} & \textbf{Calculation} & \textbf{Value} \\
+        \midrule
+        $R_{0,0}$ & $(1{\times}1)+(2{\times}3)$ & $7$ \\
+        $R_{0,1}$ & $(1{\times}2)+(2{\times}4)$ & $10$ \\
+        $R_{1,0}$ & $(3{\times}1)+(4{\times}3)$ & $15$ \\
+        $R_{1,1}$ & $(3{\times}2)+(4{\times}4)$ & $22$ \\
+        \bottomrule
+    \end{tabular}
+    \end{center}
+
+    \[
+    m \times m = \begin{pmatrix} 7 & 10 \\ 15 & 22 \end{pmatrix}
+    \]
+\end{frame}
+
+\begin{frame}{Transpose, Right Division, Left Division}
+    \leavevmode
+    \small
+    \begin{columns}[t]
+        \begin{column}{.33\textwidth}
+            \begin{block}{Transpose}
+                \scriptsize Flips a matrix over its main diagonal: rows
+                become columns.
+                \[
+                a = \begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix}
+                \;\to\;
+                a^T = \begin{pmatrix} 1 & 3 \\ 2 & 4 \end{pmatrix}
+                \]
+            \end{block}
+        \end{column}
+        \begin{column}{.33\textwidth}
+            \begin{block}{Right division}
+                \scriptsize Find $X$ solving $XA = B$:
+                \[ X = BA^{-1} \]
+            \end{block}
+        \end{column}
+        \begin{column}{.33\textwidth}
+            \begin{block}{Left division}
+                \scriptsize Find $X$ solving $AX = B$:
+                \[ X = A^{-1}B \]
+            \end{block}
+        \end{column}
+    \end{columns}
+
+    \vspace{3mm}
+    \begin{alertblock}{Order matters}
+        Matrix multiplication is \alert{not} commutative:
+        $BA^{-1} \neq A^{-1}B$. Right division and left division solve
+        different equations.
+    \end{alertblock}
+
+    \vspace{2mm}
+    {\scriptsize In practice, neither Python nor other languages compute
+    $A^{-1}$ explicitly --- a numerically stable decomposition solves
+    for $X$ directly.}
+\end{frame}
+
+\begin{frame}{Matrix Power}
+    \leavevmode
+    Raising a square matrix $A$ to an integer power $n$ means repeated
+    \alert{matrix} multiplication:
+    \[
+    A^n = \underbrace{A \times A \times \cdots \times A}_{n \text{ times}}.
+    \]
+
+    \vspace{3mm}
+    \begin{alertblock}{Not the same as element-wise power}
+        $A^n$ (matrix power) and raising every \alert{element} of $A$
+        to the power $n$ generally give different results, and are
+        written differently in Python.
+    \end{alertblock}
+\end{frame}
+
+%===============================================================================
+\section{Matrix vs. Array Arithmetic}
+%===============================================================================
+
+\begin{frame}{Two Kinds of Arithmetic in NumPy}
+    \leavevmode
+    \begin{columns}[t]
+        \begin{column}{.5\textwidth}
+            \begin{block}{Matrix operations}
+                \small Use \texttt{@}, or functions such as
+                \texttt{np.dot()}, \texttt{np.matmul()},
+                \texttt{np.linalg.solve()}.
+            \end{block}
+        \end{column}
+        \begin{column}{.5\textwidth}
+            \begin{block}{Element-wise (array) operations}
+                \small Standard operators \texttt{+ - * /} act on each
+                corresponding element, and work on arrays of any shape.
+            \end{block}
+        \end{column}
+    \end{columns}
+
+    \vspace{3mm}
+    \begin{alertblock}{They agree on two operations}
+        Addition (\texttt{+}) and subtraction (\texttt{-}) behave
+        \alert{identically} whether you mean ``matrix'' or
+        ``element-wise.'' Only multiplication, division, and power
+        differ.
+    \end{alertblock}
+\end{frame}
+
+\begin{frame}{Precedence of Matrix and Array Operators}
+    \leavevmode
+    As with ordinary arithmetic, NumPy follows an order of precedence:
+
+    \begin{center}
+    \small
+    \begin{tabular}{cl}
+        \toprule
+        \textbf{Order} & \textbf{Operation} \\
+        \midrule
+        1 & Parentheses \\
+        2 & Power \\
+        3 & Transpose \\
+        4 & Multiplication \& Division, left to right \\
+        5 & Addition \& Subtraction \\
+        6 & Colon \texttt{:} (slice) \\
+        \bottomrule
+    \end{tabular}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Algebra, Matrix Code, Array Code}
+    \leavevmode
+    \small
+    \begin{center}
+    \begin{tabular}{lll}
+        \toprule
+        \textbf{Algebra} & \textbf{Matrix (Python)} & \textbf{Array (Python)} \\
+        \midrule
+        $a + b$ & \texttt{a + b} & \texttt{a + b} \\
+        $a - b$ & \texttt{a - b} & \texttt{a - b} \\
+        $a \times b$ & \texttt{a @ b} & \texttt{a * b} \\
+        $a / b$ (right div.) & \texttt{solve(a.T,b.T).T} & \texttt{a / b} \\
+        $a \backslash b$ (left div.) & \texttt{solve(a, b)} & \texttt{b / a} \\
+        $a^n$ & \texttt{matrix\_power(a,n)} & \texttt{a ** n} \\
+        $a^T$ & \texttt{a.T} & \texttt{a.T} \\
+        \bottomrule
+    \end{tabular}
+    \end{center}
+
+    \vspace{3mm}
+    \begin{alertblock}{A note on \texttt{np.matrix}}
+        Legacy and not used in this course --- always \texttt{np.array}
+        with \texttt{@}. Appendix B records the differences.
+    \end{alertblock}
+\end{frame}
+
+%===============================================================================
+\section{Worked Matrix Examples}
+%===============================================================================
+
+\begin{frame}[fragile]{Addition, Subtraction, Multiplication}
+    \leavevmode
+\begin{lstlisting}
+A = np.array([[1, 2], [3, 4]])
+B = np.array([[5, 6], [7, 8]])
+
+A + B    # [[ 6  8] [10 12]]
+A - B    # [[-4 -4] [-4 -4]]
+A @ B    # [[19 22] [43 50]]
+np.matmul(A, B)   # same as A @ B
+\end{lstlisting}
+
+    \begin{block}{Notice}
+        Addition and subtraction look exactly like array arithmetic.
+        Multiplication does not --- \texttt{@} is required for the
+        true matrix product.
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Division and Power}
+    \leavevmode
+\begin{lstlisting}
+# Right division: solving XA = B
+np.linalg.solve(A.T, B.T).T
+# [[-1.  2.] [-2.  3.]]
+
+# Left division: solving AX = B
+np.linalg.solve(A, B)
+# [[-3. -4.] [ 4.  5.]]
+
+# Matrix power
+np.linalg.matrix_power(A, 2)
+# [[ 7 10] [15 22]]
+
+# Transpose
+A.T   # [[1 3] [2 4]]
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Precedence in a Complex Expression}
+    \leavevmode
+    \small
+    The rules from the previous section govern how Python evaluates a
+    compound matrix expression:
+
+    \begin{itemize}\itemsep2pt
+        \item \textbf{Transpose before multiplication:} \texttt{A.T @ B}
+        \item \textbf{Parentheses force order:} \texttt{(A + B) @ B}
+        \item \textbf{Power before multiplication:}
+              \texttt{matrix\_power(A,2) @ B}
+        \item \textbf{Multiplication before addition:} \texttt{A @ B + B}
+    \end{itemize}
+
+    \vspace{2mm}
+    \begin{block}{Worked check}
+        \texttt{A.T @ B} $=
+        \begin{pmatrix} 26 & 30 \\ 38 & 44 \end{pmatrix}$ \qquad
+        \texttt{(A+B) @ B} $=
+        \begin{pmatrix} 86 & 100 \\ 134 & 156 \end{pmatrix}$
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{A Full Combination}
+    \leavevmode
+\begin{lstlisting}
+# Power, transpose, addition, and division together
+result = (np.linalg.matrix_power(A, 2) + A.T) \
+          @ np.linalg.solve(B, A)
+print(result)
+\end{lstlisting}
+
+    \texttt{[[-12.\ \ -7.] [-19. -10.]]}
+
+    \vspace{3mm}
+    \begin{block}{Reading it left to right}
+        Power first (\texttt{matrix\_power(A,2)}), then transpose
+        (\texttt{A.T}), then their sum, then \texttt{solve(B, A)}
+        (left division), then the final matrix product.
+    \end{block}
+\end{frame}
+
+%===============================================================================
+\section{Complex Number Arithmetic}
+%===============================================================================
+
+\begin{frame}[fragile]{Pure Transpose vs.\ Conjugate Transpose}
+    \leavevmode
+    With complex-valued arrays, two different ``transposes'' exist:
+
+\begin{lstlisting}
+a = np.array([[1+1j, 2+2j], [3+3j, 4+4j]])
+
+a.T          # pure transpose -- swaps rows/cols only
+a.conj().T   # conjugate (Hermitian) transpose
+\end{lstlisting}
+
+    \begin{columns}[t]
+        \begin{column}{.5\textwidth}
+            \texttt{a.T}:
+            \[
+            \begin{pmatrix} 1{+}1j & 3{+}3j \\ 2{+}2j & 4{+}4j \end{pmatrix}
+            \]
+        \end{column}
+        \begin{column}{.5\textwidth}
+            \texttt{a.conj().T}:
+            \[
+            \begin{pmatrix} 1{-}1j & 3{-}3j \\ 2{-}2j & 4{-}4j \end{pmatrix}
+            \]
+        \end{column}
+    \end{columns}
+
+    \vspace{2mm}
+    \begin{alertblock}{The difference}
+        \texttt{.T} swaps rows and columns, leaving every real and
+        imaginary part unchanged. \texttt{.conj().T} \alert{additionally}
+        negates every imaginary part.
+    \end{alertblock}
+\end{frame}
+
+%===============================================================================
+\section{Summary and Practice}
+%===============================================================================
+
+\begin{frame}{What to Remember}
+    \leavevmode
+    \small
+    \begin{itemize}\itemsep3pt
+        \item Any set of simultaneous linear equations is a single
+              matrix equation $\mathbf{A}\mathbf{x} = \mathbf{b}$.
+        \item \texttt{np.linalg.solve(A, b)} solves it directly ---
+              faster and more reliable than inverting $\mathbf{A}$.
+        \item A \alert{singular} matrix (zero determinant) has no
+              unique solution; \texttt{solve} raises \texttt{LinAlgError}.
+        \item \texttt{@} is \alert{matrix} multiplication; \texttt{*} is
+              \alert{element-wise}. Confusing them is one of the most
+              common errors in numerical engineering code.
+        \item \texttt{A.T} transposes; always check a solution by
+              substitution (\texttt{A @ x} should reproduce \texttt{b}).
+    \end{itemize}
+
+    \vspace{3mm}
+    \begin{alertblock}{The real skill}
+        Setting the problem up correctly --- not solving it --- is
+        where an engineer's judgement matters most.
+    \end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{Arithmetic Operator Drill}
+    \leavevmode
+    \small
+    Before checking with Python, work these out by hand. Assume
+    \texttt{a} is a scalar, \texttt{b} and \texttt{c} are arrays or
+    matrices as appropriate:
+
+    \begin{columns}[t]
+        \begin{column}{.5\textwidth}
+\begin{lstlisting}
+a + 2 - 3
+a + 2 * 3
+2 * a**3 + a
+a + b
+np.dot(b, c)
+c.T
+np.dot(b, c.T)
+b.T + a / 2 + 2
+\end{lstlisting}
+        \end{column}
+        \begin{column}{.5\textwidth}
+\begin{lstlisting}
+np.dot(c.T, c)
+c**(2**a)
+np.dot(c, c)
+c * c
+b**b
+a + b * b**c.T
+(a + 2j).T
+np.array([a+2j, a+3j]).T
+\end{lstlisting}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Where This Is Going}
+    \leavevmode
+    \small
+    This chapter answered how engineers write and solve systems of
+    simultaneous equations compactly.
+
+    \vspace{3mm}
+    \begin{itemize}
+        \item Chapter 10 returns to the two-loop circuit on a larger
+              scale: reading many resistor/voltage configurations from
+              a spreadsheet and writing the computed currents back.
+        \item The same $\mathbf{A}\mathbf{x} = \mathbf{b}$ pattern
+              reappears throughout engineering --- structural analysis,
+              circuit networks, control systems.
+    \end{itemize}
+
+    \vspace{4mm}
+    \begin{center}
+        \large\color{primary}\textbf{Next: Measurements, Files and Spreadsheets}
+    \end{center}
+\end{frame}
+
+\end{document}

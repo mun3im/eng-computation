@@ -1,0 +1,739 @@
+\documentclass[9pt,aspectratio=169,xcolor=table]{beamer}
+
+\usepackage[sfdefault]{roboto}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage{styles/fluxmacros}
+\usefolder{styles}
+\usetheme[style=red]{flux}
+
+\definecolor{primaryLight}{HTML}{9B2242}
+\definecolor{primary}{HTML}{7B1E3A}
+\definecolor{secondary}{HTML}{3A5A6B}
+\definecolor{tertiary}{HTML}{8C6A3F}
+
+\usepackage{booktabs}
+\usepackage{colortbl}
+\usepackage{ragged2e}
+\usepackage{amssymb}
+\usepackage{multirow}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, fit, backgrounds, calc, shapes.geometric}
+\setbeamertemplate{itemize items}[square]
+\usepackage[scaled=.92]{beramono}
+\usepackage{listings}
+\usepackage{array}
+\definecolor{stripe}{gray}{0.94}
+\newcommand{\striped}{\rowcolors{1}{white}{stripe}}
+
+\definecolor{codebg}{HTML}{FBF2F4}
+\definecolor{codegreen}{rgb}{0,0.45,0}
+\definecolor{codestring}{rgb}{0.58,0.1,0.2}
+\lstdefinestyle{skpython}{
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{primary}\bfseries,
+    commentstyle=\itshape\color{codegreen},
+    stringstyle=\ttfamily\color{codestring},
+    backgroundcolor=\color{codebg},
+    breaklines=true,
+    keepspaces=true,
+    showspaces=false,
+    showstringspaces=false,
+    frame=single,
+    rulecolor=\color{primary!40},
+    numbers=none,
+}
+\lstdefinestyle{skoutput}{
+    basicstyle=\ttfamily\footnotesize,
+    backgroundcolor=\color{secondary!8},
+    breaklines=true,
+    keepspaces=true,
+    showspaces=false,
+    showstringspaces=false,
+    frame=single,
+    rulecolor=\color{secondary!50},
+    numbers=none,
+}
+\lstset{language=Python, style=skpython}
+
+\definecolor{cycfill}{HTML}{F3DCE4}
+\definecolor{cycline}{HTML}{7B1E3A}
+\definecolor{cycdofill}{HTML}{E8EEF0}
+\definecolor{cycdoline}{HTML}{3A5A6B}
+\tikzset{
+  cycstep/.style = {font=\sffamily\small, align=center, rounded corners=2pt,
+                     draw=cycline, fill=cycfill, line width=0.7pt,
+                     minimum height=7mm, minimum width=20mm, inner sep=3pt},
+  cycdo/.style   = {cycstep, fill=cycdofill, draw=cycdoline},
+  flow/.style    = {-{Stealth[length=2mm]}, thick, draw=cycline},
+}
+
+\AtBeginSection[]
+{
+{
+    \setbeamercolor{background canvas}{bg=primaryLight!6}
+    \begin{frame}[plain]
+        \frametitle{Table of Contents}
+        \tableofcontents[currentsection]
+    \end{frame}
+}
+}
+
+\title{Decisions and Repetition}
+\subtitle{\emph{Engineering Computation with Python} --- Chapter 4}
+\author{Mun\'{i}m Zabidi}
+\institute{\color{primary}Faculty of Electrical Engineering, Universiti Teknologi Malaysia}
+\date{\today}
+\titlegraphic{assets/logoutmwhite.png}
+
+\begin{document}
+
+\titlepage
+
+\begin{frame}{Table of Contents}
+    \tableofcontents
+\end{frame}
+
+%===============================================================================
+\section{Boolean Foundations}
+%===============================================================================
+
+\begin{frame}{From Straight-Line Code to Real Decisions}
+    \leavevmode
+    Every program so far has run straight through, one line at a time.
+    That is not enough for engineering work, which is full of:
+
+    \vspace{2mm}
+    \begin{columns}[t]
+        \begin{column}{.5\textwidth}
+            \begin{block}{Decisions}
+                \small Is this reading within tolerance?
+            \end{block}
+        \end{column}
+        \begin{column}{.5\textwidth}
+            \begin{block}{Repetition}
+                \small Apply this check to all $101$ samples.
+            \end{block}
+        \end{column}
+    \end{columns}
+
+    \vspace{3mm}
+    \begin{alertblock}{The foundation beneath both}
+        Every decision and every loop condition is built from
+        \alert{Boolean expressions} --- expressions that evaluate to
+        \texttt{True} or \texttt{False}.
+    \end{alertblock}
+\end{frame}
+
+\begin{frame}{Relational and Logical Operators}
+    \leavevmode
+    \small
+    \begin{columns}[t]
+        \begin{column}{.45\textwidth}
+            \striped
+            \begin{center}
+            \begin{tabular}{cl}
+                \toprule
+                \textbf{Symbol} & \textbf{Meaning} \\
+                \midrule
+                \texttt{<}  & Less than \\
+                \texttt{<=} & Less than or equal \\
+                \texttt{==} & Equal \\
+                \texttt{!=} & Not equal \\
+                \texttt{>}  & Greater than \\
+                \texttt{>=} & Greater than or equal \\
+                \bottomrule
+            \end{tabular}
+            \end{center}
+        \end{column}
+        \begin{column}{.5\textwidth}
+            \striped
+            \begin{center}
+            \begin{tabular}{lcc}
+                \toprule
+                \textbf{Logical} & \textbf{Elem.-wise} & \textbf{Short-circ.} \\
+                \midrule
+                AND & \texttt{\&} & \texttt{and} \\
+                OR  & \texttt{|}  & \texttt{or}  \\
+                NOT & \texttt{\~{}} & \texttt{not} \\
+                \bottomrule
+            \end{tabular}
+            \end{center}
+        \end{column}
+    \end{columns}
+
+    \vspace{3mm}
+    {\small Any nonzero value is \texttt{True}; zero is \texttt{False}.}
+\end{frame}
+
+\begin{frame}[fragile]{Logical vs. Bitwise: Don't Confuse Them}
+    \leavevmode
+    \alert{Logical} operators (\texttt{and}, \texttt{or}, \texttt{not})
+    output \texttt{True}/\texttt{False}. \alert{Bitwise} operators
+    (\texttt{\&}, \texttt{|}, \texttt{\textasciitilde}) work on the
+    binary representation of numbers.
+
+\begin{lstlisting}
+True and False  # False
+True or False   # True
+not True        # False
+
+6 & 3  # 2  (Binary: 110 & 011 = 010)
+6 | 3  # 7  (Binary: 110 | 011 = 111)
+~5     # -6 (two's complement)
+\end{lstlisting}
+
+    \vspace{1mm}
+    \begin{alertblock}{A common mistake}
+        Using \texttt{\&} where you meant \texttt{and} compiles fine and
+        gives a misleading numeric answer instead of an error.
+    \end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{Relational Operators in Action}
+    \leavevmode
+\begin{lstlisting}
+a = 5
+b = 10
+
+print(a < b)     # True
+print(a <= b)    # True
+print(a == b)    # False
+print(a != b)    # True
+print(a > b)     # False
+print(a >= b)    # False
+\end{lstlisting}
+
+    \vspace{1mm}
+    {\small Each of the six operators applied to the same pair of values
+    --- compare the results directly.}
+\end{frame}
+
+\begin{frame}{Operator Precedence}
+    \leavevmode
+    \small
+    Python follows a strict precedence order across arithmetic, bitwise,
+    and Boolean operators --- \alert{from highest to lowest} below:
+
+    \vspace{2mm}
+    \striped
+    \begin{center}
+    \begin{tabular}{p{4.0cm}p{6.5cm}}
+        \toprule
+        \textbf{Operator} & \textbf{Description} \\
+        \midrule
+        \texttt{**} & Exponentiation \\
+        \texttt{*}, \texttt{/}, \texttt{//}, \texttt{\%} & Mult., div., floor div., remainder \\
+        \texttt{+}, \texttt{-} & Addition, subtraction \\
+        \texttt{\&}, \texttt{\^{}}, \texttt{|} & Bitwise AND, XOR, OR \\
+        \texttt{<}, \texttt{<=}, \texttt{>}, \texttt{>=}, \texttt{!=}, \texttt{==} & Comparisons \\
+        \texttt{not}, \texttt{and}, \texttt{or} & Boolean logic \\
+        \bottomrule
+    \end{tabular}
+    \end{center}
+
+    \vspace{2mm}
+    {\small \alert{When in doubt, parenthesise.}}
+\end{frame}
+
+\begin{frame}[fragile]{Precedence in Practice}
+    \leavevmode
+\begin{lstlisting}
+a, b, c = 5, 2, 3
+
+expr1 = (a + b) * c        # Parens first: 21
+expr2 = a ** b + c         # Power first: 28
+expr6 = a < b and b > c    # Relational, then AND: False
+expr7 = a | b and c        # Bitwise OR then AND: 3
+\end{lstlisting}
+
+    \vspace{2mm}
+    \begin{alertblock}{Expression 7 deserves a closer look}
+        \texttt{a | b} evaluates first (bitwise OR: $5|2=7$). Since
+        \texttt{and} returns one of its \alert{actual operands}, not
+        just \texttt{True}/\texttt{False}, the result is \texttt{c = 3}.
+    \end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{Combining All Three Kinds at Once}
+    \leavevmode
+    Real conditions usually combine more than one operator kind:
+
+\begin{lstlisting}
+x, y, z = 8, 5, 12
+
+result = ((x + y) > z) and ((x - y) * 2 < z) or (z % y == 0)
+print(result)  # True
+
+# (x + y) > z       : is the sum greater than z?
+# (x - y) * 2 < z   : is double the difference less than z?
+# z % y == 0        : does z divide evenly by y?
+\end{lstlisting}
+
+    \vspace{1mm}
+    {\small This is where precedence starts to matter --- work through
+    it piece by piece before trusting the printed result.}
+\end{frame}
+
+\begin{frame}[fragile]{Chained Comparisons: Readable Range Checks}
+    \leavevmode
+    A range check written the traditional way:
+
+\begin{lstlisting}
+x = 10
+if x > 5 and x < 15:
+    print("x is between 5 and 15")
+\end{lstlisting}
+
+    can be written as a single \alert{chained comparison}:
+
+\begin{lstlisting}
+if 5 < x < 15:
+    print("x is between 5 and 15")
+\end{lstlisting}
+
+    \vspace{1mm}
+    {\small Python evaluates left to right and combines the result with
+    an implicit \texttt{and} --- exactly the kind of test that decides
+    whether a measurement lies within tolerance.}
+\end{frame}
+
+\begin{frame}[fragile]{Chained Comparisons: More Examples}
+    \leavevmode
+\begin{lstlisting}
+x = 15
+print(10 < x < 20)          # True
+
+y = 25
+print(20 < y <= 30)         # True
+
+a = 4
+print(2 < a**2 < 20)        # True, 16 is between 2 and 20
+
+name = "Bob"
+print("Alice" < name < "Charlie")  # True (alphabetical)
+\end{lstlisting}
+
+    \vspace{1mm}
+    {\small Chained comparisons can involve more than two operators, mix
+    data types, and even call functions --- the chain is still evaluated
+    left to right.}
+\end{frame}
+
+%===============================================================================
+\section{Decisions}
+%===============================================================================
+
+\begin{frame}{Three Kinds of Statement}
+    \leavevmode
+    Program statements fall into three categories:
+
+    \vspace{2mm}
+    \begin{enumerate}
+        \item \textbf{Assignment} --- \texttt{variable = expression}
+        \item \textbf{Decision} --- executes statements if a condition
+              is \texttt{True} (\texttt{if}, \texttt{if-else},
+              \texttt{if-elif-else})
+        \item \textbf{Repetition} --- executes statements many times
+              (\texttt{while}, \texttt{for})
+    \end{enumerate}
+
+    \vspace{3mm}
+    {\small This section covers decisions; the next covers repetition.}
+\end{frame}
+
+\begin{frame}[fragile]{The if-elif-else Structure}
+    \leavevmode
+\begin{lstlisting}
+if condition_1:
+    statements
+elif condition_2:
+    statements
+else:
+    statements
+\end{lstlisting}
+
+    \vspace{2mm}
+    \begin{block}{Example}
+\begin{lstlisting}
+x = 2
+if x < 0:
+    print('neg')
+elif x == 0:
+    print('zero')
+else:
+    print('non-neg')   # prints: non-neg
+\end{lstlisting}
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Multiple Conditions with and}
+    \leavevmode
+    Logical operators combine multiple conditions in a single
+    \texttt{if}. For $ax^2+bx+c=0$, equal roots exist when
+    $b^2-4ac=0$ \alert{and} $a \neq 0$:
+
+\begin{lstlisting}
+a = float(input('Input a value: '))
+b = float(input('Input b value: '))
+c = float(input('Input c value: '))
+
+d = b**2 - 4 * a * c
+
+if d == 0 and a != 0:
+    x = -b / (2 * a)
+    print(f'The value of x is: {x}')
+else:
+    print('Different root')
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Multiple Conditions with if-elif-else}
+    \leavevmode
+    Three outcomes: $d>0$ (two real roots), $d=0$ (one root), $d<0$
+    (complex roots) --- \alert{more than two conditions needs} \texttt{elif}:
+
+\begin{lstlisting}
+d = b**2 - 4 * a * c
+
+if d == 0 and a != 0:
+    x1 = -b / (2 * a)
+    print(f'The roots are both: {x1}')
+elif d > 0 and a != 0:
+    x1 = (-b + (d**0.5)) / (2 * a)
+    x2 = (-b - (d**0.5)) / (2 * a)
+    print(f'The roots are: {x1} and {x2}')
+else:
+    print('Complex root')
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Nested if: When One Check Depends on Another}
+    \leavevmode
+    Check $a \neq 0$ \alert{first}; only then does the discriminant
+    calculation make sense (if $a=0$, the equation is linear, not
+    quadratic):
+
+\begin{lstlisting}
+if a != 0:
+    if d == 0:
+        x1 = -b / (2 * a)
+        print(f'The roots are both: {x1}')
+    elif d > 0:
+        x1 = (-b + (d**0.5)) / (2 * a)
+        x2 = (-b - (d**0.5)) / (2 * a)
+        print(f'The roots are: {x1} and {x2}')
+    else:
+        print('Complex root')
+else:
+    x1 = -c / b
+    print(f'The root is: {x1}')
+\end{lstlisting}
+\end{frame}
+
+%===============================================================================
+\section{Loops}
+%===============================================================================
+
+\begin{frame}[fragile]{Two Loop Constructs}
+    \leavevmode
+    \begin{columns}[t]
+        \begin{column}{.5\textwidth}
+            \begin{block}{\texttt{for}: determinate}
+                \small Repeats for every value in a sequence (e.g.
+                \texttt{range}) --- the number of iterations is known
+                \alert{before} the loop starts.
+\begin{lstlisting}
+for i in range(start, stop, step):
+    statements
+\end{lstlisting}
+            \end{block}
+        \end{column}
+        \begin{column}{.5\textwidth}
+            \begin{block}{\texttt{while}: indeterminate}
+                \small Repeats as long as a condition is true --- the
+                number of iterations is \alert{not} necessarily known
+                in advance.
+\begin{lstlisting}
+while condition:
+    statements
+\end{lstlisting}
+            \end{block}
+        \end{column}
+    \end{columns}
+
+    \vspace{2mm}
+    {\small \texttt{range(j, k)}: generates $j$ to $k-1$.
+    \texttt{range(j, k, m)}: step $m$.}
+\end{frame}
+
+\begin{frame}[fragile]{Worked Example: Compound Interest with for}
+    \leavevmode
+    \[
+    B = a(1+r)^n
+    \]
+    Evaluate $B$ for $a=\$100$, $r=8\%$, over $n = 2,4,6,8,10$:
+
+\begin{lstlisting}
+a = 100   # initial investment
+r = 0.08  # annual interest rate
+
+for n in range(2, 11, 2):
+    B = a * (1 + r) ** n
+    print(f'n = {n}, B = {B:.2f}')
+\end{lstlisting}
+\begin{lstlisting}[style=skoutput]
+n = 2, B = 116.64
+n = 4, B = 136.05
+...
+n = 10, B = 215.89
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Recognizing $\Sigma$ as a Loop}
+    \leavevmode
+    Your mathematics courses write $\sum_{i=1}^{5} i = 15$. A \texttt{for}
+    loop is precisely this idea, written one step at a time:
+
+    \vspace{2mm}
+    \striped
+    \begin{center}
+    \begin{tabular}{p{3.2cm}p{3.2cm}p{3.6cm}}
+        \toprule
+        \textbf{Notation} & \textbf{Meaning} & \textbf{Python} \\
+        \midrule
+        (implicit) & Total starts at 0 & \texttt{total\_sum = 0} \\
+        $i=1$ (below $\Sigma$) & Start index & \texttt{range(1, ...} \\
+        $5$ (above $\Sigma$) & End index (incl.) & \texttt{..., 6)} \\
+        summed term & Added each step & \texttt{total\_sum += i} \\
+        \bottomrule
+    \end{tabular}
+    \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{The Summation Pattern}
+    \leavevmode
+\begin{lstlisting}
+total_sum = 0
+for i in range(1, 6):     # i = 1, 2, 3, 4, 5
+    total_sum += i
+print(total_sum)          # 15
+\end{lstlisting}
+
+    \vspace{2mm}
+    \begin{alertblock}{The same skeleton, every time}
+        $\sum i^2$ or $\sum 1/i$ use the \alert{exact same loop} ---
+        only the expression added to the running total changes.
+        Recognizing $\Sigma$ as ``a \texttt{for} loop with a running
+        total'' is one of the most useful shortcuts in this course.
+    \end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{The Same Computation with while}
+    \leavevmode
+\begin{lstlisting}
+a = 100; r = 0.08
+n = 2
+
+while n <= 10:
+    B = a * (1 + r) ** n
+    print(f'n = {n}, B = {B:.2f}')
+    n += 2   # must increment manually
+\end{lstlisting}
+
+    \vspace{2mm}
+    \begin{block}{The key difference from for}
+        \texttt{while} requires \texttt{n} to be \alert{initialized and
+        manually incremented} --- the number of iterations is governed
+        entirely by the condition.
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Worked Example: Capacitor Charging}
+    \leavevmode
+    \[
+    Q(t) = CV\left(1 - e^{-t/RC}\right)
+    \]
+    Monitor charge every $0.5\,\text{s}$ until it exceeds $2$ units
+    ($V=9$, $R=4$, $C=1$) --- the number of steps is \alert{not known
+    in advance}, so \texttt{while} is the natural choice:
+
+\begin{lstlisting}
+import math
+V, R, C = 9, 4, 1
+t, q = 0, 0
+Q, T = [], []
+
+while q <= 2:
+    q = C * V * (1 - math.exp(-t / (R * C)))
+    Q.append(q); T.append(t)
+    t += 0.5
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Two Ways to Grow a List}
+    \leavevmode
+    \begin{columns}[t]
+        \begin{column}{.5\textwidth}
+            \begin{block}{\texttt{.append()}}
+\begin{lstlisting}
+Q.append(q)
+T.append(t)
+\end{lstlisting}
+            \end{block}
+        \end{column}
+        \begin{column}{.5\textwidth}
+            \begin{block}{\texttt{+=}}
+\begin{lstlisting}
+Q += [round(q, 4)]
+T += [t]
+\end{lstlisting}
+            \end{block}
+        \end{column}
+    \end{columns}
+
+    \vspace{3mm}
+\begin{lstlisting}[style=skoutput]
+Q: [0.0, 1.0575, 1.9908, 2.8144]
+T: [0, 0.5, 1.0, 1.5]
+\end{lstlisting}
+
+    \vspace{1mm}
+    {\small Both produce identical results --- a matter of style.}
+\end{frame}
+
+\begin{frame}[fragile]{Nested Loops: Two Values at Once}
+    \leavevmode
+    $B$ for 3 values of $a$ \alert{and} 5 values of $n$ needs \alert{two}
+    loops, one inside the other:
+
+\begin{lstlisting}
+a_values = [100, 500, 800]
+n_values = [2, 4, 6, 8, 10]
+r = 0.09
+
+for a in a_values:        # outer loop
+    for n in n_values:    # inner loop
+        B = a * (1 + r) ** n
+        print(f"a={a}, n={n}, B={B:.2f}")
+\end{lstlisting}
+
+    \vspace{1mm}
+    {\small The inner loop runs to completion for \emph{every} value of
+    the outer loop --- $3 \times 5 = 15$ total iterations.}
+\end{frame}
+
+\begin{frame}[fragile]{continue: Skip This Iteration}
+    \leavevmode
+    \texttt{continue} skips the rest of the current iteration and moves
+    to the next one.
+
+\begin{lstlisting}
+for n in range(1, 51):
+    if n % 7 != 0:
+        continue          # skip non-multiples of 7
+    print(f"Divisible by 7: {n}")
+\end{lstlisting}
+\begin{lstlisting}[style=skoutput]
+Divisible by 7: 7
+Divisible by 7: 14
+...
+Divisible by 7: 49
+\end{lstlisting}
+
+    \vspace{1mm}
+    {\small In nested loops, \texttt{continue} only skips the
+    \alert{inner} loop it occurs in.}
+\end{frame}
+
+\begin{frame}[fragile]{break: Exit the Loop Entirely}
+    \leavevmode
+    \texttt{break} terminates the loop immediately --- useful for an
+    \alert{indeterminate} loop that should stop as soon as a goal is met.
+
+\begin{lstlisting}
+import random
+x = random.randint(1, 6)
+n = 0
+
+while True:               # loop forever...
+    guess = int(input('Guess the number: '))
+    n += 1
+    if guess == x:
+        print(f'Correct after {n} tries!')
+        break              # ...until the guess is right
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{break vs. continue}
+    \leavevmode
+    \begin{columns}[t]
+        \begin{column}{.5\textwidth}
+            \begin{block}{break}
+                \small Terminates the loop entirely. Statements after
+                \texttt{break} inside the loop do not execute.
+            \end{block}
+        \end{column}
+        \begin{column}{.5\textwidth}
+            \begin{block}{continue}
+                \small Skips to the next iteration. Remaining statements
+                in \emph{this} iteration are skipped.
+            \end{block}
+        \end{column}
+    \end{columns}
+
+    \vspace{3mm}
+    \begin{alertblock}{A caution}
+        Both are useful, but a loop whose logic depends heavily on them
+        is often clearer when rewritten without them.
+    \end{alertblock}
+\end{frame}
+
+%===============================================================================
+\section{Summary}
+%===============================================================================
+
+\begin{frame}{What You Should Take Away}
+    \leavevmode
+    \small
+    \begin{itemize}
+        \item \textbf{Relational operators} return \texttt{True}/\texttt{False};
+              these Boolean values are what every decision and loop
+              condition is built from.
+        \item \textbf{Logical} (\texttt{and}, \texttt{or}, \texttt{not})
+              vs. \textbf{bitwise} (\texttt{\&}, \texttt{|},
+              \texttt{\textasciitilde}) --- confusing the two is a
+              frequent source of error.
+        \item Python evaluates by strict \textbf{precedence} ---
+              arithmetic, then comparison, then logical. Parenthesise
+              when in doubt.
+        \item \textbf{Chained comparisons} (\texttt{5 < x < 15}) express
+              range checks in one readable line.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{What You Should Take Away (continued)}
+    \leavevmode
+    \small
+    \begin{itemize}
+        \item \textbf{if-elif-else} selects which block runs; an
+              \texttt{elif} chain stops at the first true condition, so
+              order matters.
+        \item \textbf{for} runs a known number of times over a sequence;
+              \textbf{while} runs until a condition is false --- the
+              right choice when iterations are not known in advance.
+        \item \texttt{break} exits a loop immediately; \texttt{continue}
+              skips to the next iteration.
+        \item A $\Sigma$ in a formula is ``a \texttt{for} loop with a
+              running total'' --- one of the most useful shortcuts in
+              this course.
+    \end{itemize}
+
+    \vspace{4mm}
+    \begin{center}
+        \large\color{primary}\textbf{Next: Functions and Reusable Calculations}
+    \end{center}
+\end{frame}
+
+\end{document}

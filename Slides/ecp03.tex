@@ -1,0 +1,701 @@
+\documentclass[9pt,aspectratio=169,xcolor=table]{beamer}
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\usepackage[sfdefault]{roboto}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+\usepackage{styles/fluxmacros}
+\usefolder{styles}
+\usetheme[style=red]{flux}
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% SKEE1033 maroon palette override (see ecp01.tex for rationale).
+\definecolor{primaryLight}{HTML}{9B2242}
+\definecolor{primary}{HTML}{7B1E3A}
+\definecolor{secondary}{HTML}{3A5A6B}
+\definecolor{tertiary}{HTML}{8C6A3F}
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+\usepackage{booktabs}
+\usepackage{colortbl}
+\usepackage{ragged2e}
+\usepackage{amssymb}
+\usepackage{multirow}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, fit, backgrounds, calc, shapes.geometric}
+\setbeamertemplate{itemize items}[square]
+\usepackage[scaled=.92]{beramono}
+\usepackage{listings}
+\usepackage{array}
+\definecolor{stripe}{gray}{0.94}
+\newcommand{\striped}{\rowcolors{1}{white}{stripe}}
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% Code listing styles. Python is the lstlisting default via \lstset below.
+\definecolor{codebg}{HTML}{FBF2F4}
+\definecolor{codegreen}{rgb}{0,0.45,0}
+\definecolor{codestring}{rgb}{0.58,0.1,0.2}
+\lstdefinestyle{skpython}{
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{primary}\bfseries,
+    commentstyle=\itshape\color{codegreen},
+    stringstyle=\ttfamily\color{codestring},
+    backgroundcolor=\color{codebg},
+    breaklines=true,
+    keepspaces=true,
+    showspaces=false,
+    showstringspaces=false,
+    frame=single,
+    rulecolor=\color{primary!40},
+    numbers=none,
+}
+\lstdefinestyle{skoutput}{
+    basicstyle=\ttfamily\footnotesize,
+    backgroundcolor=\color{secondary!8},
+    breaklines=true,
+    keepspaces=true,
+    showspaces=false,
+    showstringspaces=false,
+    frame=single,
+    rulecolor=\color{secondary!50},
+    numbers=none,
+}
+\lstset{language=Python, style=skpython}
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+\definecolor{cycfill}{HTML}{F3DCE4}
+\definecolor{cycline}{HTML}{7B1E3A}
+\definecolor{cycdofill}{HTML}{E8EEF0}
+\definecolor{cycdoline}{HTML}{3A5A6B}
+\tikzset{
+  cycstep/.style = {font=\sffamily\small, align=center, rounded corners=2pt,
+                     draw=cycline, fill=cycfill, line width=0.7pt,
+                     minimum height=7mm, minimum width=20mm, inner sep=3pt},
+  cycdo/.style   = {cycstep, fill=cycdofill, draw=cycdoline},
+  flow/.style    = {-{Stealth[length=2mm]}, thick, draw=cycline},
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% SECTION SEPARATOR (ToC recap) %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\AtBeginSection[]
+{
+{
+    \setbeamercolor{background canvas}{bg=primaryLight!6}
+    \begin{frame}[plain]
+        \frametitle{Table of Contents}
+        \tableofcontents[currentsection]
+    \end{frame}
+}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Numbers, Variables and Units}
+\subtitle{\emph{Engineering Computation with Python} --- Chapter 3}
+\author{Mun\'{i}m Zabidi}
+\institute{\color{primary}Faculty of Electrical Engineering, Universiti Teknologi Malaysia}
+\date{\today}
+\titlegraphic{assets/logoutmwhite.png}
+
+\begin{document}
+
+\titlepage
+
+\begin{frame}{Table of Contents}
+    \tableofcontents
+\end{frame}
+
+%===============================================================================
+\section{Beyond Simple Numbers}
+%===============================================================================
+
+\begin{frame}{Engineering Data Is Often More Complex Than This}
+    \leavevmode
+    Chapter 2 covered values that hold a single number or word.
+    Engineering data is often more complex:
+
+    \vspace{2mm}
+    \begin{itemize}
+        \item An AC voltage needs \alert{two components} at once.
+        \item A measurement run produces a \alert{whole series} of
+              readings.
+        \item Every quantity carries a \alert{unit} that decides whether
+              the answer is right.
+    \end{itemize}
+
+    \vspace{3mm}
+    \begin{block}{This chapter}
+        Richer types for all three --- complex numbers, strings, and
+        four collection types --- then how to represent quantities like
+        $4.7\,\text{k}\Omega$ and $10\,\mu\text{F}$ correctly.
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Complex Numbers in Python}
+    \leavevmode
+    Python natively supports complex numbers: $a + bj$, where $j$ is the
+    imaginary unit ($j^2=-1$).
+
+\begin{lstlisting}
+c1 = 3 + 4j   # real part 3, imaginary part 4
+c2 = -2 - 5j
+print(c1)          # (3+4j)
+print(type(c1))    # <class 'complex'>
+
+c = complex(3, 4)  # equivalent to 3 + 4j
+\end{lstlisting}
+
+    \vspace{1mm}
+    {\small Python uses \texttt{j}, not the mathematician's \texttt{i}
+    --- matching electrical-engineering convention, where $i$ already
+    means current.}
+\end{frame}
+
+\begin{frame}[fragile]{Working with Complex Numbers}
+    \leavevmode
+    \begin{columns}[t]
+        \begin{column}{.5\textwidth}
+\begin{lstlisting}
+c = 3 + 4j
+print(c.real)  # 3.0
+print(c.imag)  # 4.0
+
+c1 = 3 + 4j
+c2 = 1 - 2j
+print(c1 + c2)  # (4+2j)
+print(c1 * c2)  # (11-2j)
+\end{lstlisting}
+        \end{column}
+        \begin{column}{.5\textwidth}
+\begin{lstlisting}
+c = 3 + 4j
+print(c.conjugate())
+# (3-4j)
+
+print(abs(c))
+# 5.0  (magnitude)
+\end{lstlisting}
+            \vspace{2mm}
+            {\small The four arithmetic operators work exactly as on
+            real numbers --- Python handles the real/imaginary parts for
+            you.}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Why Complex Numbers Matter in EE}
+    \leavevmode
+    \begin{block}{Signal processing and electrical engineering}
+        \small Commonly used for oscillations or waves --- AC circuit
+        analysis represents voltage and current as complex phasors,
+        making impedance calculations straightforward.
+    \end{block}
+
+    \vspace{3mm}
+    \begin{block}{Mathematics}
+        \small Useful for solving equations involving square roots of
+        negative numbers.
+    \end{block}
+
+    \vspace{3mm}
+    {\small Complex numbers for AC circuits return in full in Chapter 8.}
+\end{frame}
+
+\begin{frame}[fragile]{Strings: Text as a Sequence}
+    \leavevmode
+    A \alert{string} is a sequence of characters enclosed in quotes.
+    Strings are \alert{immutable} --- they cannot be changed after
+    creation.
+
+\begin{lstlisting}
+string1 = 'Hello'
+string2 = "World"
+string3 = '''A multi-line
+string.'''
+\end{lstlisting}
+
+    \vspace{1mm}
+    {\small Single and double quotes are interchangeable; triple quotes
+    span several lines.}
+\end{frame}
+
+\begin{frame}[fragile]{Indexing and Slicing Strings}
+    \leavevmode
+\begin{lstlisting}
+text = "Python"
+first_char = text[0]   # 'P'
+last_char = text[-1]   # 'n'
+
+text = "Python Programming"
+slice1 = text[0:6]  # 'Python'
+slice2 = text[7:]   # 'Programming'
+\end{lstlisting}
+
+    \vspace{2mm}
+    \begin{block}{Remember}
+        Counting starts from zero. A negative index counts back from
+        the end. \texttt{stop} in a slice is \alert{excluded}.
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{String Methods}
+    \leavevmode
+    Because strings are immutable, every method below returns a
+    \alert{new} string rather than altering the original.
+
+\begin{lstlisting}
+text = " Python Programming "
+
+text.upper()     # ' PYTHON PROGRAMMING '
+text.lower()     # ' python programming '
+text.strip()     # 'Python Programming'
+text.replace("Python", "Java")
+# ' Java Programming '
+text.split()     # ['Python', 'Programming']
+\end{lstlisting}
+\end{frame}
+
+%===============================================================================
+\section{Collections}
+%===============================================================================
+
+\begin{frame}{Four Ways to Hold Several Values}
+    \leavevmode
+    So far every variable has held exactly one value. Engineering work
+    rarely stays that simple: a measurement run produces a series of
+    readings, a circuit has a set of component values.
+
+    \vspace{3mm}
+    \begin{columns}[t]
+        \begin{column}{.25\textwidth}
+            \begin{block}{\small List}
+                \scriptsize Ordered, changeable
+            \end{block}
+        \end{column}
+        \begin{column}{.25\textwidth}
+            \begin{block}{\small Tuple}
+                \scriptsize Ordered, fixed
+            \end{block}
+        \end{column}
+        \begin{column}{.25\textwidth}
+            \begin{block}{\small Set}
+                \scriptsize Unordered, unique
+            \end{block}
+        \end{column}
+        \begin{column}{.25\textwidth}
+            \begin{block}{\small Dictionary}
+                \scriptsize Looked up by name
+            \end{block}
+        \end{column}
+    \end{columns}
+
+    \vspace{3mm}
+    {\small Choosing the wrong one is a common source of awkward code.}
+\end{frame}
+
+\begin{frame}[fragile]{Lists: The Everyday Workhorse}
+    \leavevmode
+\begin{lstlisting}
+readings = [26.5, 26.6, 26.5, 26.7, 26.6]
+print(readings[0])     # 26.5
+print(readings[-1])    # 26.6
+print(len(readings))   # 5
+
+readings.append(27.0)  # add to the end
+readings[1] = 99.9     # lists are mutable
+\end{lstlisting}
+
+    \vspace{2mm}
+    \begin{block}{Ordered and changeable}
+        A list keeps items in the order you put them, and you can add,
+        remove, or reassign elements after creation.
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Slicing a List}
+    \leavevmode
+\begin{lstlisting}
+data = [10, 20, 30, 40, 50, 60]
+
+print(data[1:4])    # [20, 30, 40]
+print(data[:3])     # [10, 20, 30]
+print(data[3:])     # [40, 50, 60]
+print(data[::2])    # [10, 30, 50]  -- every 2nd
+print(data[::-1])   # reversed
+\end{lstlisting}
+
+    \vspace{2mm}
+    {\small \texttt{[start:stop:step]} --- extract a window, a tail, or
+    every $n$th element. \texttt{stop} is always excluded.}
+\end{frame}
+
+\begin{frame}[fragile]{Tuples: Values That Belong Together}
+    \leavevmode
+\begin{lstlisting}
+point = (3, 4)
+rgb_color = (255, 128, 0)
+
+red, green, blue = (255, 128, 0)  # unpacking
+print(red, green, blue)  # 255 128 0
+
+# point[0] = 5  # TypeError -- tuples are immutable
+\end{lstlisting}
+
+    \vspace{2mm}
+    \begin{alertblock}{Immutable by design}
+        The right choice when values belong together permanently and
+        should not be edited by accident: an $(x,y)$ coordinate, an RGB
+        colour, a fixed pair of circuit terminals.
+    \end{alertblock}
+\end{frame}
+
+\begin{frame}{Tuples Reappear: NumPy Shapes}
+    \leavevmode
+    You will meet tuples again sooner than you might expect.
+
+    \vspace{3mm}
+    \begin{block}{The shape of a NumPy array is a tuple}
+        \texttt{np.zeros((3, 3))} --- the dimensions are passed inside
+        an \alert{extra pair of brackets}, because the shape itself is
+        a single tuple argument.
+    \end{block}
+
+    \vspace{3mm}
+    {\small This becomes essential terminology from Chapter 6 onward.}
+\end{frame}
+
+\begin{frame}[fragile]{Sets: Only Distinct Values Matter}
+    \leavevmode
+    A \alert{set} is an unordered collection that automatically discards
+    duplicates.
+
+\begin{lstlisting}
+readings = [26.5, 26.6, 26.5, 26.7, 26.6]
+unique = set(readings)
+print(sorted(unique))   # [26.5, 26.6, 26.7]
+print(len(unique))      # 3 distinct values
+
+a = {1, 2, 3}
+b = {3, 4}
+print(a | b)   # union: {1, 2, 3, 4}
+print(a & b)   # intersection: {3}
+\end{lstlisting}
+
+    \vspace{1mm}
+    {\small No order means no indexing --- \texttt{unique[0]} is an
+    error.}
+\end{frame}
+
+\begin{frame}[fragile]{Dictionaries: Looked Up by Name}
+    \leavevmode
+    A \alert{dictionary} stores values looked up by a \alert{key} rather
+    than a numeric position --- \texttt{key: value} pairs.
+
+\begin{lstlisting}
+components = {"R1": 4700, "R2": 100, "C1": 100e-6}
+
+print(components["R1"])     # 4700
+components["R3"] = 220      # add a new entry
+
+for name, value in components.items():
+    print(f"{name}: {value}")
+\end{lstlisting}
+
+    \vspace{1mm}
+    {\small A list would force you to remember that position 0 means
+    R1 --- a fact nothing in the code records.}
+\end{frame}
+
+\begin{frame}{Choosing a Collection}
+    \leavevmode
+    \small
+    \striped
+    \begin{center}
+    \begin{tabular}{p{1.4cm}p{2.5cm}p{1.3cm}p{1.3cm}p{4.3cm}}
+        \toprule
+        \textbf{Type} & \textbf{Written} & \textbf{Ordered?} & \textbf{Mutable?} & \textbf{Use it when} \\
+        \midrule
+        list  & \texttt{[1, 2, 3]}   & yes & yes & values form a changing sequence \\
+        tuple & \texttt{(1, 2, 3)}   & yes & no  & values belong together, fixed \\
+        set   & \texttt{\{1, 2, 3\}} & no  & yes & only distinct values matter \\
+        dict  & \texttt{\{"a": 1\}}  & yes & yes & values are looked up by name \\
+        \bottomrule
+    \end{tabular}
+    \end{center}
+
+    \vspace{2mm}
+    \begin{block}{For numerical work}
+        The \alert{list} is by far the most important --- and it is
+        itself soon superseded by the NumPy \alert{array} in Chapter 6.
+    \end{block}
+\end{frame}
+
+%===============================================================================
+\section{Mutability}
+%===============================================================================
+
+\begin{frame}[fragile]{Mutable vs. Immutable}
+    \leavevmode
+    \begin{columns}[t]
+        \begin{column}{.5\textwidth}
+            \begin{block}{Mutable: can change in place}
+                \scriptsize list, set, dictionary
+            \end{block}
+\begin{lstlisting}
+a = [1, 2, 3]
+b = a          # b refers to
+               # the SAME list
+b.append(4)
+print(a)
+# [1, 2, 3, 4]  -- a changed too!
+\end{lstlisting}
+        \end{column}
+        \begin{column}{.5\textwidth}
+            \begin{block}{Immutable: cannot change}
+                \scriptsize int, float, str, tuple, complex, bool
+            \end{block}
+\begin{lstlisting}
+x = 5
+y = x
+y = y + 1
+print(x)
+# 5  -- x is unaffected
+\end{lstlisting}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Why Mutability Matters}
+    \leavevmode
+    \begin{alertblock}{The hazard}
+        Assigning a mutable object to a new name does \alert{not} copy
+        it --- both names point to the same underlying data. A change
+        through one name is visible through the other.
+    \end{alertblock}
+
+    \vspace{3mm}
+    \begin{block}{Practical consequence}
+        \small Passing a list into a function and modifying it inside
+        the function changes the \emph{caller's} list too, unless you
+        deliberately make a copy first. This surprises nearly every
+        beginner at least once.
+    \end{block}
+\end{frame}
+
+%===============================================================================
+\section{Engineering Units}
+%===============================================================================
+
+\begin{frame}{Every Number Carries a Unit}
+    \leavevmode
+    A resistance of $470$ is meaningless; a resistance of $470\,\Omega$
+    is a component you can hold.
+
+    \vspace{3mm}
+    \begin{alertblock}{Python does not track units}
+        It will happily add a voltage to a resistance and give you a
+        number. Keeping track of units is \alert{your} responsibility
+        --- one of the most common sources of error for beginners.
+    \end{alertblock}
+\end{frame}
+
+\begin{frame}{Quantities You Will Meet Most}
+    \leavevmode
+    \small
+    \striped
+    \begin{center}
+    \begin{tabular}{p{2.6cm}p{1.1cm}p{1.8cm}p{4.0cm}}
+        \toprule
+        \textbf{Quantity} & \textbf{Sym.} & \textbf{Unit} & \textbf{Relationship} \\
+        \midrule
+        Voltage      & $V$ & volt (V)    & $V = IR$ \\
+        Current      & $I$ & ampere (A)  & $I = V/R$ \\
+        Resistance   & $R$ & ohm ($\Omega$) & $R = V/I$ \\
+        Power        & $P$ & watt (W)    & $P = VI$ \\
+        Capacitance  & $C$ & farad (F)   & $i = C\,dv/dt$ \\
+        Frequency    & $f$ & hertz (Hz)  & $f = 1/T$ \\
+        \bottomrule
+    \end{tabular}
+    \end{center}
+\end{frame}
+
+\begin{frame}{SI Prefixes You Will Use Constantly}
+    \leavevmode
+    \small
+    A capacitor might be $10$ microfarads while a resistor is
+    $4.7$ kilohms --- writing either in full decimal form is error-prone.
+
+    \vspace{2mm}
+    \striped
+    \begin{center}
+    \begin{tabular}{llll}
+        \toprule
+        \textbf{Prefix} & \textbf{Sym.} & \textbf{Mult.} & \textbf{Example} \\
+        \midrule
+        kilo  & k      & $10^{3}$   & $4.7\,\text{k}\Omega$ \\
+        milli & m      & $10^{-3}$  & $20\,\text{mA}$ \\
+        micro & $\mu$  & $10^{-6}$  & $10\,\mu\text{F}$ \\
+        nano  & n      & $10^{-9}$  & $5\,\text{ns}$ \\
+        pico  & p      & $10^{-12}$ & $22\,\text{pF}$ \\
+        \bottomrule
+    \end{tabular}
+    \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Scientific Notation in Python}
+    \leavevmode
+    Python has no notion of ``kilo'' or ``micro'' --- prefixed values
+    must be entered as plain numbers, using \alert{scientific notation}.
+
+\begin{lstlisting}
+R = 4.7e3      # 4.7 kilohms = 4700 ohms
+C = 100e-6     # 100 microfarads = 0.0001 farads
+I = 20e-3      # 20 milliamps = 0.02 amps
+\end{lstlisting}
+
+    \vspace{2mm}
+    {\small The letter \texttt{e} means ``times ten to the power of.''
+    This is the clearest way to write a prefixed engineering value.}
+\end{frame}
+
+\begin{frame}{Working Consistently in Base Units}
+    \leavevmode
+    \begin{block}{The rule}
+        Convert every quantity to its \alert{base SI unit} (ohms, farads,
+        seconds, amps) before calculating, then convert the \emph{result}
+        back to a convenient prefix for display.
+    \end{block}
+
+    \vspace{3mm}
+    \begin{alertblock}{Worked check: RC time constant}
+        $R = 4.7\,\text{k}\Omega = 4700\,\Omega$, $C = 100\,\mu\text{F} =
+        0.0001\,\text{F}$:
+        \[
+        \tau = RC = 4700 \times 0.0001 = 0.47\,\text{s}.
+        \]
+        Units confirm the result: ohms $\times$ farads $=$ seconds.
+    \end{alertblock}
+\end{frame}
+
+%===============================================================================
+\section{Conventions and Constants}
+%===============================================================================
+
+\begin{frame}{Naming Conventions: PEP 8}
+    \leavevmode
+    Python does not care what you call things --- \texttt{supply\_voltage},
+    \texttt{SupplyVoltage}, and \texttt{sv} are all legal. Other engineers
+    \alert{do} care.
+
+    \vspace{3mm}
+    \begin{columns}[t]
+        \begin{column}{.33\textwidth}
+            \begin{block}{\scriptsize snake\_case}
+                \scriptsize variables, functions \\
+                \texttt{\scriptsize supply\_voltage}
+            \end{block}
+        \end{column}
+        \begin{column}{.33\textwidth}
+            \begin{block}{\scriptsize SCREAMING\_SNAKE}
+                \scriptsize constants \\
+                \texttt{\scriptsize MAX\_CURRENT}
+            \end{block}
+        \end{column}
+        \begin{column}{.33\textwidth}
+            \begin{block}{\scriptsize CapWords}
+                \scriptsize classes \\
+                \texttt{\scriptsize Resistor}
+            \end{block}
+        \end{column}
+    \end{columns}
+
+    \vspace{3mm}
+    {\small The style you will use constantly is \alert{snake\_case}.}
+\end{frame}
+
+\begin{frame}[fragile]{Naming Well: A Practical Example}
+    \leavevmode
+\begin{lstlisting}
+# Conventional -- every name announces what it is
+MAX_CURRENT = 0.02              # a constant
+supply_voltage = 5.0            # a variable
+
+def series_resistor(v_supply, v_led, current):
+    return (v_supply - v_led) / current
+\end{lstlisting}
+
+    \vspace{2mm}
+    \begin{block}{Two further habits}
+        Name the \emph{quantity}, not its type (\texttt{voltage} beats
+        \texttt{voltage\_float}). Reserve single letters for symbols
+        that match the mathematics (\texttt{R}, \texttt{C}, \texttt{f},
+        \texttt{t}).
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Constants}
+    \leavevmode
+    Some quantities never change: the speed of light, a supply rail
+    fixed by hardware. Python has no \texttt{const} keyword --- it uses
+    the \texttt{SCREAMING\_SNAKE\_CASE} convention instead.
+
+\begin{lstlisting}
+PI = 3.14159
+GRAVITY = 9.81
+SPEED_OF_LIGHT = 299792458
+\end{lstlisting}
+
+    \vspace{2mm}
+    \begin{alertblock}{The capitals carry no authority}
+        Nothing stops a later line from reassigning \texttt{GRAVITY} ---
+        a constant in Python is a \alert{promise between programmers},
+        not a guarantee from the language.
+    \end{alertblock}
+\end{frame}
+
+%===============================================================================
+\section{Summary}
+%===============================================================================
+
+\begin{frame}{What You Should Take Away}
+    \leavevmode
+    \small
+    \begin{itemize}
+        \item \textbf{Complex numbers} (\texttt{3+4j}) and
+              \textbf{strings} are Python's richer scalar types, both
+              with their own arithmetic and methods.
+        \item Four \textbf{collections}: list (ordered, mutable), tuple
+              (ordered, fixed), set (unordered, unique), dictionary
+              (keyed lookup).
+        \item \textbf{Mutability} matters: assigning a mutable object to
+              a new name shares the same underlying data.
+        \item Every number carries a \textbf{unit}. Work in \textbf{base
+              SI units}, using scientific notation (\texttt{4.7e3}) for
+              prefixed values.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{What You Should Take Away (continued)}
+    \leavevmode
+    \small
+    \begin{itemize}
+        \item \textbf{PEP 8} naming: \texttt{snake\_case} for variables
+              and functions (your everyday style), \texttt{SCREAMING\_}
+              \texttt{SNAKE\_CASE} for constants.
+        \item A Python \textbf{constant} is a naming convention, not an
+              enforced guarantee --- honouring it is what makes it
+              useful.
+        \item The \textbf{list} is the most important collection for
+              numerical work --- and is superseded by the NumPy
+              \textbf{array} from Chapter 6 onward.
+    \end{itemize}
+
+    \vspace{4mm}
+    \begin{center}
+        \large\color{primary}\textbf{Next: Decisions and Repetition}
+    \end{center}
+\end{frame}
+
+\end{document}

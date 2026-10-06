@@ -1,0 +1,655 @@
+\documentclass[9pt,aspectratio=169,xcolor=table]{beamer}
+
+\usepackage[sfdefault]{roboto}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage{styles/fluxmacros}
+\usefolder{styles}
+\usetheme[style=red]{flux}
+
+\definecolor{primaryLight}{HTML}{9B2242}
+\definecolor{primary}{HTML}{7B1E3A}
+\definecolor{secondary}{HTML}{3A5A6B}
+\definecolor{tertiary}{HTML}{8C6A3F}
+
+\usepackage{booktabs}
+\usepackage{colortbl}
+\usepackage{ragged2e}
+\usepackage{amssymb}
+\usepackage{multirow}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, fit, backgrounds, calc, shapes.geometric}
+\setbeamertemplate{itemize items}[square]
+\usepackage[scaled=.92]{beramono}
+\usepackage{listings}
+\usepackage{array}
+\definecolor{stripe}{gray}{0.94}
+\newcommand{\striped}{\rowcolors{1}{white}{stripe}}
+
+\definecolor{codebg}{HTML}{FBF2F4}
+\definecolor{codegreen}{rgb}{0,0.45,0}
+\definecolor{codestring}{rgb}{0.58,0.1,0.2}
+\lstdefinestyle{skpython}{
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{primary}\bfseries,
+    commentstyle=\itshape\color{codegreen},
+    stringstyle=\ttfamily\color{codestring},
+    backgroundcolor=\color{codebg},
+    breaklines=true,
+    keepspaces=true,
+    showspaces=false,
+    showstringspaces=false,
+    frame=single,
+    rulecolor=\color{primary!40},
+    numbers=none,
+}
+\lstdefinestyle{skoutput}{
+    basicstyle=\ttfamily\footnotesize,
+    backgroundcolor=\color{secondary!8},
+    breaklines=true,
+    keepspaces=true,
+    showspaces=false,
+    showstringspaces=false,
+    frame=single,
+    rulecolor=\color{secondary!50},
+    numbers=none,
+}
+\lstset{language=Python, style=skpython}
+
+\definecolor{cycfill}{HTML}{F3DCE4}
+\definecolor{cycline}{HTML}{7B1E3A}
+\definecolor{cycdofill}{HTML}{E8EEF0}
+\definecolor{cycdoline}{HTML}{3A5A6B}
+\tikzset{
+  cycstep/.style = {font=\sffamily\small, align=center, rounded corners=2pt,
+                     draw=cycline, fill=cycfill, line width=0.7pt,
+                     minimum height=7mm, minimum width=20mm, inner sep=3pt},
+  cycdo/.style   = {cycstep, fill=cycdofill, draw=cycdoline},
+  flow/.style    = {-{Stealth[length=2mm]}, thick, draw=cycline},
+}
+
+\AtBeginSection[]
+{
+{
+    \setbeamercolor{background canvas}{bg=primaryLight!6}
+    \begin{frame}[plain]
+        \frametitle{Table of Contents}
+        \tableofcontents[currentsection]
+    \end{frame}
+}
+}
+
+\title{Arrays and Vectorized Computation}
+\subtitle{\emph{Engineering Computation with Python} --- Chapter 6}
+\author{Mun\'{i}m Zabidi}
+\institute{\color{primary}Faculty of Electrical Engineering, Universiti Teknologi Malaysia}
+\date{\today}
+\titlegraphic{assets/logoutmwhite.png}
+
+\begin{document}
+
+\titlepage
+
+\begin{frame}{Table of Contents}
+    \tableofcontents
+\end{frame}
+
+%===============================================================================
+\section{One Value, Then Many}
+%===============================================================================
+
+\begin{frame}{A Single Measurement Is a Number. A Signal Is Thousands.}
+    \leavevmode
+    A variable like \texttt{voltage = 4.7} holds one measurement. Now
+    suppose an instrument logs a reading every $20\,\text{ms}$ for two
+    seconds --- that is $101$ measurements.
+
+    \vspace{3mm}
+    \begin{block}{Storing each in its own variable does not scale}
+        \texttt{voltage0}, \texttt{voltage1}, \ldots --- unworkable past
+        a handful of readings.
+    \end{block}
+
+    \vspace{2mm}
+    \begin{alertblock}{A list can hold them, but...}
+        It cannot add $5$ to every entry, or convert all $101$ values
+        from volts to millivolts, in one step. Each element must be
+        visited \alert{one at a time}, in a loop.
+    \end{alertblock}
+\end{frame}
+
+\begin{frame}{The NumPy Array}
+    \leavevmode
+    \begin{block}{This chapter's central idea}
+        A NumPy \alert{array} stores many values together \emph{and}
+        lets arithmetic apply to \alert{all of them at once}, without
+        writing a loop.
+    \end{block}
+
+    \vspace{3mm}
+    {\small You have written vectors as ordered lists of numbers, and
+    added or scaled them component by component. A NumPy array
+    \emph{is} that vector, stored in memory --- the arithmetic you did
+    by hand is what Python performs in a single expression across
+    thousands of elements.}
+
+    \vspace{3mm}
+    {\small \alert{Not needed yet}: matrix multiplication, dot and cross
+    products --- those arrive in Chapter 9. Here, every operation is
+    element by element.}
+\end{frame}
+
+\begin{frame}{If You Know MATLAB}
+    \leavevmode
+    \small
+    A NumPy array is the closest thing Python has to a MATLAB matrix.
+    Four differences cause most early mistakes:
+
+    \vspace{2mm}
+    \begin{itemize}
+        \item \textbf{Indexing starts at zero.} \texttt{a[0]}, not
+              \texttt{a(1)}; \texttt{a[-1]} for the last element.
+        \item \textbf{A range excludes its endpoint.} MATLAB's
+              \texttt{1:5} gives 5 values; \texttt{np.arange(1,5)}
+              gives 4.
+        \item \textbf{Multiplication operators are reversed.} In NumPy,
+              \texttt{*} is element-wise and \texttt{@} is the matrix
+              product --- the \alert{opposite} of MATLAB.
+        \item \textbf{Shapes are a tuple.} \texttt{np.zeros(3)} is a
+              3-element vector; write \texttt{np.zeros((3,3))} for a
+              square one.
+    \end{itemize}
+\end{frame}
+
+%===============================================================================
+\section{Creating and Accessing Arrays}
+%===============================================================================
+
+\begin{frame}{Three Ways to Represent Array-Like Data}
+    \leavevmode
+    \small
+    \begin{columns}[t]
+        \begin{column}{.33\textwidth}
+            \begin{block}{Lists}
+                \scriptsize Ordered, mutable, mixed types. General
+                purpose. \texttt{[1,2,3,4]}
+            \end{block}
+        \end{column}
+        \begin{column}{.33\textwidth}
+            \begin{block}{\texttt{array} module}
+                \scriptsize Type-consistent, 1D only. Rarely used
+                directly in this course.
+            \end{block}
+        \end{column}
+        \begin{column}{.33\textwidth}
+            \begin{block}{NumPy arrays}
+                \scriptsize Optimized numerics, multi-dimensional.
+                \texttt{np.array([1,2,3,4])}
+            \end{block}
+        \end{column}
+    \end{columns}
+
+    \vspace{3mm}
+    {\small \alert{Scalar} (0D), \alert{1D} (vector), \alert{2D}
+    (matrix), \alert{multi-dimensional} (tensor) --- classified by the
+    number of dimensions (axes).}
+\end{frame}
+
+\begin{frame}{Human Row/Column vs. Python Row/Column}
+    \leavevmode
+    \[
+    \begin{pmatrix}
+    1 & 2 & 3 \\
+    4 & 5 & 6 \\
+    7 & 8 & 9
+    \end{pmatrix}
+    \]
+
+    \vspace{2mm}
+    \begin{columns}[t]
+        \begin{column}{.5\textwidth}
+            \begin{block}{Human (1-based)}
+                \small Row 1, column 1 $\to$ value 1. \\
+                Row 2, column 3 $\to$ value 6.
+            \end{block}
+        \end{column}
+        \begin{column}{.5\textwidth}
+            \begin{block}{Python (0-based)}
+                \small Row 0, column 0 $\to$ value 1. \\
+                Row 1, column 2 $\to$ value 6.
+            \end{block}
+        \end{column}
+    \end{columns}
+
+    \vspace{2mm}
+    \begin{alertblock}{Be precise with language}
+        Always specify which convention you mean when discussing rows
+        and columns.
+    \end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{Creating an Array}
+    \leavevmode
+\begin{lstlisting}
+import numpy as np
+a = np.array([[1, 2], [3, 4]])
+\end{lstlisting}
+
+    \vspace{1mm}
+    {\small The outer bracket \texttt{[[~]]} groups the rows together;
+    each inner bracket \texttt{[~]} is one row.}
+
+\begin{lstlisting}
+b = np.arange(1, 6, 2)   # like range(), but returns an array
+\end{lstlisting}
+
+    \vspace{2mm}
+    \begin{block}{Subscript syntax}
+        \texttt{array[start:stop:step]} --- same rules as list slicing
+        from Chapter 3.
+    \end{block}
+\end{frame}
+
+\begin{frame}{NumPy Subscript Notation}
+    \leavevmode
+    \[
+    a = \begin{pmatrix} 2 & 4 & 1 \\ 10 & 9 & 5 \\ 7 & 8 & 15 \end{pmatrix}
+    \]
+
+    \small
+    \striped
+    \begin{center}
+    \begin{tabular}{ll}
+        \toprule
+        \textbf{Expression} & \textbf{Meaning / Result} \\
+        \midrule
+        \texttt{a[0,0]} & Element at (0,0) $\to$ \texttt{2} \\
+        \texttt{a[0]} & First row $\to$ \texttt{[2,4,1]} \\
+        \texttt{a[-1]} & Last row $\to$ \texttt{[7,8,15]} \\
+        \texttt{a[:,0]} & First column $\to$ \texttt{[2,10,7]} \\
+        \texttt{a[[1,2],1]} & Rows 1,2, column 1 $\to$ \texttt{[9,8]} \\
+        \bottomrule
+    \end{tabular}
+    \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{1D Arrays vs. 2D Row/Column Vectors}
+    \leavevmode
+    Single brackets give a \alert{1D array}; double brackets give a
+    genuine \alert{2D} row or column vector:
+
+\begin{lstlisting}
+vector_1d = np.array([1, 2, 3])        # shape (3,)
+row_vector = np.array([[1, 2, 3]])     # shape (1, 3)
+column_vector = np.array([[1], [2], [3]])  # shape (3, 1)
+\end{lstlisting}
+\begin{lstlisting}[style=skoutput]
+[1 2 3]        <- 1D
+[[1 2 3]]      <- 2D row
+[[1]
+ [2]
+ [3]]          <- 2D column
+\end{lstlisting}
+\end{frame}
+
+%===============================================================================
+\section{Slicing and Subscripting}
+%===============================================================================
+
+\begin{frame}[fragile]{Slicing a List Copies. Slicing an Array Does Not.}
+    \leavevmode
+    \alert{One important difference from lists}: slicing an array
+    produces a \alert{view} --- a window onto the same memory.
+
+\begin{lstlisting}
+A = np.array([1, 2, 3, 4])
+v = A[1:3]      # a VIEW, not a copy
+v[0] = 99
+print(A)        # [1 99 3 4]  -- the original changed!
+
+B = np.array([1, 2, 3, 4])
+c = B[1:3].copy()   # ask explicitly for a copy
+c[0] = 99
+print(B)        # [1 2 3 4]  -- safe
+\end{lstlisting}
+
+    \vspace{1mm}
+    {\small Views make NumPy fast --- use \texttt{.copy()} when you must
+    modify a slice without disturbing the original.}
+\end{frame}
+
+\begin{frame}[fragile]{Selecting Rows, Columns, and Blocks}
+    \leavevmode
+\begin{lstlisting}
+array = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+
+array[0, :]      # first row:    [1, 2, 3]
+array[:, 0]      # first column: [1, 4, 7]
+array[0:2, 1:3]  # 2x2 block:    [[2, 3], [5, 6]]
+array[::2]       # every 2nd row: [[1,2,3], [7,8,9]]
+\end{lstlisting}
+
+    \vspace{2mm}
+    \begin{block}{What's new vs. list slicing}
+        An array can be sliced in \alert{more than one dimension at
+        once} --- a row index and a column index, separated by a comma.
+    \end{block}
+\end{frame}
+
+\begin{frame}{Common Subscripting Patterns}
+    \leavevmode
+    \small
+    \striped
+    \begin{center}
+    \begin{tabular}{lp{7.2cm}}
+        \toprule
+        \textbf{Notation} & \textbf{Meaning} \\
+        \midrule
+        \texttt{A[:,c]} & Column $c$ of \texttt{A} \\
+        \texttt{A[r,:]} & Row $r$ of \texttt{A} \\
+        \texttt{A[:,:]} & All elements (the entire array) \\
+        \texttt{A[:,j:k]} & All rows, columns $j$ to $k-1$ \\
+        \texttt{A[j:k]} & Rows $j$ to $k-1$ \\
+        \texttt{A[:]} & All elements as a single vector \\
+        \bottomrule
+    \end{tabular}
+    \end{center}
+
+    \vspace{3mm}
+    {\small The colon alone means ``all elements.''}
+\end{frame}
+
+\begin{frame}[fragile]{linspace and arange}
+    \leavevmode
+    \begin{columns}[t]
+        \begin{column}{.5\textwidth}
+            \begin{block}{\texttt{linspace(start, stop, num)}}
+                \scriptsize Evenly spaced values; \texttt{num} samples;
+                \alert{includes} the endpoint by default.
+            \end{block}
+        \end{column}
+        \begin{column}{.5\textwidth}
+            \begin{block}{\texttt{arange(start, stop, step)}}
+                \scriptsize Fixed step size; \texttt{stop}
+                \alert{excluded}, matching \texttt{range()}.
+            \end{block}
+        \end{column}
+    \end{columns}
+
+\begin{lstlisting}
+np.linspace(0, 1, num=5)      # [0. 0.25 0.5 0.75 1. ]
+np.arange(0, 1.25, 0.25)      # [0. 0.25 0.5 0.75 1. ]
+\end{lstlisting}
+
+    \vspace{1mm}
+    {\small \texttt{linspace} is often the safer choice for a time axis,
+    since it guarantees the endpoint is included.}
+\end{frame}
+
+%===============================================================================
+\section{Element-wise Operations}
+%===============================================================================
+
+\begin{frame}[fragile]{Arithmetic Is Element-wise}
+    \leavevmode
+\begin{lstlisting}
+A = np.array([[1, 2], [3, 4]])
+B = np.array([[5, 6], [7, 8]])
+
+A + B   # [[6, 8], [10, 12]]
+A - B   # [[-4, -4], [-4, -4]]
+A * B   # [[5, 12], [21, 32]]  -- element-wise, NOT matrix product
+A / B   # [[0.2, 0.33], [0.43, 0.5]]
+A ** 2  # [[1, 4], [9, 16]]
+\end{lstlisting}
+
+    \vspace{2mm}
+    \begin{alertblock}{The MATLAB trap, again}
+        \texttt{A * B} is element-wise in NumPy. The matrix product
+        needs \texttt{A @ B} (Chapter 9).
+    \end{alertblock}
+\end{frame}
+
+\begin{frame}{Mathematical Functions, Element-wise Too}
+    \leavevmode
+    \small
+    \striped
+    \begin{center}
+    \begin{tabular}{p{2.8cm}p{3.6cm}p{3.0cm}}
+        \toprule
+        \textbf{Function} & \textbf{Computes} & \textbf{Example} \\
+        \midrule
+        \texttt{np.sqrt(x)} & square root & $\to$ \texttt{4.0} \\
+        \texttt{np.exp(x)}  & $e^x$ & $\to$ \texttt{2.7183} \\
+        \texttt{np.log(x)}  & $\ln x$ & $\to$ \texttt{1.0} \\
+        \texttt{np.sin(x)}  & sine (radians) & $\to$ \texttt{1.0} \\
+        \texttt{np.radians(d)} & deg $\to$ rad & \\
+        \texttt{np.degrees(r)} & rad $\to$ deg & \\
+        \bottomrule
+    \end{tabular}
+    \end{center}
+
+    \vspace{2mm}
+    {\small One call evaluates the function at \alert{every} sample ---
+    no loop required.}
+\end{frame}
+
+\begin{frame}[fragile]{Angles Are Still in Radians}
+    \leavevmode
+    This causes more wrong answers than any other feature of these
+    functions. Engineering problems are usually \emph{stated} in
+    degrees:
+
+\begin{lstlisting}
+print(np.sin(30))                 # -0.988 -- 30 RADIANS
+print(np.sin(np.radians(30)))     #  0.5   -- 30 degrees
+\end{lstlisting}
+
+    \vspace{2mm}
+    \begin{alertblock}{No error, just a wrong answer}
+        $30$ radians is a valid angle --- nothing raises an exception.
+        A units check catches this; a computer never will.
+    \end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{Two Practical Cautions}
+    \leavevmode
+    \begin{block}{Exact zeros are rarely exact}
+\begin{lstlisting}
+print(np.cos(np.pi / 2))
+# 6.123233995736766e-17, not 0.0
+\end{lstlisting}
+        \small Never test such a result with \texttt{==}.
+    \end{block}
+
+    \vspace{2mm}
+    \begin{block}{Use \texttt{arctan2}, not \texttt{arctan}, for angles}
+\begin{lstlisting}
+np.degrees(np.arctan(1 / -1))    # -45.0  -- wrong quadrant
+np.degrees(np.arctan2(1, -1))    # 135.0  -- correct
+\end{lstlisting}
+        \small \texttt{arctan2(y, x)} keeps both signs and returns the
+        correct angle over the full circle.
+    \end{block}
+\end{frame}
+
+%===============================================================================
+\section{Vectorizing Formulas}
+%===============================================================================
+
+\begin{frame}[fragile]{One Formula, One Value or Many}
+    \leavevmode
+    \[
+    B = a(1+r)^n
+    \]
+    The same formula, with no changes, works on a single value or an
+    entire array:
+
+\begin{lstlisting}
+r, n = 0.09, 10
+
+A1 = 100
+B1 = A1 * (1 + r) ** n        # 236.7364
+
+A2 = np.array([100, 200, 500, 1000, 4000])
+B2 = A2 * (1 + r) ** n        # [236.7, 473.5, 1183.7, ...]
+\end{lstlisting}
+
+    \vspace{1mm}
+    {\small This is \alert{vectorization}: apply a formula across an
+    entire array at once, with no explicit loop.}
+\end{frame}
+
+\begin{frame}[fragile]{Vectorized: Vertical Displacement}
+    \leavevmode
+    \[
+    s = \frac{g t^2}{2}
+    \]
+
+\begin{lstlisting}
+g = 9.81
+t = np.arange(0, 6)   # [0, 1, 2, 3, 4, 5]
+
+s = g * t**2 / 2
+print(s)
+# [0. 4.905 19.62 44.145 78.48 122.625]
+\end{lstlisting}
+
+    \vspace{2mm}
+    {\small Every displacement, for every time step, computed in one
+    expression.}
+\end{frame}
+
+\begin{frame}[fragile]{EE Focus: The Bench Recording as an Array}
+    \leavevmode
+    $101$ samples, every $20\,\text{ms}$ for two seconds --- far too many
+    for individual variables, exactly right for an array:
+
+\begin{lstlisting}
+V0, R, C = 12.0, 4700.0, 100e-6
+tau = R * C          # 0.47 s
+
+t = np.arange(0, 2.001, 0.02)   # all 101 sample times
+
+v = V0 * np.exp(-t / tau)       # every voltage, one expression
+i_mA = (v / R) * 1000           # every current, one expression
+\end{lstlisting}
+\begin{lstlisting}[style=skoutput]
+Number of samples: 101
+v at t=0:   12.0000 V
+i at t=0:   2.5532 mA
+v at t=2s:  0.1703 V
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Engineering Sanity Checks}
+    \leavevmode
+    Three lines of arithmetic produced $202$ numbers --- worth
+    confirming they are the right ones:
+
+    \vspace{2mm}
+    \begin{itemize}\small
+        \item \textbf{Sample count.} $2\,\text{s}$ at $20\,\text{ms}$
+              intervals gives $100$ intervals, $101$ readings. Matches
+              \texttt{t.size}.
+        \item \textbf{Initial values.} At $t=0$: $i = 12/4700 \approx
+              2.55\,\text{mA}$ by Ohm's law. Matches.
+        \item \textbf{Decay.} After $2\,\text{s}$ (over 4 time
+              constants), voltage has fallen to $0.17\,\text{V}$ ---
+              close to zero, as expected.
+    \end{itemize}
+
+    \vspace{3mm}
+    \begin{alertblock}{What did not appear above: a loop}
+        Every value was computed for all $101$ samples in a single
+        expression --- the central reason engineers reach for arrays.
+    \end{alertblock}
+\end{frame}
+
+%===============================================================================
+\section{Accumulation and Boolean Masks}
+%===============================================================================
+
+\begin{frame}[fragile]{Preview: Accumulation}
+    \leavevmode
+    Arrays make \alert{accumulation} --- how much has built up so far
+    --- visible early:
+
+\begin{lstlisting}
+current = np.array([2.0, 2.0, 1.6, 1.2, 0.8])   # amps, hourly
+charge = np.cumsum(current)                      # amp-hours
+
+print(charge)   # [2.  4.  5.6 6.8 7.6]
+\end{lstlisting}
+
+    \vspace{2mm}
+    \begin{block}{This running total is an integral}
+        Chapter 13 develops this properly, alongside its counterpart
+        the \alert{derivative} (a rate of change) --- both connect to
+        polynomial models of a system's response.
+    \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Boolean Operations on Arrays}
+    \leavevmode
+    Relational and logical operators extend naturally to arrays,
+    applying \alert{element-wise}:
+
+\begin{lstlisting}
+readings = np.array([24.5, 26.1, 29.8, 22.0, 31.2])
+
+mask = readings > 28
+print(mask)             # [False False  True False  True]
+
+print(readings[mask])   # [29.8 31.2] -- only the "too hot" readings
+\end{lstlisting}
+
+    \vspace{2mm}
+    \begin{alertblock}{A Boolean mask is a selector}
+        \texttt{readings[mask]} returns only the elements where the
+        mask is \texttt{True} --- filtering a whole dataset in one line.
+    \end{alertblock}
+\end{frame}
+
+%===============================================================================
+\section{Summary}
+%===============================================================================
+
+\begin{frame}{What You Should Take Away}
+    \leavevmode
+    \small
+    \begin{itemize}
+        \item A \textbf{NumPy array} stores many values together and
+              applies arithmetic to all of them at once --- no loop
+              required.
+        \item Indexing starts at \textbf{0}. Slicing uses
+              \texttt{[start:stop:step]}, with \texttt{stop} excluded.
+        \item Slicing an array returns a \textbf{view}, not a copy ---
+              use \texttt{.copy()} when you need an independent array.
+        \item NumPy's math functions (\texttt{np.sqrt}, \texttt{np.sin},
+              \ldots) apply \textbf{element-wise}; trig functions expect
+              \textbf{radians}.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{What You Should Take Away (continued)}
+    \leavevmode
+    \small
+    \begin{itemize}
+        \item \textbf{Vectorization}: one formula, written once, applies
+              to a single value or an entire array with no change.
+        \item \texttt{np.cumsum} previews \textbf{accumulation} ---
+              Chapter 13's integral.
+        \item A \textbf{Boolean mask} (\texttt{readings > 28}) selects
+              elements meeting a condition --- filtering a dataset in
+              one line.
+    \end{itemize}
+
+    \vspace{4mm}
+    \begin{center}
+        \large\color{primary}\textbf{Next: Data Visualization}
+    \end{center}
+\end{frame}
+
+\end{document}
