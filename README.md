@@ -25,6 +25,6 @@ The 16 chapters are grouped into four parts, one chapter per teaching week, foll
 ## Repository contents
 
 - `Slides/ecp01.pdf` – `ecp16.pdf` — compiled slide decks, one per chapter
-- `Slides/src/ecp01.tex` – `ecp16.tex` — Beamer source for each chapter
-- `Slides/src/styles/` — shared Beamer theme (`flux`)
-- `Slides/src/assets/` — logo and chapter figures referenced by the slides
+- `src/ecp01.tex` – `ecp16.tex` — Beamer source for each chapter
+- `src/styles/` — shared Beamer theme (`flux`)
+- `src/assets/` — logo and chapter figures referenced by the slides
