@@ -11,9 +11,9 @@
 \usetheme[style=red]{flux}
 
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-% SKEE1033 maroon palette override (see ecp01.tex for rationale).
-\definecolor{primaryLight}{HTML}{9B2242}
-\definecolor{primary}{HTML}{7B1E3A}
+% SKEE1033 graphite palette override (see ecp01.tex for rationale).
+\definecolor{primaryLight}{HTML}{5A6068}
+\definecolor{primary}{HTML}{3A4047}
 \definecolor{secondary}{HTML}{3A5A6B}
 \definecolor{tertiary}{HTML}{8C6A3F}
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -34,12 +34,14 @@
 
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 % Code listing styles. Python is the lstlisting default via \lstset below.
-\definecolor{codebg}{HTML}{FBF2F4}
-\definecolor{codegreen}{rgb}{0,0.45,0}
-\definecolor{codestring}{rgb}{0.58,0.1,0.2}
+\definecolor{codebg}{HTML}{1E1E2A}
+\definecolor{codetext}{HTML}{E6E6E6}
+\definecolor{codegreen}{HTML}{6A9955}
+\definecolor{codestring}{HTML}{D7BA3A}
+\definecolor{codekeyword}{HTML}{4FA3F7}
 \lstdefinestyle{skpython}{
-    basicstyle=\ttfamily\footnotesize,
-    keywordstyle=\color{primary}\bfseries,
+    basicstyle=\ttfamily\footnotesize\color{codetext},
+    keywordstyle=\color{codekeyword}\bfseries,
     commentstyle=\itshape\color{codegreen},
     stringstyle=\ttfamily\color{codestring},
     backgroundcolor=\color{codebg},
@@ -47,8 +49,7 @@
     keepspaces=true,
     showspaces=false,
     showstringspaces=false,
-    frame=single,
-    rulecolor=\color{primary!40},
+    frame=none,
     numbers=none,
 }
 \lstdefinestyle{skoutput}{
@@ -66,7 +67,7 @@
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 \definecolor{cycfill}{HTML}{F3DCE4}
-\definecolor{cycline}{HTML}{7B1E3A}
+\definecolor{cycline}{HTML}{3A4047}
 \definecolor{cycdofill}{HTML}{E8EEF0}
 \definecolor{cycdoline}{HTML}{3A5A6B}
 \tikzset{
@@ -465,6 +466,28 @@ print(x)
 \end{lstlisting}
         \end{column}
     \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Testing Immutability with \texttt{id()}}
+    \leavevmode
+    \texttt{id()} returns a variable's memory address --- the same tool
+    from Chapter 2, now applied to lists and tuples:
+
+\begin{lstlisting}
+readings = [26.5, 26.6]
+before = id(readings)
+readings.append(26.7)
+print(id(readings) == before)   # True -- same object
+
+point = (2.5, 4.0)
+before = id(point)
+point = point + (1.0,)
+print(id(point) == before)      # False -- new object
+\end{lstlisting}
+
+    \vspace{1mm}
+    {\small Appending to a list edits it in place; ``adding'' to a tuple
+    cannot, so Python builds a new one.}
 \end{frame}
 
 \begin{frame}{Why Mutability Matters}

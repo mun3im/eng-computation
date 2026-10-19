@@ -19,12 +19,12 @@ The 16 chapters are grouped into four parts, one chapter per teaching week, foll
 - **Part I — Your First Engineering Programs** (Ch 1–5): computing as an engineering tool, algorithms and flowcharts, first programs, engineering units, decisions and repetition, and functions.
 - **Part II — Seeing Engineering Mathematics** (Ch 6–9): arrays as engineering data, graphing functions and signals, complex numbers for AC circuits, and matrices for circuit equations.
 - **Part III — Working with Engineering Data** (Ch 10–12): measurements and files, errors and imperfect data, and interpolation, curve fitting and calibration.
-- **Part IV — From Models to Prediction** (Ch 13–14): numerical calculus and system models, then data analytics and a first look at machine learning.
+- **Part IV — From Models to Prediction** (Ch 13–14): numerical calculus and system models, then engineering statistics and data analysis.
 - **Enrichment** (Ch 15–16, outside the taught weeks): a short introduction to object-oriented Python, and integrative mini-projects combining the whole book.
 
 ## Repository contents
 
-- `Slides/ecp01.tex` – `ecp16.tex` — Beamer source for each chapter, plus compiled `.pdf` output
-- `Slides/styles/` — shared Beamer theme (`flux`)
-- `Slides/assets/` — logo asset used in the theme
-- `images/` — chapter figures referenced by the slides
+- `Slides/ecp01.pdf` – `ecp16.pdf` — compiled slide decks, one per chapter
+- `Slides/src/ecp01.tex` – `ecp16.tex` — Beamer source for each chapter
+- `Slides/src/styles/` — shared Beamer theme (`flux`)
+- `Slides/src/assets/` — logo and chapter figures referenced by the slides

@@ -13,20 +13,20 @@
 \usefolder{styles}
 % Use Flux theme v0.1 beta
 % Available style: asphalt, blue, red, green, gray
-% "red" is the closest built-in style to maroon; its exact colours are
-% overridden with a true maroon palette just below, after the theme loads.
+% The built-in "red" style is only a base; its colours are
+% overridden with a graphite palette just below, after the theme loads.
 \usetheme[style=red]{flux}
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-% SKEE1033 maroon palette override.
+% SKEE1033 graphite palette override.
 % The flux theme's colortheme defines primaryLight/primary/secondary/tertiary
 % as plain \definecolor calls (not \providecolor), so simply redefining them
 % here, AFTER \usetheme, wins -- xcolor allows redefinition and every
 % \setbeamercolor in beamercolorthemeflux.sty was already evaluated against
 % these names, so the redefinition propagates everywhere automatically.
-\definecolor{primaryLight}{HTML}{9B2242} % lighter maroon -- headers, accents
-\definecolor{primary}{HTML}{7B1E3A}      % core maroon -- titles, block headers
+\definecolor{primaryLight}{HTML}{5A6068} % lighter graphite -- headers, accents
+\definecolor{primary}{HTML}{3A4047}      % core graphite -- titles, block headers
 \definecolor{secondary}{HTML}{3A5A6B}    % muted teal -- complementary accent
 \definecolor{tertiary}{HTML}{8C6A3F}     % warm bronze -- example/third accent
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -55,12 +55,14 @@
 % \lstset below -- every \begin{lstlisting} needs no language=... of its own.
 % The one exception is the pseudocode frame later in this deck, which opts
 % out explicitly with language={} since it is not real Python.
-\definecolor{codebg}{HTML}{FBF2F4}
-\definecolor{codegreen}{rgb}{0,0.45,0}
-\definecolor{codestring}{rgb}{0.58,0.1,0.2}
+\definecolor{codebg}{HTML}{1E1E2A}
+\definecolor{codetext}{HTML}{E6E6E6}
+\definecolor{codegreen}{HTML}{6A9955}
+\definecolor{codestring}{HTML}{D7BA3A}
+\definecolor{codekeyword}{HTML}{4FA3F7}
 \lstdefinestyle{skpython}{
-    basicstyle=\ttfamily\footnotesize,
-    keywordstyle=\color{primary}\bfseries,
+    basicstyle=\ttfamily\footnotesize\color{codetext},
+    keywordstyle=\color{codekeyword}\bfseries,
     commentstyle=\itshape\color{codegreen},
     stringstyle=\ttfamily\color{codestring},
     backgroundcolor=\color{codebg},
@@ -68,8 +70,7 @@
     keepspaces=true,
     showspaces=false,
     showstringspaces=false,
-    frame=single,
-    rulecolor=\color{primary!40},
+    frame=none,
     numbers=none,
 }
 \lstset{language=Python, style=skpython}
@@ -78,7 +79,7 @@
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 % TikZ block styles for the computation-cycle and control-structure diagrams
 \definecolor{cycfill}{HTML}{F3DCE4}
-\definecolor{cycline}{HTML}{7B1E3A}
+\definecolor{cycline}{HTML}{3A4047}
 \definecolor{cycdofill}{HTML}{E8EEF0}
 \definecolor{cycdoline}{HTML}{3A5A6B}
 \tikzset{
@@ -390,6 +391,28 @@ print("R =", R, "ohms")
     \end{enumerate}
 \end{frame}
 
+\begin{frame}{A More Precise Definition}
+    \leavevmode
+    \begin{block}{Formal definition}
+        An \alert{algorithm} is an ordered set of unambiguous, executable
+        steps that defines a terminating process.
+    \end{block}
+
+    \vspace{2mm}
+    \textbf{Every valid algorithm shares these characteristics:}
+    \begin{itemize}\itemsep2pt
+        \item Each instruction is precise and unambiguous.
+        \item A finite number of steps.
+        \item Produces a correct result.
+        \item Does not depend on any particular programming language.
+    \end{itemize}
+
+    \vspace{3mm}
+    {\small \textbf{A note on history.} The word ``algorithm'' comes from
+    the name of Al-Khwarizmi, a Persian mathematician who first proposed
+    the concept in the 9th century.}
+\end{frame}
+
 \begin{frame}{Example: Starting a Car}
     \leavevmode
     \small
@@ -452,7 +475,7 @@ print("R =", R, "ohms")
 \end{frame}
 
 %===============================================================================
-\section{Flowcharts and Pseudocode}
+\section{Flowcharts}
 %===============================================================================
 
 \begin{frame}{What Is a Flowchart?}
@@ -485,6 +508,55 @@ print("R =", R, "ohms")
     {\small This course uses \emph{program} flowcharts throughout.}
 \end{frame}
 
+\begin{frame}{Flowchart Symbols}
+    \leavevmode
+    \small
+    \begin{itemize}\itemsep3pt
+        \item \textbf{Rectangles} --- processing steps.
+        \item \textbf{Diamonds} --- points of branch/decision.
+        \item \textbf{Parallelograms} --- input and output steps.
+        \item \textbf{Circles} --- connectors.
+        \item \textbf{Ovals} --- start and finish of the flowchart.
+        \item \textbf{Arrows} --- direction of flow between symbols.
+    \end{itemize}
+
+    \vspace{3mm}
+    \begin{alertblock}{A good flowchart}
+        One start point and one end point; flow lines that do not
+        intersect; no programming-language-specific syntax; neat and
+        clear for the reader.
+    \end{alertblock}
+\end{frame}
+
+\begin{frame}{Worked Example: Diagnosing a Lamp}
+    \leavevmode
+    \begin{center}
+    \begin{tikzpicture}[node distance=7mm]
+        \node[cycstep]                        (start) {Lamp doesn't work};
+        \node[cycstep, below=of start]        (plug)  {Lamp plugged in?};
+        \node[cycstep, below=11mm of plug]    (bulb)  {Bulb burned out?};
+        \node[cycstep, below=of bulb]         (rep)   {Repair lamp};
+        \node[cycdo, right=14mm of plug]      (plugin){Plug in lamp};
+        \node[cycdo, right=14mm of bulb]      (newb)  {Replace bulb};
+
+        \draw[flow] (start) -- (plug);
+        \draw[flow] (plug)  -- node[font=\scriptsize,left]  {Yes} (bulb);
+        \draw[flow] (plug)  -- node[font=\scriptsize,above] {No}  (plugin);
+        \draw[flow] (bulb)  -- node[font=\scriptsize,left]  {No}  (rep);
+        \draw[flow] (bulb)  -- node[font=\scriptsize,above] {Yes} (newb);
+    \end{tikzpicture}
+    \end{center}
+
+    \vspace{2mm}
+    {\small A diamond decision at each stage, rectangle actions, flow
+    merging back to a single path --- the pattern every flowchart in
+    this course follows.}
+\end{frame}
+
+%===============================================================================
+\section{Pseudocode}
+%===============================================================================
+
 \begin{frame}[fragile]{Pseudocode: A Preview}
     \leavevmode
     Integer division of $n$ by $d$, using only subtraction:
@@ -509,6 +581,31 @@ end
         statements --- exactly the control structures from the previous
         slide, written in a language-independent notation.
     \end{block}
+\end{frame}
+
+\begin{frame}{Tracing Pseudocode by Hand: IntegerDivision}
+    \leavevmode
+    \small
+    Trace the \texttt{IntegerDivision} procedure (previewed earlier) with
+    $n = 6$, $d = 2$. Initial values: $n=6$, $d=2$, $\mathit{result}=0$.
+
+    \vspace{2mm}
+    \begin{itemize}\itemsep2pt
+        \item \textbf{Iteration 1:} $6 \geq 2 \to$ True. $n=4$, $\mathit{result}=1$.
+        \item \textbf{Iteration 2:} $4 \geq 2 \to$ True. $n=2$, $\mathit{result}=2$.
+        \item \textbf{Iteration 3:} $2 \geq 2 \to$ True. $n=0$, $\mathit{result}=3$.
+        \item \textbf{Exit:} $0 \geq 2 \to$ False. Loop ends.
+    \end{itemize}
+
+    \vspace{2mm}
+    \begin{block}{Result}
+        Return $\mathit{result} = 3$ --- and indeed $6 \div 2 = 3$.
+    \end{block}
+
+    \vspace{2mm}
+    {\scriptsize Tracing a procedure by hand --- writing down how every
+    variable changes on every pass --- is the same skill used later to
+    debug real Python code.}
 \end{frame}
 
 \begin{frame}{Where This Is Going}

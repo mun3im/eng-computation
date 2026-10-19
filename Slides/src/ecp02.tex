@@ -13,20 +13,20 @@
 \usefolder{styles}
 % Use Flux theme v0.1 beta
 % Available style: asphalt, blue, red, green, gray
-% "red" is the closest built-in style to maroon; its exact colours are
-% overridden with a true maroon palette just below, after the theme loads.
+% The built-in "red" style is only a base; its colours are
+% overridden with a graphite palette just below, after the theme loads.
 \usetheme[style=red]{flux}
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-% SKEE1033 maroon palette override.
+% SKEE1033 graphite palette override.
 % The flux theme's colortheme defines primaryLight/primary/secondary/tertiary
 % as plain \definecolor calls (not \providecolor), so simply redefining them
 % here, AFTER \usetheme, wins -- xcolor allows redefinition and every
 % \setbeamercolor in beamercolorthemeflux.sty was already evaluated against
 % these names, so the redefinition propagates everywhere automatically.
-\definecolor{primaryLight}{HTML}{9B2242} % lighter maroon -- headers, accents
-\definecolor{primary}{HTML}{7B1E3A}      % core maroon -- titles, block headers
+\definecolor{primaryLight}{HTML}{5A6068} % lighter graphite -- headers, accents
+\definecolor{primary}{HTML}{3A4047}      % core graphite -- titles, block headers
 \definecolor{secondary}{HTML}{3A5A6B}    % muted teal -- complementary accent
 \definecolor{tertiary}{HTML}{8C6A3F}     % warm bronze -- example/third accent
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -53,12 +53,14 @@
 % Code listing style (lightweight analogue of the book's skpython style).
 % This course is Python-only, so Python is set as the lstlisting default via
 % \lstset below -- every \begin{lstlisting} needs no language=... of its own.
-\definecolor{codebg}{HTML}{FBF2F4}
-\definecolor{codegreen}{rgb}{0,0.45,0}
-\definecolor{codestring}{rgb}{0.58,0.1,0.2}
+\definecolor{codebg}{HTML}{1E1E2A}
+\definecolor{codetext}{HTML}{E6E6E6}
+\definecolor{codegreen}{HTML}{6A9955}
+\definecolor{codestring}{HTML}{D7BA3A}
+\definecolor{codekeyword}{HTML}{4FA3F7}
 \lstdefinestyle{skpython}{
-    basicstyle=\ttfamily\footnotesize,
-    keywordstyle=\color{primary}\bfseries,
+    basicstyle=\ttfamily\footnotesize\color{codetext},
+    keywordstyle=\color{codekeyword}\bfseries,
     commentstyle=\itshape\color{codegreen},
     stringstyle=\ttfamily\color{codestring},
     backgroundcolor=\color{codebg},
@@ -66,8 +68,7 @@
     keepspaces=true,
     showspaces=false,
     showstringspaces=false,
-    frame=single,
-    rulecolor=\color{primary!40},
+    frame=none,
     numbers=none,
 }
 \lstdefinestyle{skoutput}{
@@ -88,7 +89,7 @@
 % TikZ block styles (kept for visual consistency with ecp01.tex, reused for
 % any process/flow diagrams)
 \definecolor{cycfill}{HTML}{F3DCE4}
-\definecolor{cycline}{HTML}{7B1E3A}
+\definecolor{cycline}{HTML}{3A4047}
 \definecolor{cycdofill}{HTML}{E8EEF0}
 \definecolor{cycdoline}{HTML}{3A5A6B}
 \tikzset{
@@ -252,6 +253,28 @@ a = 1 + b  # 'b' has never been assigned
 
     \vspace{3mm}
     {\small The next section surveys the basic types a value can take.}
+\end{frame}
+
+\begin{frame}[fragile]{Checking What Python Actually Did: \texttt{id()}}
+    \leavevmode
+    The built-in \texttt{id()} function returns a variable's
+    \alert{memory address} --- where the value it points to actually
+    lives.
+
+\begin{lstlisting}
+x = 3
+print(id(x))
+x = 3 + 1
+print(id(x))
+\end{lstlisting}
+
+    \vspace{2mm}
+    \begin{block}{Reassignment is not mutation}
+        \small Integers are \alert{immutable}: reassigning \texttt{x}
+        does not change the object \texttt{3} --- it makes \texttt{x}
+        point to a \emph{different} object, \texttt{4}, with a different
+        \texttt{id()}. The original \texttt{3} is untouched.
+    \end{block}
 \end{frame}
 
 %===============================================================================

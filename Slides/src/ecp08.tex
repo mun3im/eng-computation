@@ -8,13 +8,13 @@
 
 \usepackage{styles/fluxmacros}
 \usefolder{styles}
-% "red" is the closest built-in style to maroon; overridden below.
+% "red" is the closest built-in style to graphite; overridden below.
 \usetheme[style=red]{flux}
 
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-% SKEE1033 maroon palette override (matches ch01-ch07).
-\definecolor{primaryLight}{HTML}{9B2242}
-\definecolor{primary}{HTML}{7B1E3A}
+% SKEE1033 graphite palette override (matches ch01-ch07).
+\definecolor{primaryLight}{HTML}{5A6068}
+\definecolor{primary}{HTML}{3A4047}
 \definecolor{secondary}{HTML}{3A5A6B}
 \definecolor{tertiary}{HTML}{8C6A3F}
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -35,12 +35,14 @@
 
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 % Code listing style -- Python is the deck-wide default via \lstset below.
-\definecolor{codebg}{HTML}{FBF2F4}
-\definecolor{codegreen}{rgb}{0,0.45,0}
-\definecolor{codestring}{rgb}{0.58,0.1,0.2}
+\definecolor{codebg}{HTML}{1E1E2A}
+\definecolor{codetext}{HTML}{E6E6E6}
+\definecolor{codegreen}{HTML}{6A9955}
+\definecolor{codestring}{HTML}{D7BA3A}
+\definecolor{codekeyword}{HTML}{4FA3F7}
 \lstdefinestyle{skpython}{
-    basicstyle=\ttfamily\footnotesize,
-    keywordstyle=\color{primary}\bfseries,
+    basicstyle=\ttfamily\footnotesize\color{codetext},
+    keywordstyle=\color{codekeyword}\bfseries,
     commentstyle=\itshape\color{codegreen},
     stringstyle=\ttfamily\color{codestring},
     backgroundcolor=\color{codebg},
@@ -48,15 +50,14 @@
     keepspaces=true,
     showspaces=false,
     showstringspaces=false,
-    frame=single,
-    rulecolor=\color{primary!40},
+    frame=none,
     numbers=none,
 }
 \lstset{language=Python, style=skpython}
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 \definecolor{cycfill}{HTML}{F3DCE4}
-\definecolor{cycline}{HTML}{7B1E3A}
+\definecolor{cycline}{HTML}{3A4047}
 \definecolor{cycdofill}{HTML}{E8EEF0}
 \definecolor{cycdoline}{HTML}{3A5A6B}
 \tikzset{
@@ -356,7 +357,7 @@ print(f"Phase Angle:       {np.degrees(np.angle(Z_total)):.1f} degrees")
     \leavevmode
     \begin{columns}[c]
         \begin{column}{.55\textwidth}
-            \includegraphics[width=\textwidth]{../images/chapter8/complex_impedance_phasor.png}
+            \includegraphics[width=\textwidth]{assets/complex_impedance_phasor.png}
         \end{column}
         \begin{column}{.42\textwidth}
             \small
@@ -378,275 +379,12 @@ print(f"Phase Angle:       {np.degrees(np.angle(Z_total)):.1f} degrees")
     oppose each other's effects.
 
     \vspace{3mm}
-    \begin{alertblock}{A preview of resonance}
+    \begin{alertblock}{Reactances can cancel}
         If the frequency were tuned so that $X_L = X_C$, the upward and
         downward reactance steps would be exactly equal, and the total
-        impedance would lie flat on the real axis.
+        impedance would lie flat on the real axis --- a result your
+        circuits course will study further.
     \end{alertblock}
-
-    \vspace{2mm}
-    {\small This fundamental electrical phenomenon is
-    \alert{resonance} --- covered later in this chapter.}
-\end{frame}
-
-%===============================================================================
-\section{Parallel RLC Circuits}
-%===============================================================================
-
-\begin{frame}{Parallel Impedances Combine as Reciprocals}
-    \leavevmode
-    In a series circuit the impedances add directly. In a
-    \textbf{parallel} circuit they combine as reciprocals, exactly as
-    parallel resistances do in DC:
-    \[
-    \frac{1}{Z_{\text{total}}} = \frac{1}{Z_R} + \frac{1}{Z_L} + \frac{1}{Z_C}.
-    \]
-
-    \vspace{3mm}
-    \begin{block}{No manual algebra needed}
-        This looks troublesome by hand --- rationalizing denominators,
-        separating real and imaginary parts. Python's complex division
-        handles it in \alert{one line}.
-    \end{block}
-\end{frame}
-
-\begin{frame}[fragile]{Same Components, Connected in Parallel}
-    \leavevmode
-\begin{lstlisting}
-import numpy as np
-
-R, L, C, f = 40.0, 0.2, 50e-6, 60.0
-omega = 2 * np.pi * f
-
-Z_R = R
-Z_L = 1j * omega * L
-Z_C = -1j / (omega * C)
-
-# Parallel combination: reciprocal of the sum of reciprocals
-Z_total = 1 / (1/Z_R + 1/Z_L + 1/Z_C)
-
-print(f"Z_total = {Z_total.real:.2f} + {Z_total.imag:.2f}j Ohms")
-print(f"Magnitude: {np.abs(Z_total):.2f} Ohms")
-print(f"Phase angle: {np.degrees(np.angle(Z_total)):.2f} degrees")
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}{Topology Matters as Much as Component Values}
-    \leavevmode
-    \texttt{Z\_total = 38.10 + -8.51j Ohms} \quad
-    \texttt{Magnitude: 39.04} \quad
-    \texttt{Phase: -12.60\textdegree}
-
-    \vspace{4mm}
-    \begin{columns}[t]
-        \begin{column}{.5\textwidth}
-            \begin{block}{Series (same parts)}
-                \small $40 + 22.35j\,\Omega$, magnitude $45.82\,\Omega$,
-                phase $+29.2^\circ$ --- net \alert{inductive}.
-            \end{block}
-        \end{column}
-        \begin{column}{.5\textwidth}
-            \begin{alertblock}{Parallel (same parts)}
-                \small $38.10 - 8.51j\,\Omega$, magnitude
-                $39.04\,\Omega$, phase $-12.6^\circ$ --- net
-                \alert{capacitive}.
-            \end{alertblock}
-        \end{column}
-    \end{columns}
-
-    \vspace{3mm}
-    {\small Same three components. Different connection. Opposite
-    character.}
-\end{frame}
-
-%===============================================================================
-\section{Power in AC Circuits}
-%===============================================================================
-
-\begin{frame}{$P = VI$ Is Wrong for AC}
-    \leavevmode
-    In DC, power is simply $P = VI$. In AC, that formula fails whenever
-    the load is not purely resistive --- voltage and current no longer
-    peak at the same instant.
-
-    \vspace{3mm}
-    Three separate quantities are needed, and confusing them is a
-    classic error:
-    \begin{itemize}
-        \item \textbf{Real power} $P$ (W) --- actually converted to
-              heat or work. The only part the meter charges for.
-        \item \textbf{Reactive power} $Q$ (VAR) --- sloshes back and
-              forth, doing no net work.
-        \item \textbf{Apparent power} $S$ (VA) --- what the cabling
-              must be sized to carry.
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{The Power Triangle and Power Factor}
-    \leavevmode
-    \[
-    S = \sqrt{P^{2} + Q^{2}}, \qquad P = S\cos\theta, \qquad Q = S\sin\theta.
-    \]
-
-    \vspace{2mm}
-    \[
-    \text{power factor} = \cos\theta = \frac{P}{S}.
-    \]
-
-    \vspace{3mm}
-    \begin{block}{What power factor tells you}
-        What fraction of delivered capacity does useful work. Purely
-        resistive: $\cos\theta = 1$. Purely reactive: $\cos\theta = 0$
-        --- no work at all.
-    \end{block}
-\end{frame}
-
-\begin{frame}[fragile]{Complex Power: $S = VI^{*}$}
-    \leavevmode
-\begin{lstlisting}
-import numpy as np
-
-R, L, C, f = 40.0, 0.2, 50e-6, 60.0
-V = 120.0                          # supply voltage (RMS)
-
-omega = 2 * np.pi * f
-Z = R + 1j*omega*L - 1j/(omega*C)
-
-I = V / Z                          # complex current (Ohm's law)
-S = V * np.conj(I)                 # complex power
-
-print(f"Real power P:      {S.real:.2f} W")
-print(f"Reactive power Q:  {S.imag:.2f} VAR")
-print(f"Apparent power S:  {np.abs(S):.2f} VA")
-print(f"Power factor:      {np.cos(np.angle(Z)):.4f}")
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}{Checking and Interpreting the Power Result}
-    \leavevmode
-    \texttt{P: 274.37 W} \quad \texttt{Q: 153.28 VAR} \quad
-    \texttt{S: 314.28 VA} \quad \texttt{PF: 0.8730}
-
-    \vspace{3mm}
-    \begin{block}{Check}
-        \small $P$ must equal $|I|^2 R = 2.619^2 \times 40 = 274.4\,$W
-        --- it does. And $\sqrt{P^2+Q^2} = 314.3\,$VA matches $S$.
-    \end{block}
-
-    \vspace{2mm}
-    \begin{alertblock}{Interpret}
-        \small Only $274\,$W of the $314\,$VA supplied does useful
-        work. Industrial customers are penalised for poor power
-        factor --- capacitors are added alongside motors to cancel
-        inductive $Q$ and pull $\cos\theta$ toward unity.
-    \end{alertblock}
-\end{frame}
-
-%===============================================================================
-\section{Resonance}
-%===============================================================================
-
-\begin{frame}{When Reactances Cancel Exactly}
-    \leavevmode
-    $X_L = \omega L$ grows with frequency; $X_C = 1/\omega C$ shrinks.
-    At some frequency the two must be equal.
-
-    \vspace{3mm}
-    \begin{block}{Resonant frequency}
-        \[
-        \omega_0 L = \frac{1}{\omega_0 C} \quad\Longrightarrow\quad
-        f_0 = \frac{1}{2\pi\sqrt{LC}}.
-        \]
-    \end{block}
-
-    \vspace{2mm}
-    \begin{alertblock}{At resonance}
-        The imaginary part of $Z$ vanishes: $Z = R$. The circuit
-        behaves as though the inductor and capacitor were not there.
-    \end{alertblock}
-\end{frame}
-
-\begin{frame}[fragile]{Finding Resonance in Python}
-    \leavevmode
-\begin{lstlisting}
-import numpy as np
-
-R, L, C, V = 40.0, 0.2, 50e-6, 120.0
-
-f0 = 1 / (2*np.pi*np.sqrt(L*C))
-omega0 = 2*np.pi*f0
-
-X_L = omega0 * L
-X_C = 1 / (omega0 * C)
-Z0  = R + 1j*X_L - 1j*X_C
-
-print(f"Resonant frequency: {f0:.2f} Hz")
-print(f"Z at resonance:     {Z0.real:.1f} + {Z0.imag:.4f}j Ohms")
-print(f"Current at f0:      {np.abs(V/Z0):.3f} A")
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}{Three Consequences of Resonance}
-    \leavevmode
-    \texttt{f0 = 50.33 Hz} \quad \texttt{Z = 40.0 + 0.0000j} \quad
-    \texttt{Current = 3.000 A}
-
-    \vspace{3mm}
-    \begin{itemize}
-        \item \textbf{Current peaks.} Impedance is smallest, so a
-              modest voltage drives a large current --- exploited in
-              radio tuning, dangerous in power systems.
-        \item \textbf{Power factor becomes unity.} $\theta = 0$,
-              $\cos\theta = 1$: every VA does useful work.
-        \item \textbf{Character flips with frequency.} Below $f_0$:
-              capacitive, current leads. Above $f_0$: inductive,
-              current lags.
-    \end{itemize}
-
-    \vspace{2mm}
-    {\small Check: the two reactances agree to three decimals, but $Z$'s
-    imaginary part is never exactly zero in floating point --- a reason
-    to avoid testing with \texttt{==}.}
-\end{frame}
-
-\begin{frame}{Sweeping Frequency: The Resonance Dip}
-    \leavevmode
-    \begin{center}
-    \includegraphics[height=0.64\textheight]{../images/chapter8/resonance_sweep.png}
-    \end{center}
-
-    {\scriptsize Both axes logarithmic. The minimum sits at $f_0$ for
-    every curve --- changing $R$ moves the dip up or down, never
-    sideways.}
-\end{frame}
-
-\begin{frame}{The Quality Factor}
-    \leavevmode
-    How sharp the resonance dip is depends on resistance:
-    \[
-    Q_{\text{factor}} = \frac{1}{R}\sqrt{\frac{L}{C}}.
-    \]
-
-    \vspace{3mm}
-    \begin{columns}[t]
-        \begin{column}{.5\textwidth}
-            \begin{block}{Low $R$ ($10\,\Omega$)}
-                \small Deep, narrow dip. Strong but selective response
-                --- good for tuning a radio to one station.
-            \end{block}
-        \end{column}
-        \begin{column}{.5\textwidth}
-            \begin{alertblock}{High $R$ ($120\,\Omega$)}
-                \small Shallow, broad dip. Still resonates, but barely
-                distinguishes $f_0$ from its neighbours.
-            \end{alertblock}
-        \end{column}
-    \end{columns}
-
-    \vspace{3mm}
-    {\scriptsize This $Q$ (dimensionless sharpness) is unrelated to the
-    reactive power $Q$ from the previous section --- an unfortunate
-    clash of notation in electrical engineering.}
 \end{frame}
 
 %===============================================================================
@@ -671,16 +409,10 @@ print(f"Current at f0:      {np.abs(V/Z0):.3f} A")
               resistors, complex arithmetic.
         \item \textbf{Magnitude} sets current flow; \textbf{phase}
               says whether the load is capacitive or inductive.
-        \item AC power splits into $P$ (W), $Q$ (VAR), $S$ (VA), with
-              $S = \sqrt{P^2+Q^2}$ and complex power $S = VI^{*}$.
-        \item \textbf{Power factor} $\cos\theta = P/S$; correcting it
-              (adding capacitance to inductive loads) reduces current
-              for the same real power.
-        \item At \textbf{resonance}, $f_0 = 1/(2\pi\sqrt{LC})$,
-              reactances cancel, $Z=R$, current peaks, power factor
-              hits unity.
-        \item \textbf{Quality factor} $(1/R)\sqrt{L/C}$ measures how
-              sharply a circuit selects its resonant frequency.
+        \item Parallel circuits, AC power, and resonance all follow the
+              same pattern of complex-number reasoning introduced
+              here --- your circuits course will build further on this
+              foundation.
     \end{itemize}
 \end{frame}
 

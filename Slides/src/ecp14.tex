@@ -13,15 +13,15 @@
 \usefolder{styles}
 % Use Flux theme v0.1 beta
 % Available style: asphalt, blue, red, green, gray
-% "red" is the closest built-in style to maroon; its exact colours are
-% overridden with a true maroon palette just below, after the theme loads.
+% The built-in "red" style is only a base; its colours are
+% overridden with a graphite palette just below, after the theme loads.
 \usetheme[style=red]{flux}
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-% SKEE1033 maroon palette override.
-\definecolor{primaryLight}{HTML}{9B2242} % lighter maroon -- headers, accents
-\definecolor{primary}{HTML}{7B1E3A}      % core maroon -- titles, block headers
+% SKEE1033 graphite palette override.
+\definecolor{primaryLight}{HTML}{5A6068} % lighter graphite -- headers, accents
+\definecolor{primary}{HTML}{3A4047}      % core graphite -- titles, block headers
 \definecolor{secondary}{HTML}{3A5A6B}    % muted teal -- complementary accent
 \definecolor{tertiary}{HTML}{8C6A3F}     % warm bronze -- example/third accent
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -48,12 +48,14 @@
 % Code listing style (lightweight analogue of the book's skpython style).
 % This course is Python-only, so Python is set as the lstlisting default via
 % \lstset below -- every \begin{lstlisting} needs no language=... of its own.
-\definecolor{codebg}{HTML}{FBF2F4}
-\definecolor{codegreen}{rgb}{0,0.45,0}
-\definecolor{codestring}{rgb}{0.58,0.1,0.2}
+\definecolor{codebg}{HTML}{1E1E2A}
+\definecolor{codetext}{HTML}{E6E6E6}
+\definecolor{codegreen}{HTML}{6A9955}
+\definecolor{codestring}{HTML}{D7BA3A}
+\definecolor{codekeyword}{HTML}{4FA3F7}
 \lstdefinestyle{skpython}{
-    basicstyle=\ttfamily\footnotesize,
-    keywordstyle=\color{primary}\bfseries,
+    basicstyle=\ttfamily\footnotesize\color{codetext},
+    keywordstyle=\color{codekeyword}\bfseries,
     commentstyle=\itshape\color{codegreen},
     stringstyle=\ttfamily\color{codestring},
     backgroundcolor=\color{codebg},
@@ -61,8 +63,7 @@
     keepspaces=true,
     showspaces=false,
     showstringspaces=false,
-    frame=single,
-    rulecolor=\color{primary!40},
+    frame=none,
     numbers=none,
 }
 \lstset{language=Python, style=skpython}
@@ -71,7 +72,7 @@
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 % TikZ block styles for the computation-cycle and control-structure diagrams
 \definecolor{cycfill}{HTML}{F3DCE4}
-\definecolor{cycline}{HTML}{7B1E3A}
+\definecolor{cycline}{HTML}{3A4047}
 \definecolor{cycdofill}{HTML}{E8EEF0}
 \definecolor{cycdoline}{HTML}{3A5A6B}
 \tikzset{
@@ -100,7 +101,7 @@
 
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 % Information
-\title{Data Analytics and a First Look at Machine Learning}
+\title{Engineering Statistics and Data Analysis}
 \subtitle{\emph{Engineering Computation with Python} --- Chapter 14}
 \author{Mun\'{i}m Zabidi}
 \institute{\color{primary}Faculty of Electrical Engineering, Universiti Teknologi Malaysia}

@@ -13,15 +13,15 @@
 \usefolder{styles}
 % Use Flux theme v0.1 beta
 % Available style: asphalt, blue, red, green, gray
-% "red" is the closest built-in style to maroon; its exact colours are
-% overridden with a true maroon palette just below, after the theme loads.
+% The built-in "red" style is only a base; its colours are
+% overridden with a graphite palette just below, after the theme loads.
 \usetheme[style=red]{flux}
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-% SKEE1033 maroon palette override.
-\definecolor{primaryLight}{HTML}{9B2242} % lighter maroon -- headers, accents
-\definecolor{primary}{HTML}{7B1E3A}      % core maroon -- titles, block headers
+% SKEE1033 graphite palette override.
+\definecolor{primaryLight}{HTML}{5A6068} % lighter graphite -- headers, accents
+\definecolor{primary}{HTML}{3A4047}      % core graphite -- titles, block headers
 \definecolor{secondary}{HTML}{3A5A6B}    % muted teal -- complementary accent
 \definecolor{tertiary}{HTML}{8C6A3F}     % warm bronze -- example/third accent
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -46,12 +46,14 @@
 
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 % Code listing style (lightweight analogue of the book's skpython style).
-\definecolor{codebg}{HTML}{FBF2F4}
-\definecolor{codegreen}{rgb}{0,0.45,0}
-\definecolor{codestring}{rgb}{0.58,0.1,0.2}
+\definecolor{codebg}{HTML}{1E1E2A}
+\definecolor{codetext}{HTML}{E6E6E6}
+\definecolor{codegreen}{HTML}{6A9955}
+\definecolor{codestring}{HTML}{D7BA3A}
+\definecolor{codekeyword}{HTML}{4FA3F7}
 \lstdefinestyle{skpython}{
-    basicstyle=\ttfamily\footnotesize,
-    keywordstyle=\color{primary}\bfseries,
+    basicstyle=\ttfamily\footnotesize\color{codetext},
+    keywordstyle=\color{codekeyword}\bfseries,
     commentstyle=\itshape\color{codegreen},
     stringstyle=\ttfamily\color{codestring},
     backgroundcolor=\color{codebg},
@@ -59,8 +61,7 @@
     keepspaces=true,
     showspaces=false,
     showstringspaces=false,
-    frame=single,
-    rulecolor=\color{primary!40},
+    frame=none,
     numbers=none,
 }
 \lstset{language=Python, style=skpython}
@@ -132,7 +133,7 @@
         Differentiate $f(x)$ by rule & Difference of neighbours
             (\texttt{np.gradient}) \\
         Integrate $f(x)$ in closed form & Sum thin strips
-            (\texttt{np.trapz}, \texttt{np.cumsum}) \\
+            (\texttt{np.trapezoid}, \texttt{np.cumsum}) \\
         Solve $f(x)=0$ algebraically & Find roots numerically
             (\texttt{np.roots}) \\
         Find the equation of a curve & Fit coefficients to data
@@ -299,7 +300,7 @@ i_mA = C * dv_dt * 1000
 \begin{frame}{Voltage and Current: What the Plot Reveals}
     \leavevmode
     \begin{center}
-    \includegraphics[height=0.58\textheight]{../images/chapter13/capacitor_ac_voltage_current.png}
+    \includegraphics[height=0.58\textheight]{assets/capacitor_ac_voltage_current.png}
     \end{center}
 
     \vspace{1mm}
@@ -352,9 +353,9 @@ i_from_slope = -C * np.gradient(v, t) * 1000
 \begin{frame}{Integration: Building Up a Total}
     \leavevmode
     \small
-    \texttt{np.trapz(y, x)} applies the trapezoidal rule to an entire
-    array at once. \texttt{np.cumsum()} builds a \alert{running total}
-    step by step:
+    \texttt{np.trapezoid(y, x)} applies the trapezoidal rule to an
+    entire array at once. \texttt{np.cumsum()} builds a \alert{running
+    total} step by step:
 
     \vspace{2mm}
     \begin{center}
@@ -390,7 +391,7 @@ v = (1 / C) * accumulated_current
 \begin{frame}{Charging a Capacitor: Constant Current, Linear Ramp}
     \leavevmode
     \begin{center}
-    \includegraphics[height=0.58\textheight]{../images/chapter13/capacitor_charging_cumsum.png}
+    \includegraphics[height=0.58\textheight]{assets/capacitor_charging_cumsum.png}
     \end{center}
 
     \vspace{1mm}
@@ -399,14 +400,14 @@ v = (1 / C) * accumulated_current
     straight, linear ramp.}
 \end{frame}
 
-\begin{frame}[fragile]{Verifying \texttt{np.trapz()} Against an Exact Integral}
+\begin{frame}[fragile]{Verifying \texttt{np.trapezoid()} Against an Exact Integral}
     \leavevmode
     $y = x^2$ over $[0, 10]$, whose exact integral you already know:
 
 \begin{lstlisting}
 x = np.linspace(0, 10, 1000)
 y = x**2
-area = np.trapz(y, x)
+area = np.trapezoid(y, x)
 print("Approximate area:", area)
 # Approximate area: 333.333500333834
 \end{lstlisting}
@@ -649,7 +650,7 @@ Q_s = np.polyval(Q_n, s) / np.polyval(Q_d, s)
 \begin{frame}{The Frequency Response Plot}
     \leavevmode
     \begin{center}
-    \includegraphics[height=0.62\textheight]{../images/chapter13/frequency_response.png}
+    \includegraphics[height=0.62\textheight]{assets/frequency_response.png}
     \end{center}
 
     \vspace{1mm}
@@ -694,7 +695,7 @@ tground = r[r != 0][0]   # the non-zero root
 \begin{frame}{The Trajectory}
     \leavevmode
     \begin{center}
-    \includegraphics[height=0.6\textheight]{../images/chapter13/vertical_displacement.png}
+    \includegraphics[height=0.6\textheight]{assets/vertical_displacement.png}
     \end{center}
 \end{frame}
 
@@ -757,7 +758,7 @@ def check_stability(C, Pn, Pd):
     \small
     \begin{itemize}
         \item Rates and totals from \alert{measured data}: \texttt{np.diff()},
-              \texttt{np.gradient()}, \texttt{np.trapz()},
+              \texttt{np.gradient()}, \texttt{np.trapezoid()},
               \texttt{np.cumsum()}.
         \item Polynomials as \alert{coefficient vectors}: multiply,
               divide, evaluate, find roots.
@@ -768,10 +769,17 @@ def check_stability(C, Pn, Pd):
               a Bode-style response.
     \end{itemize}
 
-    \vspace{4mm}
+    \vspace{3mm}
+    \begin{alertblock}{Looking ahead}
+        We used mathematics to build a model of a physical system. But
+        engineering measurements are never exact --- before trusting a
+        model, we need to understand the data from which it was built.
+    \end{alertblock}
+
+    \vspace{2mm}
     \begin{center}
-        \large\color{primary}\textbf{Next: Data Analytics and a First
-        Look at Machine Learning}
+        \large\color{primary}\textbf{Next: Engineering Statistics and
+        Data Analysis}
     \end{center}
 \end{frame}
 

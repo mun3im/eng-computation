@@ -8,8 +8,8 @@
 \usefolder{styles}
 \usetheme[style=red]{flux}
 
-\definecolor{primaryLight}{HTML}{9B2242}
-\definecolor{primary}{HTML}{7B1E3A}
+\definecolor{primaryLight}{HTML}{5A6068}
+\definecolor{primary}{HTML}{3A4047}
 \definecolor{secondary}{HTML}{3A5A6B}
 \definecolor{tertiary}{HTML}{8C6A3F}
 
@@ -27,12 +27,14 @@
 \definecolor{stripe}{gray}{0.94}
 \newcommand{\striped}{\rowcolors{1}{white}{stripe}}
 
-\definecolor{codebg}{HTML}{FBF2F4}
-\definecolor{codegreen}{rgb}{0,0.45,0}
-\definecolor{codestring}{rgb}{0.58,0.1,0.2}
+\definecolor{codebg}{HTML}{1E1E2A}
+\definecolor{codetext}{HTML}{E6E6E6}
+\definecolor{codegreen}{HTML}{6A9955}
+\definecolor{codestring}{HTML}{D7BA3A}
+\definecolor{codekeyword}{HTML}{4FA3F7}
 \lstdefinestyle{skpython}{
-    basicstyle=\ttfamily\footnotesize,
-    keywordstyle=\color{primary}\bfseries,
+    basicstyle=\ttfamily\footnotesize\color{codetext},
+    keywordstyle=\color{codekeyword}\bfseries,
     commentstyle=\itshape\color{codegreen},
     stringstyle=\ttfamily\color{codestring},
     backgroundcolor=\color{codebg},
@@ -40,8 +42,7 @@
     keepspaces=true,
     showspaces=false,
     showstringspaces=false,
-    frame=single,
-    rulecolor=\color{primary!40},
+    frame=none,
     numbers=none,
 }
 \lstdefinestyle{skoutput}{
@@ -58,7 +59,7 @@
 \lstset{language=Python, style=skpython}
 
 \definecolor{cycfill}{HTML}{F3DCE4}
-\definecolor{cycline}{HTML}{7B1E3A}
+\definecolor{cycline}{HTML}{3A4047}
 \definecolor{cycdofill}{HTML}{E8EEF0}
 \definecolor{cycdoline}{HTML}{3A5A6B}
 \tikzset{
@@ -413,6 +414,50 @@ help(calculate_circle_area)
     one they must reverse-engineer.}
 \end{frame}
 
+\begin{frame}[fragile]{Modules: Functions in Their Own File}
+    \leavevmode
+    Save functions in a \texttt{.py} file and that file becomes a
+    \alert{module}, importable from any other script.
+
+\begin{lstlisting}
+# math_operations.py
+def add(a, b):
+    return a + b
+
+# main_script.py
+import math_operations
+print(math_operations.add(10, 5))   # 15
+
+# or import only what you need:
+from math_operations import add
+print(add(7, 3))                    # 10
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{The \texttt{main()} Pattern}
+    \leavevmode
+    A \lstinline{main()} function keeps a script organized and safe to
+    import --- demo code does not run just because another script
+    imports this file.
+
+\begin{lstlisting}
+def celsius_to_fahrenheit(c):
+    return (c * 9/5) + 32
+
+def main():
+    print(celsius_to_fahrenheit(100))
+
+if __name__ == "__main__":
+    main()
+\end{lstlisting}
+
+    \vspace{1mm}
+    {\small Run directly: \texttt{\_\_name\_\_ == "\_\_main\_\_"} is
+    \texttt{True}, so \texttt{main()} executes. Imported elsewhere:
+    \texttt{\_\_name\_\_} is the module name, so \texttt{main()} is
+    skipped --- only the functions become available.}
+\end{frame}
+
 %===============================================================================
 \section{Variable Scope}
 %===============================================================================
@@ -557,6 +602,29 @@ print(count)
         value, not merely read it. Prefer parameters and return values
         where you can.
     \end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]{Nested Functions See Their Enclosing Scope}
+    \leavevmode
+    A function defined inside another can \alert{read} variables from
+    the function it is nested in --- but not the main program's globals,
+    unless declared \texttt{global}:
+
+\begin{lstlisting}
+def outer():
+    msg = "Hello"
+
+    def inner():
+        print(msg)  # found in the enclosing scope
+
+    inner()
+
+outer()   # Hello
+\end{lstlisting}
+
+    \vspace{1mm}
+    {\small Same rule applies whether the nested function lives in the
+    main program file or inside an imported module.}
 \end{frame}
 
 %===============================================================================
