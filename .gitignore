@@ -10,3 +10,15 @@
 *.snm
 *.toc
 *.vrb
+
+# Output written by the example scripts when they are run
+__pycache__/
+scripts/**/*.png
+scripts/**/*.pdf
+scripts/**/*.npy
+scripts/**/*.pkl
+scripts/**/*.bin
+scripts/**/example.txt
+scripts/**/notes.txt
+scripts/**/components.csv
+scripts/**/temps.csv

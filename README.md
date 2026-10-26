@@ -1,6 +1,6 @@
 # Engineering Computation with Python
 
-Beamer slide decks (16 chapters) for my book *Engineering Computation with Python: An Introduction for Electrical Engineering Students*.
+Beamer slide decks (16 chapters) and the complete code listings for my book *Engineering Computation with Python: An Introduction for Electrical Engineering Students*.
 
 ## About the book
 
@@ -28,3 +28,26 @@ The 16 chapters are grouped into four parts, one chapter per teaching week, foll
 - `src/ecp01.tex` – `ecp16.tex` — Beamer source for each chapter
 - `src/styles/` — shared Beamer theme (`flux`)
 - `src/assets/` — logo and chapter figures referenced by the slides
+- `scripts/chapterNN/` — every code listing from the book, as runnable `.py` files
+
+## Code listings
+
+Every listing in the book longer than five lines — 215 of them — is available
+as a standalone Python file under [`scripts/`](scripts/), grouped by chapter and
+named for the section it comes from. Each file's docstring records the chapter,
+the section, the source location, and the output the book prints, so a listing
+can be run and compared against the page without retyping it.
+
+```sh
+cd scripts/chapter08
+python3 04_a_simple_series_circuit.py
+```
+
+`scripts/run_all.py` runs them all and reports which execute standalone; 145 do.
+The rest continue an earlier listing, wait on `input()`, or read a data file not
+distributed with the book. See [`scripts/README.md`](scripts/README.md) for the
+full index, and for four places where the book's printed output does not match
+what its code produces.
+
+Tested with Python 3.12, NumPy 2.3, SciPy 1.17, pandas 2.3, Matplotlib 3.10 and
+scikit-learn 1.8.

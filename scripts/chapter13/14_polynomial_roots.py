@@ -1,0 +1,17 @@
+"""
+Numerical Calculus and System Models - Polynomials and System Models
+Subsection: Polynomial Roots
+Example: Polynomial Roots
+Source: chapters/chapter13.tex, line 705
+"""
+
+import numpy as np
+
+# Define the polynomial coefficients for f(x) = x^3 + x^2 - 4x - 4
+coefficients = [1, 1, -4, -4]
+
+# Find the roots using numpy.roots()
+roots = np.roots(coefficients)
+
+# Output the roots
+print("Roots of the polynomial are:", roots)
