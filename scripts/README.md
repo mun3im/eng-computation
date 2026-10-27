@@ -29,28 +29,30 @@ python3 scripts/run_all.py chapter12  # one chapter
 
 | Status | Count | Meaning |
 |---|---|---|
-| ok | 145 | Runs clean on its own. |
-| needs earlier listing | 51 | Continues an earlier listing; needs names or a module defined there. |
+| ok | 151 | Runs clean on its own. |
+| needs earlier listing | 50 | Continues an earlier listing; needs names or a module defined there. |
 | needs input | 8 | Calls `input()`, so it waits for the user. |
-| needs a data file | 7 | Reads a data file the book does not ship -- see below. |
 | raises by design | 2 | Deliberately raises, to demonstrate an error or a bug. |
-| teaching failure | 2 | Fails on purpose: an `UnboundLocalError` demo, and a syntax skeleton. |
+| teaching failure | 3 | Fails on purpose, or hits a known book bug (see below). |
+| needs a data file | 1 | The cheat-sheet `pd.read_csv('d.csv')` placeholder. |
 
 ## Known issues in the book's code
 
-These scripts reproduce the book's listings **verbatim**, so four of them print
-something different from what the printed page shows. The code is left as the
-book has it, so the scripts stay a faithful reference; the fixes are below.
+These scripts reproduce the book's listings **verbatim**, so five of them print
+something different from what the printed page shows, or fail outright. The code
+is left as the book has it, so the scripts stay a faithful reference; the fixes
+are below.
 
 | Script | What happens | Fix |
 |---|---|---|
 | `chapter08/04_a_simple_series_circuit.py` | prints `Inductor Impedance:  0.00+75.40jj Ohms`, not `75.40j Ohms` — `Z_L` is complex, so `{Z_L:.2f}` renders both parts and the literal `j` is appended to that | use `{Z_L.imag:.2f}j` |
-| `chapter13/01_visualizing_the_derivative_limit.py` | three of five table rows differ from the book in the last digit (`h` = 0.01, 0.001, 0.0001) | the script's output is correct; the book's table needs updating |
+| `chapter10/15_example_csv_for_temperature_data.py` | raises `TypeError: unsupported operand type(s) for /: 'str' and 'int'` — the time-stamp row makes `read_csv` type every column as text | `temp_c = pd.to_numeric(data.iloc[1, 1:])` |
 | `chapter12/06_straight_line_trendlines.py` | prints `Fitted values:` at full precision, not the two decimals shown | `print("Fitted values:", np.round(y_fit, 2))` |
+| `chapter13/01_visualizing_the_derivative_limit.py` | three of five table rows differ from the book in the last digit (`h` = 0.01, 0.001, 0.0001) | the script's output is correct; the book's table needs updating |
 | `chapter14/26_simple_decision_tree_classifier.py` | prints `['high']` — `predict()` returns an array, one answer per input row — not `'high'` | index it: `model.predict([[3]])[0]` |
 
-In every case the underlying numbers are right; only the formatting, or the
-output as transcribed into the book, is wrong.
+In every case the underlying numbers are right; only the formatting, the output
+as transcribed into the book, or a missing type conversion is wrong.
 
 ## Data files
 

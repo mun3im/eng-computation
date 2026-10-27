@@ -43,10 +43,10 @@ cd scripts/chapter08
 python3 04_a_simple_series_circuit.py
 ```
 
-`scripts/run_all.py` runs them all and reports which execute standalone; 145 do.
-The rest continue an earlier listing, wait on `input()`, or read a data file not
-distributed with the book. See [`scripts/README.md`](scripts/README.md) for the
-full index, and for four places where the book's printed output does not match
+`scripts/run_all.py` runs them all and reports which execute standalone; 151 do.
+The rest continue an earlier listing or wait on `input()`. Every data file the
+listings read is included. See [`scripts/README.md`](scripts/README.md) for the
+full index, and for five places where the book's printed output does not match
 what its code produces.
 
 Tested with Python 3.12, NumPy 2.3, SciPy 1.17, pandas 2.3, Matplotlib 3.10 and
