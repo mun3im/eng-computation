@@ -809,7 +809,7 @@ y = ['low', 'low', 'high', 'high']
 
 model = DecisionTreeClassifier()
 model.fit(X, y)
-print(model.predict([[3]]))   # 'high'
+print(model.predict([[3]])[0])   # high
 \end{lstlisting}
 
     \begin{alertblock}{A model has no sense of its own limits}

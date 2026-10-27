@@ -56,14 +56,27 @@ as transcribed into the book, or a missing type conversion is wrong.
 
 ## Data files
 
-`bench_rc.csv` (Appendix C) is copied into the chapter folders that read it,
-so those listings run as-is.
+Every data file the listings read is included, so the examples run as printed:
 
-Five data files are named by the book but are **not distributed with it**:
-`dac_signal.csv`, `reduced_ecg_signal.csv`, `sensor_calibration.xlsx`,
-`internetusage.xlsx` and `waterusage.xlsx`. The listings that read them cannot
-run until the files are published -- see the Errata chapter of the instructor's
-manual, which records this.
+| File | Used by |
+|---|---|
+| `bench_rc.csv` | Ch 7, 12, 14 — the recurring bench dataset (Appendix C) |
+| `tempData.xlsx`, `tempData.csv` | Ch 10 — temperature conversion |
+| `circuit_analysis.xlsx` | Ch 10 — ten mesh-circuit configurations |
+| `dac_signal.csv` | Ch 12 — DAC interpolation comparison |
+| `reduced_ecg_signal.csv` | Ch 12 — ECG spline enhancement |
+| `sensor_calibration.xlsx` | Ch 12 — sensor calibration fit |
+| `internetusage.xlsx` | Ch 12 — internet-usage polynomial fit |
+| `waterusage.xlsx` | Ch 12 — water-usage R² comparison |
+
+The Chapter 10 and 12 files were absent from the book's original distribution
+and have been recovered from the course archive. They are the originals: each
+reproduces the output printed in the book exactly — `sensor_calibration.xlsx`
+gives `T(V) = 14.74V + -9.33`, `waterusage.xlsx` gives all five R² values
+(0.9743, 0.9750, 0.9947, 0.9947, 0.9961), and `circuit_analysis.xlsx` matches
+the stored currents on all ten circuit configurations.
+
+Reading the `.xlsx` files needs `openpyxl` (`pip install openpyxl`).
 
 ## Index
 
