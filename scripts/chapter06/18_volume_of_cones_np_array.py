@@ -1,7 +1,6 @@
 """
 Arrays and Vectorized Computation - Vectorizing Formulas
 Example: - Volume of Cones
-Source: chapters/chapter6.tex, line 974
 
 Output as printed in the book:
     Volumes of cones using vectorization:

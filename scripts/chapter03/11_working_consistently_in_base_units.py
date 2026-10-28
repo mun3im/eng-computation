@@ -1,7 +1,6 @@
 """
 Numbers, Variables and Units - Engineering Units and Dimensions
 Subsection: Working Consistently in Base Units
-Source: chapters/chapter3.tex, line 578
 
 Output as printed in the book:
     Time constant: 1.0 s

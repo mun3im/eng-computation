@@ -2,7 +2,6 @@
 Arrays and Vectorized Computation - Subscripting Notation in NumPy
 Subsection: Reading Slice Notation on Rows
 Example: Slicing Specific Rows from a 2D Array
-Source: chapters/chapter6.tex, line 377
 
 Output as printed in the book:
     array[2:4] - Selecting rows from index 2 to 4 (exclusive):

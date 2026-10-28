@@ -2,7 +2,6 @@
 Engineering Statistics and Data Analysis - Basic Statistical Analysis
 Subsection: Choosing an Axis for Matrix Statistics
 Example: Calculating Mean Along Rows and Columns Using NumPy
-Source: chapters/chapter14.tex, line 212
 """
 
 import numpy as np

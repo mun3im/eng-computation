@@ -1,7 +1,6 @@
 """
 Handling Imperfect Engineering Data - Missing Data and Outliers
 Subsection: Data Imputation
-Source: chapters/chapter11.tex, line 847
 
 Output as printed in the book:
     Mean-filled: [12.5   12.975 13.1   12.9   12.975 13.4  ]

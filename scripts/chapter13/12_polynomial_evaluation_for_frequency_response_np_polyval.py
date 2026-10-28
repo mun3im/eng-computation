@@ -2,7 +2,6 @@
 Numerical Calculus and System Models - Polynomials and System Models
 Subsection: Frequency Response
 Example: Polynomial Evaluation for Frequency Response
-Source: chapters/chapter13.tex, line 654
 """
 
 import numpy as np

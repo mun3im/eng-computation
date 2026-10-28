@@ -3,7 +3,6 @@ Engineering Statistics and Data Analysis - Basic Statistical Analysis
 Subsection: Choosing an Axis for Matrix Statistics
 Example: Temperature Data Analysis with Python
 Listing: The datastat()
-Source: chapters/chapter14.tex, line 276
 """
 
 import numpy as np

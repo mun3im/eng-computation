@@ -2,7 +2,6 @@
 Handling Imperfect Engineering Data - Writing Robust Code
 Subsection: Using finally for Cleanup
 Listing: try/except/finally for safe file handling
-Source: chapters/chapter11.tex, line 463
 """
 
 try:

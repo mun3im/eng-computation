@@ -1,7 +1,6 @@
 """
 Your First Python Programs - Data Types
 Subsection: Translating Math Notation to Code
-Source: chapters/chapter2.tex, line 169
 """
 
 P = 1000     # Principal

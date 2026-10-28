@@ -1,7 +1,6 @@
 """
 Decisions and Repetition - Boolean Foundations
 Subsection: Example - Operator Precedence in Practice
-Source: chapters/chapter4.tex, line 232
 """
 
 # Precedence of Operators in Python

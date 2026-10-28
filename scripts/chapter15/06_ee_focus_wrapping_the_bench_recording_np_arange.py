@@ -1,6 +1,5 @@
 """
 A First Look at Object-Oriented Python - EE Focus: Wrapping the Bench Recording
-Source: chapters/chapter15.tex, line 350
 
 Output as printed in the book:
     bench_rc voltage: 101 samples, 3 missing, v from 12.00 to 0.17 V

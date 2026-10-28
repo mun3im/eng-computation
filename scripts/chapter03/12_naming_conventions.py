@@ -1,6 +1,5 @@
 """
 Numbers, Variables and Units - Naming Conventions
-Source: chapters/chapter3.tex, line 619
 """
 
 # Conventional -- every name announces what it is

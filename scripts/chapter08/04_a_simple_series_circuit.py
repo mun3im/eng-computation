@@ -1,6 +1,5 @@
 """
 Complex Numbers as an Engineering Tool - A Simple Series Circuit
-Source: chapters/chapter8.tex, line 169
 
 Output as printed in the book:
     Resistor Impedance:  40.0 Ohms

@@ -1,7 +1,6 @@
 """
 Data Visualization - Subplots
 Subsection: Subplot: RC Circuit Example
-Source: chapters/chapter7.tex, line 394
 """
 
 import numpy as np

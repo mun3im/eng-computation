@@ -1,6 +1,5 @@
 """
 Matrices and Circuit Equations - Arithmetic Operator Drill
-Source: chapters/chapter9.tex, line 584
 """
 
 a + 2 - 3

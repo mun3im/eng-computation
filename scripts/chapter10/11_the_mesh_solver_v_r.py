@@ -1,7 +1,6 @@
 """
 Measurements, Files and Spreadsheets - Case Study: Mesh Circuits
 Subsection: The mesh\_solver(V, R)
-Source: chapters/chapter10.tex, line 580
 """
 
 def mesh_solver(V, R):

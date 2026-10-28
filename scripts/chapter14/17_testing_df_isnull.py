@@ -2,7 +2,6 @@
 Engineering Statistics and Data Analysis - Data Cleaning and Preprocessing
 Subsection: Data Inspection: Missing Values
 Example: Testing df.isnull()
-Source: chapters/chapter14.tex, line 889
 
 Output as printed in the book:
     Original DataFrame:

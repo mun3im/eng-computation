@@ -1,7 +1,6 @@
 """
 Measurements, Files and Spreadsheets - Case Study: Mesh Circuits
 Subsection: Writing the Results Back to Excel
-Source: chapters/chapter10.tex, line 700
 """
 
 # Create a DataFrame with only I1 and I2 to append to the original file

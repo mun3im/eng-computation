@@ -1,7 +1,6 @@
 """
 Matrices and Circuit Equations - Complex Number Arithmetic
 Example: - Conjugate Transpose vs.\ Pure Transpose
-Source: chapters/chapter9.tex, line 543
 
 Output as printed in the book:
     Array a:

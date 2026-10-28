@@ -2,7 +2,6 @@
 Engineering Statistics and Data Analysis - Basic Statistical Analysis
 Subsection: Choosing an Axis for Matrix Statistics
 Example: Temperature Data Analysis with Python
-Source: chapters/chapter14.tex, line 371
 """
 
 import numpy as np

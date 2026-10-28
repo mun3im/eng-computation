@@ -2,7 +2,6 @@
 Arrays and Vectorized Computation - Creating and Accessing Arrays
 Subsection: Understanding Vectors in NumPy: 1D and 2D Representations
 Example: Creating and Printing Vectors in NumPy
-Source: chapters/chapter6.tex, line 218
 
 Output as printed in the book:
     Row Vector (1D):

@@ -1,7 +1,6 @@
 """
 Engineering Statistics and Data Analysis - Introduction to Machine Learning
 Subsection: Linear Regression Classifier Example
-Source: chapters/chapter14.tex, line 1446
 
 Output as printed in the book:
     Predicted sales for temperature 45°C: 5847.63

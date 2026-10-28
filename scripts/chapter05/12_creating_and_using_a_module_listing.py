@@ -1,7 +1,6 @@
 """
 Functions and Reusable Calculations - Using Functions from External Files
 Subsection: Creating and Using a Module
-Source: chapters/chapter5.tex, line 510
 """
 
 # use_add.py

@@ -1,7 +1,6 @@
 """
 Decisions and Repetition - Boolean Foundations
 Subsection: Boolean Operator Drill
-Source: chapters/chapter4.tex, line 631
 """
 
 x = 3 > 2

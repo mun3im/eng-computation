@@ -1,7 +1,6 @@
 """
 Data Visualization - Statistical Plots
 Subsection: Grouped Box Plot
-Source: chapters/chapter7.tex, line 733
 """
 
 import numpy as np

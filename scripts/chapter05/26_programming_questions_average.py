@@ -1,7 +1,6 @@
 """
 Functions and Reusable Calculations - Questions
 Subsection: Programming Questions
-Source: chapters/chapter5.tex, line 1216
 """
 
 # list_stats.py

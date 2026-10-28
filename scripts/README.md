@@ -6,9 +6,9 @@ source into runnable `.py` files. Generated from edition **J1a**.
 **215 scripts** in 17 folders, named `NN_description.py`,
 where `NN` is the order of appearance in the chapter.
 
-Each file's docstring names the chapter and section it came from, the exact
-source file and line, and -- where the book prints one -- the output the book
-says the code produces. That makes every script checkable against the book.
+Each file's docstring names the chapter and section it came from and -- where
+the book prints one -- the output the book says the code produces. That makes
+every script checkable against the book.
 
 ## Running them
 

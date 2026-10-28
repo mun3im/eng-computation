@@ -1,7 +1,6 @@
 """
 Matrices and Circuit Equations - Worked Matrix Examples
 Example: - Matrix Addition, Subtraction, Multiplication, Division, Power, and Transpose
-Source: chapters/chapter9.tex, line 385
 
 Output as printed in the book:
     Matrix Right Division (np.linalg.solve(A.T, B.T).T):

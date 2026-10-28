@@ -1,7 +1,6 @@
 """
 Measurements, Files and Spreadsheets - Importing and Exporting Data in Python
 Subsection: Example: Greek Letter Conversion Table
-Source: chapters/chapter10.tex, line 390
 """
 
 # main.py

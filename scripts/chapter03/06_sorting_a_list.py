@@ -1,7 +1,6 @@
 """
 Numbers, Variables and Units - Collections: Holding Several Values
 Subsection: Sorting a List
-Source: chapters/chapter3.tex, line 302
 """
 
 # Sorting strings in alphabetical order

@@ -2,7 +2,6 @@
 Numerical Calculus and System Models - Polynomials and System Models
 Subsection: Polynomial Multiplication
 Example: Polynomial Multiplication
-Source: chapters/chapter13.tex, line 464
 """
 
 import numpy as np

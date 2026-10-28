@@ -1,6 +1,5 @@
 """
 Engineering Statistics and Data Analysis - Data Aggregation with groupby
-Source: chapters/chapter14.tex, line 832
 
 Output as printed in the book:
                mean  sum

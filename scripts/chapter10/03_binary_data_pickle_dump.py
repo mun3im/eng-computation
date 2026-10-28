@@ -1,7 +1,6 @@
 """
 Measurements, Files and Spreadsheets - Importing and Exporting Data in Python
 Subsection: Binary Data
-Source: chapters/chapter10.tex, line 310
 """
 
 import pickle

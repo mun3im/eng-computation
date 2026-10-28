@@ -1,7 +1,6 @@
 """
 Data Visualization - Specialized Plots
 Subsection: Stem Plot: Discrete Signals
-Source: chapters/chapter7.tex, line 481
 """
 
 import numpy as np

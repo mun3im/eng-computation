@@ -3,7 +3,6 @@ Engineering Statistics and Data Analysis - Basic Statistical Analysis
 Subsection: Choosing an Axis for Matrix Statistics
 Example: Temperature Data Analysis with Python
 Listing: The plotdata()
-Source: chapters/chapter14.tex, line 343
 """
 
 def plotdata(x, y, xlabel, ylabel):

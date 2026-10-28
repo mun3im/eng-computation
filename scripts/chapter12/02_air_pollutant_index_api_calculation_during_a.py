@@ -1,7 +1,6 @@
 """
 Interpolation, Curve Fitting and Calibration - Evaluating Unknown Values
 Example: Air Pollutant Index (API) Calculation During a Haze Crisis
-Source: chapters/chapter12.tex, line 230
 """
 
 import numpy as np

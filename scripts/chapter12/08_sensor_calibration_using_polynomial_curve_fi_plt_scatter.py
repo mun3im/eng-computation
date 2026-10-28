@@ -2,7 +2,6 @@
 Interpolation, Curve Fitting and Calibration - Curve Fitting Using Polynomials
 Subsection: Sensor Calibration
 Example: Sensor Calibration Using Polynomial Curve Fitting
-Source: chapters/chapter12.tex, line 559
 """
 
 # Plot the data and the fitted curve

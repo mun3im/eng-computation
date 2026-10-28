@@ -1,7 +1,6 @@
 """
 Data Visualization - Subplots
 Subsection: Subplot: Upper and Lower Plot
-Source: chapters/chapter7.tex, line 331
 """
 
 import numpy as np

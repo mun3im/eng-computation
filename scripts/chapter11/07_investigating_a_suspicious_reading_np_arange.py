@@ -2,7 +2,6 @@
 Handling Imperfect Engineering Data - Missing Data and Outliers
 Subsection: What Is an Outlier?
 Example: Investigating a Suspicious Reading
-Source: chapters/chapter11.tex, line 777
 """
 
 import numpy as np

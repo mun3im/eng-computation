@@ -2,7 +2,6 @@
 Decisions and Repetition - Loops
 Subsection: Returning Vectors as Output
 Example: b (using +=
-Source: chapters/chapter4.tex, line 1061
 
 Output as printed in the book:
     Q: [0.0, 1.0575, 1.9908, 2.8144]

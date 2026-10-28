@@ -1,7 +1,6 @@
 """
 Data Visualization - Statistical Plots
 Subsection: Scatter Box Plot
-Source: chapters/chapter7.tex, line 784
 """
 
 import numpy as np

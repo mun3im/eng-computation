@@ -2,7 +2,6 @@
 Engineering Statistics and Data Analysis - Data Sorting
 Subsection: Sorting in NumPy
 Example: NumPy Sorting Examples
-Source: chapters/chapter14.tex, line 430
 
 Output as printed in the book:
     Sorted 1D Array: [2 3 6 7 8]

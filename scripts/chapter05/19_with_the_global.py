@@ -1,7 +1,6 @@
 """
 Functions and Reusable Calculations - Variable Scope
 Subsection: With the global
-Source: chapters/chapter5.tex, line 819
 """
 
 count = 0  # global variable

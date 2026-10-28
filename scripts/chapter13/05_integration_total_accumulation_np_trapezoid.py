@@ -1,7 +1,6 @@
 """
 Numerical Calculus and System Models - Numerical Calculus
 Subsection: Integration (Total Accumulation)
-Source: chapters/chapter13.tex, line 303
 
 Output as printed in the book:
     Approximate area: 333.333500333834

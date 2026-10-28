@@ -1,7 +1,6 @@
 """
 Handling Imperfect Engineering Data - Missing Data and Outliers
 Subsection: Repairing a Signal by Interpolation
-Source: chapters/chapter11.tex, line 659
 
 Output as printed in the book:
     Number of missing samples: 7

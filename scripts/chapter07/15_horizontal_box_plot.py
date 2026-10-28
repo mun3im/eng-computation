@@ -1,7 +1,6 @@
 """
 Data Visualization - Statistical Plots
 Subsection: Horizontal Box Plot
-Source: chapters/chapter7.tex, line 760
 """
 
 import numpy as np

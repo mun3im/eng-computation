@@ -1,6 +1,5 @@
 """
 Complex Numbers as an Engineering Tool - Complex Numbers in Python
-Source: chapters/chapter8.tex, line 115
 
 Output as printed in the book:
     |Z| = 5.00, angle = 53.13 degrees

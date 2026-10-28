@@ -1,6 +1,5 @@
 """
 Matrices and Circuit Equations - Why Circuits Need Matrices
-Source: chapters/chapter9.tex, line 51
 
 Output as printed in the book:
     I1 = 60.345 mA

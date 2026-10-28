@@ -1,7 +1,6 @@
 """
 Decisions and Repetition - Boolean Foundations
 Subsection: Example - Relational Operators
-Source: chapters/chapter4.tex, line 145
 """
 
 # Relational Operators in Python

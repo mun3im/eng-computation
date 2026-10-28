@@ -2,7 +2,6 @@
 Engineering Statistics and Data Analysis - Data Cleaning and Preprocessing
 Subsection: Identifying and Handling Outliers with pandas
 Example: Detecting Outliers
-Source: chapters/chapter14.tex, line 1148
 
 Output as printed in the book:
     Final DataFrame after replacing NaN with the median:

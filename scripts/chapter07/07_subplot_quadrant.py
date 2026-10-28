@@ -1,7 +1,6 @@
 """
 Data Visualization - Subplots
 Subsection: Subplot: Quadrant
-Source: chapters/chapter7.tex, line 449
 """
 
 import numpy as np

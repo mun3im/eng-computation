@@ -1,7 +1,6 @@
 """
 Data Visualization - Statistical Plots
 Subsection: Notched Box Plot
-Source: chapters/chapter7.tex, line 709
 """
 
 import numpy as np

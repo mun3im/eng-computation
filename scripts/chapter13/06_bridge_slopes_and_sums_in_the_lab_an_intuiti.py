@@ -1,7 +1,6 @@
 """
 Numerical Calculus and System Models - Numerical Calculus
 Subsection: Bridge: Slopes and Sums in the Lab (An Intuitive Calculus Preview)
-Source: chapters/chapter13.tex, line 351
 
 Output as printed in the book:
     Accumulated charge (Ah): [2.  4.  5.6 6.8 7.6 8. ]

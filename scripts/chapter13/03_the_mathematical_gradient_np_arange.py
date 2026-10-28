@@ -1,7 +1,6 @@
 """
 Numerical Calculus and System Models - Numerical Calculus
 Subsection: The Mathematical Gradient
-Source: chapters/chapter13.tex, line 215
 
 Output as printed in the book:
     i_measured[0]   = 2.5532 mA

@@ -2,7 +2,6 @@
 Engineering Statistics and Data Analysis - Data Sorting
 Subsection: Sorting in NumPy
 Example: Finding the Top 2 Highest and Lowest Temperatures with Day
-Source: chapters/chapter14.tex, line 504
 """
 
 import numpy as np

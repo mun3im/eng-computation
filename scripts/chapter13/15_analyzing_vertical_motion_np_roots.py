@@ -2,7 +2,6 @@
 Numerical Calculus and System Models - Polynomials and System Models
 Subsection: Vertical Displacement
 Example: Analyzing Vertical Motion
-Source: chapters/chapter13.tex, line 749
 """
 
 import numpy as np

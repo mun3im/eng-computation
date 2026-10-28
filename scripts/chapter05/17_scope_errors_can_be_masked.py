@@ -1,7 +1,6 @@
 """
 Functions and Reusable Calculations - Variable Scope
 Subsection: Scope Errors Can Be Masked
-Source: chapters/chapter5.tex, line 767
 """
 
 x = 10  # global variable

@@ -1,7 +1,6 @@
 """
 Decisions and Repetition - Decisions
 Subsection: Nested if
-Source: chapters/chapter4.tex, line 841
 """
 
 # Input values for a, b, and c

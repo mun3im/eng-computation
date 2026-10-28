@@ -1,7 +1,6 @@
 """
 Data Visualization - 2-D Line Plots
 Subsection: Basic Line and Marker Styles
-Source: chapters/chapter7.tex, line 183
 """
 
 import numpy as np

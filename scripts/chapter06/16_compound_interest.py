@@ -1,7 +1,6 @@
 """
 Arrays and Vectorized Computation - Vectorizing Formulas
 Example: - Compound Interest
-Source: chapters/chapter6.tex, line 910
 
 Output as printed in the book:
     Single value calculation:

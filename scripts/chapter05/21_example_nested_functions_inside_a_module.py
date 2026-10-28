@@ -1,7 +1,6 @@
 """
 Functions and Reusable Calculations - Variable Scope
 Subsection: Example: Nested Functions Inside a Module
-Source: chapters/chapter5.tex, line 930
 """
 
 # my_module.py

@@ -1,7 +1,6 @@
 """
 Measurements, Files and Spreadsheets - Case Study: Mesh Circuits
 Subsection: Computing the Currents
-Source: chapters/chapter10.tex, line 666
 """
 
 # Iterate over each row in the NumPy array to compute currents

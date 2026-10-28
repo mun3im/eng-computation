@@ -1,6 +1,5 @@
 """
 Arrays and Vectorized Computation - Subscripting Notation in NumPy
-Source: chapters/chapter6.tex, line 276
 """
 
 import numpy as np

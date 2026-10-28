@@ -1,7 +1,6 @@
 """
 Measurements, Files and Spreadsheets - Case Study: Mesh Circuits
 Subsection: The separate\_ir(R)
-Source: chapters/chapter10.tex, line 545
 """
 
 # mesh_solver.py

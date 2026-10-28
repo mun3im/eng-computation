@@ -1,7 +1,6 @@
 """
 Arrays and Vectorized Computation - Array (Element-wise) Operations
 Example: - Element-wise Addition, Subtraction, Multiplication, Division, and Power
-Source: chapters/chapter6.tex, line 740
 
 Output as printed in the book:
     Element-wise Left Division (B / A):

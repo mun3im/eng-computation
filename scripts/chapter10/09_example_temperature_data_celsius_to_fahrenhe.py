@@ -1,7 +1,6 @@
 """
 Measurements, Files and Spreadsheets - Reading and Writing Spreadsheets
 Subsection: Example: Temperature Data (Celsius to Fahrenheit)
-Source: chapters/chapter10.tex, line 442
 """
 
 import pandas as pd

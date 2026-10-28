@@ -1,6 +1,5 @@
 """
 A First Look at Object-Oriented Python - EE Focus: Wrapping the Bench Recording
-Source: chapters/chapter15.tex, line 319
 """
 
 import numpy as np

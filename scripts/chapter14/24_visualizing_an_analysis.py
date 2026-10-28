@@ -1,6 +1,5 @@
 """
 Engineering Statistics and Data Analysis - Visualizing an Analysis
-Source: chapters/chapter14.tex, line 1318
 """
 
 import matplotlib.pyplot as plt

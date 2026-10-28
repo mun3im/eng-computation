@@ -2,7 +2,6 @@
 Numerical Calculus and System Models - Polynomials and System Models
 Subsection: System Stability
 Example: Stability Analysis of a PID Control System Using Polynomial Roots
-Source: chapters/chapter13.tex, line 808
 """
 
 # stability_check.py

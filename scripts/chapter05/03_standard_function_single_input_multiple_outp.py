@@ -1,7 +1,6 @@
 """
 Functions and Reusable Calculations - User-Defined Functions
 Subsection: Standard Function: Single Input, Multiple Output
-Source: chapters/chapter5.tex, line 284
 """
 
 def analyze_number(num):

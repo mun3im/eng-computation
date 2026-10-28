@@ -2,7 +2,6 @@
 Handling Imperfect Engineering Data - Writing Robust Code
 Subsection: Handling User Input Safely
 Listing: Handling multiple possible exceptions from user input
-Source: chapters/chapter11.tex, line 430
 """
 
 try:

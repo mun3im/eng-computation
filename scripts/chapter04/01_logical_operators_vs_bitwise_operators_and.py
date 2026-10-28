@@ -1,7 +1,6 @@
 """
 Decisions and Repetition - Boolean Foundations
 Subsection: Logical Operators vs.\ Bitwise Operators: and
-Source: chapters/chapter4.tex, line 131
 """
 
 True and False  # Output: False

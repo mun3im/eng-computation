@@ -1,6 +1,5 @@
 """
 Measurements, Files and Spreadsheets - Requesting Prompt Input
-Source: chapters/chapter10.tex, line 97
 """
 
 # Request user input for height and width as numbers

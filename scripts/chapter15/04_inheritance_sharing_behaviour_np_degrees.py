@@ -1,6 +1,5 @@
 """
 A First Look at Object-Oriented Python - Inheritance: Sharing Behaviour
-Source: chapters/chapter15.tex, line 288
 
 Output as printed in the book:
     R: Z = 40.00+0.00j ohm, |Z| = 40.00 ohm

@@ -2,7 +2,6 @@
 Engineering Statistics and Data Analysis - Data Cleaning and Preprocessing
 Subsection: Identifying and Handling Outliers with pandas
 Example: Detecting Outliers
-Source: chapters/chapter14.tex, line 1059
 
 Output as printed in the book:
     DataFrame with Outlier Column:

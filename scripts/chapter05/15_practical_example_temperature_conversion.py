@@ -1,7 +1,6 @@
 """
 Functions and Reusable Calculations - Using Functions from External Files
 Subsection: Practical Example: Temperature Conversion
-Source: chapters/chapter5.tex, line 582
 """
 
 import numpy as np

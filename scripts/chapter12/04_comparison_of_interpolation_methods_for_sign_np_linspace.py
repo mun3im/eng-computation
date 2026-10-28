@@ -1,7 +1,6 @@
 """
 Interpolation, Curve Fitting and Calibration - Increasing Signal Detail
 Example: Comparison of Interpolation Methods for Signal Processing (Digital-to-Analog Converter)
-Source: chapters/chapter12.tex, line 393
 """
 
 import numpy as np

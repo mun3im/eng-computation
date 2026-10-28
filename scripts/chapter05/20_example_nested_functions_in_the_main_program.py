@@ -1,7 +1,6 @@
 """
 Functions and Reusable Calculations - Variable Scope
 Subsection: Example: Nested Functions in the Main Program File
-Source: chapters/chapter5.tex, line 892
 """
 
 # main_program.py

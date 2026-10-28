@@ -1,6 +1,5 @@
 """
 Measurements, Files and Spreadsheets - Reading and Writing Spreadsheets
-Source: chapters/chapter10.tex, line 408
 """
 
 # Reading data from a spreadsheet

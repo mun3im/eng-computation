@@ -1,7 +1,6 @@
 """
 Numbers, Variables and Units - Beyond Simple Numbers
 Subsection: String Methods
-Source: chapters/chapter3.tex, line 155
 """
 
 text = " Python Programming "

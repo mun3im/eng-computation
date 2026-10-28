@@ -1,7 +1,6 @@
 """
 Data Visualization - Statistical Plots
 Subsection: Basic Box Plot
-Source: chapters/chapter7.tex, line 685
 """
 
 import numpy as np

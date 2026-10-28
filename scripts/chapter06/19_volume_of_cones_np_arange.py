@@ -1,7 +1,6 @@
 """
 Arrays and Vectorized Computation - Vectorizing Formulas
 Example: - Volume of Cones
-Source: chapters/chapter6.tex, line 1000
 
 Output as printed in the book:
     Number of samples: 101

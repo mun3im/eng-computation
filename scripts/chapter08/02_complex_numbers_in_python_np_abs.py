@@ -1,6 +1,5 @@
 """
 Complex Numbers as an Engineering Tool - Complex Numbers in Python
-Source: chapters/chapter8.tex, line 97
 """
 
 import numpy as np

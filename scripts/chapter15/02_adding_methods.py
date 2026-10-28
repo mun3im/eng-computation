@@ -1,6 +1,5 @@
 """
 A First Look at Object-Oriented Python - Adding Methods
-Source: chapters/chapter15.tex, line 188
 
 Output as printed in the book:
     (40+0j)

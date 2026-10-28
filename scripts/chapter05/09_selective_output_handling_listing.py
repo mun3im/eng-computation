@@ -1,7 +1,6 @@
 """
 Functions and Reusable Calculations - User-Defined Functions
 Subsection: Selective Output Handling
-Source: chapters/chapter5.tex, line 446
 """
 
 # Case 2a: Requesting only the first output

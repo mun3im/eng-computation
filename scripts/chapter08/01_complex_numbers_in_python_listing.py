@@ -1,6 +1,5 @@
 """
 Complex Numbers as an Engineering Tool - Complex Numbers in Python
-Source: chapters/chapter8.tex, line 85
 """
 
 Z1 = 3 + 4j

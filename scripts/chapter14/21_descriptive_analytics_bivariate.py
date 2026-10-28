@@ -1,7 +1,6 @@
 """
 Engineering Statistics and Data Analysis - Data Analysis
 Subsection: Descriptive Analytics (Bivariate)
-Source: chapters/chapter14.tex, line 1240
 """
 
 import matplotlib.pyplot as plt

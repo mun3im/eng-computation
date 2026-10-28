@@ -1,7 +1,6 @@
 """
 Engineering Statistics and Data Analysis - Understanding Engineering Measurements
 Subsection: Population and Sample
-Source: chapters/chapter14.tex, line 72
 
 Output as printed in the book:
     Population variance: 1.5881632653061184

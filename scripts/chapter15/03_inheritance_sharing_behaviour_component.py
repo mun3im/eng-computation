@@ -1,6 +1,5 @@
 """
 A First Look at Object-Oriented Python - Inheritance: Sharing Behaviour
-Source: chapters/chapter15.tex, line 212
 """
 
 import numpy as np

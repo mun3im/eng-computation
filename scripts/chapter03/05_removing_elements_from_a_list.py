@@ -1,7 +1,6 @@
 """
 Numbers, Variables and Units - Collections: Holding Several Values
 Subsection: Removing Elements from a List
-Source: chapters/chapter3.tex, line 282
 """
 
 # Removing a string by value

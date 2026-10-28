@@ -1,7 +1,6 @@
 """
 Functions and Reusable Calculations - User-Defined Functions
 Subsection: Selective Output Handling
-Source: chapters/chapter5.tex, line 425
 """
 
 # Define a function that returns multiple outputs

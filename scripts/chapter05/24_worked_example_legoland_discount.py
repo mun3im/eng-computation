@@ -1,7 +1,6 @@
 """
 Functions and Reusable Calculations - Testing Functions
 Subsection: Worked Example: Legoland Discount
-Source: chapters/chapter5.tex, line 1126
 """
 
 # BUGGY implementation (off-by-one)

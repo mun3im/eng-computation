@@ -2,7 +2,6 @@
 Interpolation, Curve Fitting and Calibration - Curve Fitting Using Polynomials
 Subsection: Data Modelling
 Example: Polynomial Curve Fitting with R-Squared Evaluation for Water Usage Prediction
-Source: chapters/chapter12.tex, line 728
 """
 
 import pandas as pd

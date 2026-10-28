@@ -2,7 +2,6 @@
 Engineering Statistics and Data Analysis - Basic Statistical Analysis
 Subsection: Choosing an Axis for Matrix Statistics
 Example: Calculating the Mean of the Entire Matrix Using NumPy
-Source: chapters/chapter14.tex, line 242
 """
 
 import numpy as np

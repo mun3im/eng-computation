@@ -1,6 +1,5 @@
 """
 Data Visualization - Plotting the Bench Experiment
-Source: chapters/chapter7.tex, line 823
 """
 
 import pandas as pd

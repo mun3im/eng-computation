@@ -1,7 +1,6 @@
 """
 Engineering Statistics and Data Analysis - Introduction to Machine Learning
 Subsection: Data Cleaning and Scaling for Machine Learning
-Source: chapters/chapter14.tex, line 1361
 """
 
 import pandas as pd

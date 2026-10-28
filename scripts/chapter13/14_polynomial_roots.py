@@ -2,7 +2,6 @@
 Numerical Calculus and System Models - Polynomials and System Models
 Subsection: Polynomial Roots
 Example: Polynomial Roots
-Source: chapters/chapter13.tex, line 705
 """
 
 import numpy as np

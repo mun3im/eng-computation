@@ -1,7 +1,6 @@
 """
 Measurements, Files and Spreadsheets - CSV Files
 Subsection: Example: CSV for Temperature Data
-Source: chapters/chapter10.tex, line 743
 """
 
 import pandas as pd

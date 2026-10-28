@@ -2,7 +2,6 @@
 Interpolation, Curve Fitting and Calibration - Curve Fitting Using Polynomials
 Subsection: Data Trends
 Example: Predicting Internet Usage with Polynomial Curve Fitting
-Source: chapters/chapter12.tex, line 677
 """
 
 # Adjust title, labels, and grid

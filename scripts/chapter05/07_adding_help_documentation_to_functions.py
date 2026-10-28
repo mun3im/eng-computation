@@ -1,7 +1,6 @@
 """
 Functions and Reusable Calculations - User-Defined Functions
 Subsection: Adding Help Documentation to Functions
-Source: chapters/chapter5.tex, line 404
 """
 
 def calculate_circle_area(radius):

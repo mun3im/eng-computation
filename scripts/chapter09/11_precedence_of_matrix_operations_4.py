@@ -2,7 +2,6 @@
 Matrices and Circuit Equations - Worked Matrix Examples
 Subsection: Matrix Precedence
 Example: Precedence of Matrix Operations
-Source: chapters/chapter9.tex, line 514
 
 Output as printed in the book:
     Precedence 5 (Multiplication before Addition - A @ B + B):

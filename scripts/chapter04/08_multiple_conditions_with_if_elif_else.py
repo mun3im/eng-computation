@@ -1,7 +1,6 @@
 """
 Decisions and Repetition - Decisions
 Subsection: Multiple Conditions with if-elif-else
-Source: chapters/chapter4.tex, line 808
 
 Output as printed in the book:
     Input a value: 1

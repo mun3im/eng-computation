@@ -2,7 +2,6 @@
 Arrays and Vectorized Computation - Subscripting Notation in NumPy
 Subsection: Accessing Elements in Multi-Dimensional Arrays
 Example: Selecting Elements from Specific Dimensions
-Source: chapters/chapter6.tex, line 552
 
 Output as printed in the book:
     A[i, j, :] - Selects all elements in the ith row and jth column:

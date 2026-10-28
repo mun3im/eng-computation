@@ -2,7 +2,6 @@
 Decisions and Repetition - Loops
 Subsection: while Loop
 Example: Compound Interest Calculation using a while Loop
-Source: chapters/chapter4.tex, line 1000
 
 Output as printed in the book:
     n = 2, B = 116.64

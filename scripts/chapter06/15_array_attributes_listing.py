@@ -1,7 +1,6 @@
 """
 Arrays and Vectorized Computation - Array (Element-wise) Operations
 Example: - Array Attributes
-Source: chapters/chapter6.tex, line 787
 
 Output as printed in the book:
     Total number of elements in the array:

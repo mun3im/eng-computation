@@ -1,6 +1,5 @@
 """
 Interpolation, Curve Fitting and Calibration - Straight-Line Trendlines
-Source: chapters/chapter12.tex, line 477
 
 Output as printed in the book:
     Best-fit line: y = 2.01x + 1.03

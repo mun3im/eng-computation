@@ -1,7 +1,6 @@
 """
 Data Visualization - Specialized Plots
 Subsection: Logarithmic Plots
-Source: chapters/chapter7.tex, line 543
 """
 
 import numpy as np

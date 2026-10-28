@@ -2,7 +2,6 @@
 Data Visualization - Specialized Plots
 Subsection: An Engineering Application: The Bode Plot
 Example: Bode Plot of an RC Low-Pass Filter
-Source: chapters/chapter7.tex, line 596
 
 Output as printed in the book:
     Cutoff frequency: 72.1 Hz

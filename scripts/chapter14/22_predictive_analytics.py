@@ -1,7 +1,6 @@
 """
 Engineering Statistics and Data Analysis - Data Analysis
 Subsection: Predictive Analytics
-Source: chapters/chapter14.tex, line 1275
 
 Output as printed in the book:
     Predicted sales: [2693.00225734]

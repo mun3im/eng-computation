@@ -2,7 +2,6 @@
 Decisions and Repetition - Loops
 Subsection: The break Statement
 Example: Random Number Guessing Game using a while Loop and break Statement
-Source: chapters/chapter4.tex, line 1158
 
 Output as printed in the book:
     Guess the number: 2

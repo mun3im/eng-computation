@@ -1,7 +1,6 @@
 """
 Your First Python Programs - Data Types
 Subsection: Reading the Values from the Console
-Source: chapters/chapter2.tex, line 381
 """
 
 # Read the circuit values from the user

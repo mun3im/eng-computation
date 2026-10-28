@@ -1,7 +1,6 @@
 """
 Numerical Calculus and System Models - Numerical Calculus
 Subsection: Integration (Total Accumulation)
-Source: chapters/chapter13.tex, line 255
 """
 
 import numpy as np

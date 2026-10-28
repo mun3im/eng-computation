@@ -1,7 +1,6 @@
 """
 Arrays and Vectorized Computation - Subscripting Notation in NumPy
 Subsection: Array Splitting Practice
-Source: chapters/chapter6.tex, line 653
 """
 
 print(A[1, :])        # [5 6 7 8]

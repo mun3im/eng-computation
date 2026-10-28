@@ -1,7 +1,6 @@
 """
 Arrays and Vectorized Computation - Vectorizing Formulas
 Example: - Vertical Displacement
-Source: chapters/chapter6.tex, line 947
 
 Output as printed in the book:
     Elapsed time (t): [0 1 2 3 4 5]

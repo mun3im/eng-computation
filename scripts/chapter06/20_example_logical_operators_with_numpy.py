@@ -1,7 +1,6 @@
 """
 Arrays and Vectorized Computation - Boolean Operations on NumPy Arrays
 Subsection: Example - Logical Operators with NumPy
-Source: chapters/chapter6.tex, line 1065
 """
 
 import numpy as np

@@ -2,7 +2,6 @@
 Decisions and Repetition - Loops
 Subsection: Nested Loops
 Example: Compound Interest with Nested Loops for Multiple Principal and Time Periods
-Source: chapters/chapter4.tex, line 1089
 
 Output as printed in the book:
     For a = 100, n = 2, B = 118.81

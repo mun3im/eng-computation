@@ -2,7 +2,6 @@
 Numerical Calculus and System Models - Polynomials and System Models
 Subsection: Polynomial Division
 Example: Polynomial Division
-Source: chapters/chapter13.tex, line 486
 """
 
 import numpy as np

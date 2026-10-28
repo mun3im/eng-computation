@@ -1,7 +1,6 @@
 """
 Numerical Calculus and System Models - Polynomials and System Models
 Subsection: Polynomial Division
-Source: chapters/chapter13.tex, line 519
 """
 
 import numpy as np

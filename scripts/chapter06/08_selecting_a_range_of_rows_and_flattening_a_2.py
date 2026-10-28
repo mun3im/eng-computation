@@ -2,7 +2,6 @@
 Arrays and Vectorized Computation - Subscripting Notation in NumPy
 Subsection: Slicing and Vectorization in NumPy
 Example: Selecting a Range of Rows and Flattening a 2D Array
-Source: chapters/chapter6.tex, line 596
 
 Output as printed in the book:
     A[j:k] - Selects rows from index j to k-1:

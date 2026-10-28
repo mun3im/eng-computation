@@ -1,7 +1,6 @@
 """
 Numbers, Variables and Units - Collections: Holding Several Values
 Subsection: Adding Elements to a List
-Source: chapters/chapter3.tex, line 263
 """
 
 # Adding a single string using append

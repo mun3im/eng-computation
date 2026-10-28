@@ -1,7 +1,6 @@
 """
 Engineering Statistics and Data Analysis - Understanding Engineering Measurements
 Subsection: Mean, Range, Variance and Standard Deviation
-Source: chapters/chapter14.tex, line 108
 
 Output as printed in the book:
     Mean:               100.24 ohms

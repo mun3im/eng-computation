@@ -1,7 +1,6 @@
 """
 Functions and Reusable Calculations - User-Defined Functions
 Subsection: Multiple Local Functions
-Source: chapters/chapter5.tex, line 351
 """
 
 def process_order(quantity, price_per_item):

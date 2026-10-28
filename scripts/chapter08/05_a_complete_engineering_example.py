@@ -1,6 +1,5 @@
 """
 Complex Numbers as an Engineering Tool - A Complete Engineering Example
-Source: chapters/chapter8.tex, line 240
 
 Output as printed in the book:
     Total Impedance (Z): 40.0 + 22.35j Ohms

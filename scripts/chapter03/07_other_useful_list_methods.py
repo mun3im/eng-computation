@@ -1,7 +1,6 @@
 """
 Numbers, Variables and Units - Collections: Holding Several Values
 Subsection: Other Useful List Methods
-Source: chapters/chapter3.tex, line 317
 """
 
 # Joining list elements into a single string

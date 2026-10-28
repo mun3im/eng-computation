@@ -1,6 +1,5 @@
 """
 A First Look at Object-Oriented Python - Defining a Class
-Source: chapters/chapter15.tex, line 113
 
 Output as printed in the book:
     R1 40.0

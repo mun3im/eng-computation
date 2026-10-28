@@ -1,7 +1,6 @@
 """
 Numerical Calculus and System Models - Numerical Calculus
 Subsection: Visualizing the Derivative Limit
-Source: chapters/chapter13.tex, line 88
 
 Output as printed in the book:
     Exact derivative (cos(pi/4)): 0.707107

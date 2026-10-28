@@ -2,7 +2,6 @@
 Arrays and Vectorized Computation - Subscripting Notation in NumPy
 Subsection: Subscripting: Using the Colon Operator in NumPy
 Example: Selecting Columns, Rows, and Subarrays
-Source: chapters/chapter6.tex, line 492
 
 Output as printed in the book:
     A[:, j] - Selects the jth column of A:

@@ -1,7 +1,6 @@
 """
 Numerical Calculus and System Models - Numerical Calculus
 Subsection: The Mathematical Gradient
-Source: chapters/chapter13.tex, line 150
 """
 
 import numpy as np

@@ -2,7 +2,6 @@
 Handling Imperfect Engineering Data - Missing Data and Outliers
 Subsection: Handling Missing Data
 Example: Handling Missing Data and Interpolation
-Source: chapters/chapter11.tex, line 707
 """
 
 import numpy as np

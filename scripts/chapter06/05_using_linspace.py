@@ -2,7 +2,6 @@
 Arrays and Vectorized Computation - Subscripting Notation in NumPy
 Subsection: Creating Arrays: linspace
 Example: Using linspace
-Source: chapters/chapter6.tex, line 438
 
 Output as printed in the book:
     Array created with linspace:

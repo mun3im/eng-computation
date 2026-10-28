@@ -1,7 +1,6 @@
 """
 Numbers, Variables and Units - Beyond Simple Numbers
 Subsection: Creating Strings
-Source: chapters/chapter3.tex, line 113
 """
 
 # Single quotes

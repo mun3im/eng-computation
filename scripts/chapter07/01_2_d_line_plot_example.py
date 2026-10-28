@@ -1,7 +1,6 @@
 """
 Data Visualization - 2-D Line Plots
 Subsection: 2-D Line Plot Example
-Source: chapters/chapter7.tex, line 91
 """
 
 import numpy as np

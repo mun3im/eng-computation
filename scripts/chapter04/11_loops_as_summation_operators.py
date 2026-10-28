@@ -1,7 +1,6 @@
 """
 Decisions and Repetition - Loops
 Subsection: Loops as Summation Operators (
-Source: chapters/chapter4.tex, line 952
 """
 
 total_sum = 0           # The running total, starts at 0 -- this

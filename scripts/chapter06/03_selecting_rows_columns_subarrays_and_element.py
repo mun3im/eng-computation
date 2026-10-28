@@ -1,7 +1,6 @@
 """
 Arrays and Vectorized Computation - Subscripting Notation in NumPy
 Example: Selecting Rows, Columns, Subarrays, and Elements with Different Step Sizes
-Source: chapters/chapter6.tex, line 297
 
 Output as printed in the book:
     First Row:

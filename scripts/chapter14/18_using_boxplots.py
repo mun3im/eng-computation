@@ -1,7 +1,6 @@
 """
 Engineering Statistics and Data Analysis - Data Cleaning and Preprocessing
 Subsection: Using Boxplots
-Source: chapters/chapter14.tex, line 1036
 """
 
 import matplotlib.pyplot as plt

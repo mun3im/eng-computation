@@ -35,7 +35,7 @@ The 16 chapters are grouped into four parts, one chapter per teaching week, foll
 Every listing in the book longer than five lines — 215 of them — is available
 as a standalone Python file under [`scripts/`](scripts/), grouped by chapter and
 named for the section it comes from. Each file's docstring records the chapter,
-the section, the source location, and the output the book prints, so a listing
+the section, and the output the book prints, so a listing
 can be run and compared against the page without retyping it.
 
 ```sh

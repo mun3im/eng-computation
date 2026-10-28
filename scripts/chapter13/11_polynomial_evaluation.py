@@ -2,7 +2,6 @@
 Numerical Calculus and System Models - Polynomials and System Models
 Subsection: Polynomial Evaluation
 Example: Polynomial Evaluation
-Source: chapters/chapter13.tex, line 629
 """
 
 import numpy as np

@@ -1,7 +1,6 @@
 """
 Engineering Statistics and Data Analysis - Introduction to Machine Learning
 Subsection: Simple Decision Tree Classifier
-Source: chapters/chapter14.tex, line 1415
 
 Output as printed in the book:
     'high'

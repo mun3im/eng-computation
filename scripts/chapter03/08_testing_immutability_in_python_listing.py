@@ -1,7 +1,6 @@
 """
 Numbers, Variables and Units - Mutability
 Subsection: Testing Immutability in Python
-Source: chapters/chapter3.tex, line 447
 """
 
 # Step 1: Assign a variable to an integer value

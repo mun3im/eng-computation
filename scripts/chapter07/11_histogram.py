@@ -1,7 +1,6 @@
 """
 Data Visualization - Statistical Plots
 Subsection: Histogram
-Source: chapters/chapter7.tex, line 660
 """
 
 import numpy as np

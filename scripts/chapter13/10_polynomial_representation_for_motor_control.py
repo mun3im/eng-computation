@@ -2,7 +2,6 @@
 Numerical Calculus and System Models - Polynomials and System Models
 Subsection: System Function
 Example: Polynomial Representation for Motor Control using a PID Controller
-Source: chapters/chapter13.tex, line 592
 """
 
 import numpy as np
