@@ -4,7 +4,7 @@ Every code listing longer than five lines, extracted from the book's LaTeX
 source into runnable `.py` files. Generated from edition **J2** (second
 edition).
 
-**218 scripts** in 18 folders, named `NN_description.py`,
+**235 scripts** in 18 folders, named `NN_description.py`,
 where `NN` is the order of appearance in the chapter. Each file's docstring
 names the chapter and section it came from and, where the book prints one,
 the output the book says the code produces. That makes every script
@@ -48,9 +48,9 @@ files with `git checkout -- scripts/chapter10/`.
 
 | Status | Count | Meaning |
 |---|---|---|
-| ok | 161 | Runs clean on its own. |
+| ok | 177 | Runs clean on its own. |
 | needs earlier listing | 43 | Continues an earlier listing; needs names defined there. |
-| needs input | 8 | Calls `input()`, so it waits for the user. |
+| needs input | 9 | Calls `input()`, so it waits for the user. |
 | raises by design | 4 | Deliberately raises, to demonstrate an error. |
 | teaching failure | 1 | Fails on purpose to show a scope error. |
 | needs a data file | 1 | The cheat-sheet placeholder `d.csv`. |
@@ -128,23 +128,30 @@ exercises and for anyone following the original course.
 | `01_translating_math_notation_to_code_math_sqrt.py` | -- |  |
 | `02_translating_math_notation_to_code_listing.py` | -- |  |
 | `03_reading_the_values_from_the_console.py` | yes | needs input |
+| `04_power_in_a_resistor.py` | yes |  |
+| `05_updating_a_variable.py` | yes |  |
+| `06_whole_number_division.py` | yes |  |
+| `07_from_text_to_a_number.py` | yes | needs input |
 
 ### `chapter03/` --- Numbers, Variables and Units
 
 | Script | Book output? | Status |
 |---|---|---|
-| `01_basic_operations_with_complex_numbers.py` | -- |  |
-| `02_creating_strings.py` | -- |  |
-| `03_string_methods.py` | -- |  |
-| `04_adding_elements_to_a_list.py` | -- |  |
-| `05_removing_elements_from_a_list.py` | -- |  |
-| `06_sorting_a_list.py` | -- |  |
-| `07_other_useful_list_methods.py` | -- |  |
-| `08_testing_immutability_in_python_listing.py` | -- |  |
-| `09_testing_immutability_in_python_2.py` | -- |  |
-| `10_scientific_notation_in_python.py` | -- |  |
-| `11_working_consistently_in_base_units.py` | yes |  |
-| `12_naming_conventions.py` | -- |  |
+| `01_creating_strings.py` | -- |  |
+| `02_string_methods.py` | -- |  |
+| `03_adding_elements_to_a_list.py` | -- |  |
+| `04_removing_elements_from_a_list.py` | -- |  |
+| `05_sorting_a_list.py` | -- |  |
+| `06_other_useful_list_methods.py` | -- |  |
+| `07_testing_immutability_in_python_listing.py` | -- |  |
+| `08_testing_immutability_in_python_2.py` | -- |  |
+| `09_scientific_notation_in_python.py` | -- |  |
+| `10_working_consistently_in_base_units.py` | yes |  |
+| `11_naming_conventions.py` | -- |  |
+| `12_collecting_readings_in_a_list.py` | yes |  |
+| `13_splitting_a_line_of_text.py` | yes |  |
+| `14_a_dictionary_of_components.py` | yes |  |
+| `15_slicing_a_recording.py` | yes |  |
 
 ### `chapter04/` --- Decisions and Repetition
 
@@ -167,6 +174,12 @@ exercises and for anyone following the original course.
 | `15_compound_interest_with_nested_loops_for_mult.py` | yes |  |
 | `16_the_continue_statement.py` | yes |  |
 | `17_random_number_guessing_game_using_a_while_lo.py` | yes | needs input |
+| `18_classifying_a_battery_voltage.py` | yes |  |
+| `19_counting_out_of_tolerance_resistors.py` | yes |  |
+| `20_finding_the_largest_value_by_hand.py` | yes |  |
+| `21_a_while_loop_that_stops.py` | yes |  |
+| `22_drill_basic_programming_listing.py` | -- |  |
+| `23_drill_basic_programming_2.py` | -- |  |
 
 ### `chapter05/` --- Functions and Reusable Calculations
 
@@ -196,8 +209,12 @@ exercises and for anyone following the original course.
 | `22_nested_enclosing_scope_a_simple_recap.py` | -- |  |
 | `23_simple_function_test.py` | -- |  |
 | `24_worked_example_legoland_discount.py` | -- | raises by design |
-| `25_programming_questions_is_palindrome.py` | -- |  |
-| `26_programming_questions_average.py` | -- |  |
+| `25_a_function_for_ohm_s_law.py` | yes |  |
+| `26_print_or_return.py` | yes |  |
+| `27_default_values_for_parameters.py` | yes |  |
+| `28_functions_working_together.py` | yes |  |
+| `29_programming_questions_is_palindrome.py` | -- |  |
+| `30_programming_questions_average.py` | -- |  |
 
 ### `chapter06/` --- Arrays and Vectorised Computation
 

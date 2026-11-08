@@ -5,7 +5,8 @@ Data Visualisation - Basic Box Plot
 import numpy as np
 import matplotlib.pyplot as plt
 
-data = np.random.randn(100, 3)
+rng = np.random.default_rng(0)   # fixed seed: the same data every run
+data = rng.standard_normal((100, 3))
 plt.figure()
 plt.boxplot(data)
 plt.title('Basic Box Plot')

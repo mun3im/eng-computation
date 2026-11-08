@@ -8,6 +8,7 @@ Z = 3 + 4j
 
 print("Real part:", Z.real)             # 3.0
 print("Imaginary part:", Z.imag)        # 4.0
+print("Conjugate:", Z.conjugate())      # (3-4j)
 
 magnitude = abs(Z)                      # or np.abs(Z)
 print(f"Magnitude: {magnitude:.2f}")    # 5.00

@@ -12,7 +12,7 @@ Examples are drawn from electrical engineering — voltage, current, resistance,
 
 ## Chapter flow
 
-The second edition (J2) of the book has 17 chapters: four parts, one chapter per teaching week, followed by three non-week chapters. The slide decks below follow the first edition's 16-chapter numbering.
+The second edition (J2) of the book has 16 chapters: four parts, one chapter per teaching week, followed by two non-week enrichment chapters. The slide decks follow the same numbering.
 
 ![Chapter flow diagram](chapter-flow.svg)
 
@@ -20,7 +20,7 @@ The second edition (J2) of the book has 17 chapters: four parts, one chapter per
 - **Part II — Seeing Engineering Mathematics** (Ch 6–9): arrays as engineering data, graphing functions and signals, complex numbers for AC circuits, and matrices for circuit equations.
 - **Part III — Working with Engineering Data** (Ch 10–12): measurements and files, errors and imperfect data, and interpolation, curve fitting and calibration.
 - **Part IV — From Models to Prediction** (Ch 13–14): numerical calculus and system models, then engineering statistics and data analysis.
-- **Enrichment** (Ch 15–17, outside the taught weeks): a first look at machine learning, a short introduction to object-oriented Python, and integrative mini-projects combining the whole book.
+- **Enrichment** (Ch 15–16, outside the taught weeks): a first look at machine learning, and a short introduction to object-oriented Python. The first edition's mini-projects chapter was removed in J2, so that instructors can set their own projects.
 
 ## Repository contents
 
@@ -32,7 +32,7 @@ The second edition (J2) of the book has 17 chapters: four parts, one chapter per
 
 ## Code listings
 
-Every listing in the J2 book longer than five lines — 218 of them — is available
+Every listing in the J2 book longer than five lines — 235 of them — is available
 as a standalone Python file under [`scripts/`](scripts/), grouped by chapter and
 named for the section it comes from. Each file's docstring records the chapter,
 the section, and the output the book prints, so a listing
@@ -43,7 +43,7 @@ cd scripts/chapter08
 python3 04_a_simple_series_circuit.py
 ```
 
-`scripts/run_all.py` runs them all and reports which execute standalone; 161 do.
+`scripts/run_all.py` runs them all and reports which execute standalone; 177 do.
 The rest continue an earlier listing or wait on `input()`. The helper modules
 the book imports by name (`mesh_solver.py`, `stability_check.py`, and others)
 are included, and so is every data file the listings read. See [`scripts/README.md`](scripts/README.md) for the full index

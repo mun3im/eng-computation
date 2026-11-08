@@ -19,11 +19,11 @@ with Python*. Source files are in [`../src/`](../src/) — see
 | [`ecp11.pdf`](ecp11.pdf) | 38 | Handling Imperfect Engineering Data |
 | [`ecp12.pdf`](ecp12.pdf) | 43 | Interpolation, Curve Fitting and Calibration |
 | [`ecp13.pdf`](ecp13.pdf) | 40 | Numerical Calculus and System Models |
-| [`ecp14.pdf`](ecp14.pdf) | 44 | Engineering Statistics and Data Analysis |
-| [`ecp15.pdf`](ecp15.pdf) | 34 | A First Look at Object-Oriented Python |
-| [`ecp16.pdf`](ecp16.pdf) | 24 | Engineering Mini-Projects |
+| [`ecp14.pdf`](ecp14.pdf) | 39 | Engineering Statistics and Data Analysis |
+| [`ecp15.pdf`](ecp15.pdf) | 17 | A First Look at Machine Learning |
+| [`ecp16.pdf`](ecp16.pdf) | 34 | A First Look at Object-Oriented Python |
 
-**Total: 546 pages across 16 decks.**
+**Total: 534 pages across 16 decks.** The decks follow the second (J2) edition: machine learning has its own deck (15), OOP moved to deck 16, and the first edition's mini-projects deck was removed.
 
 > **Note:** `ecp08.pdf`'s slide title, "Complex Numbers and AC Circuits," is
 > slightly out of date — the book chapter it covers was later retitled

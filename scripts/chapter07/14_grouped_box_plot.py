@@ -6,8 +6,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Generate random data for two groups
-group1 = np.random.randn(100)
-group2 = np.random.randn(100) + 2
+rng = np.random.default_rng(0)
+group1 = rng.standard_normal(100)
+group2 = rng.standard_normal(100) + 2
 
 # Create the grouped box plot
 plt.boxplot([group1, group2])

@@ -146,9 +146,9 @@
     \end{block}
 
     \vspace{2mm}
-    \begin{alertblock}{Machine learning is an optional preview}
-        The closing section on ML classifiers previews where this path
-        leads in later courses. It is \alert{not required} to complete
+    \begin{alertblock}{Machine learning comes next}
+        Chapter 15, \emph{A First Look at Machine Learning}, builds on
+        this path. It is an enrichment chapter, \alert{not required} for
         the core path above.
     \end{alertblock}
 \end{frame}
@@ -759,132 +759,21 @@ print(model.predict([[32]]))   # Predicted sales: [2693.0]
 \end{frame}
 
 %===============================================================================
-\section{Machine Learning (Optional Preview)}
+\section{Where This Leaves You}
 %===============================================================================
-
-\begin{frame}{Machine Learning: An Optional Preview}
-    \leavevmode
-    \begin{alertblock}{Before you continue}
-        This section previews where the core path leads in later
-        courses. It is \alert{not required} to understand the rest of
-        this course --- treat it as a survey, not a deep dive.
-    \end{alertblock}
-
-    \vspace{3mm}
-    Predictive analytics uses machine learning: models learn from
-    historical data and are used for prediction and classification,
-    without being explicitly programmed for the specific task.
-\end{frame}
-
-\begin{frame}{Regression vs.\ Classification}
-    \leavevmode
-    Predictive models divide into two kinds, by what they produce:
-
-    \vspace{2mm}
-    \begin{columns}[t]
-        \begin{column}{.5\textwidth}
-            \begin{block}{Regression}
-                \small Predicts a \alert{quantity} --- a temperature, a
-                voltage, a time constant. \\
-                \emph{``How hot will this motor get?''}
-            \end{block}
-        \end{column}
-        \begin{column}{.5\textwidth}
-            \begin{block}{Classification}
-                \small Predicts a \alert{category} --- healthy or
-                faulty, pass or fail. \\
-                \emph{``Is this motor overheating?''}
-            \end{block}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-\begin{frame}[fragile]{A Simple Decision Tree}
-    \leavevmode
-\begin{lstlisting}
-from sklearn.tree import DecisionTreeClassifier
-
-X = [[1], [2], [3], [4]]
-y = ['low', 'low', 'high', 'high']
-
-model = DecisionTreeClassifier()
-model.fit(X, y)
-print(model.predict([[3]])[0])   # high
-\end{lstlisting}
-
-    \begin{alertblock}{A model has no sense of its own limits}
-        Asked to classify $99$ --- far outside its training data --- it
-        still returns \texttt{high} regardless, since its only rule is
-        ``above 2.5''. Judging when a question falls outside the
-        model's experience remains the engineer's job.
-    \end{alertblock}
-\end{frame}
-
-\begin{frame}{The General Machine Learning Workflow}
-    \leavevmode
-    \begin{center}
-    \begin{tikzpicture}[node distance=6mm and 8mm]
-        \node[cycstep]                  (c) {Collect data};
-        \node[cycdo, right=of c]        (p) {Process data};
-        \node[cycstep, right=of p]      (t) {Train model};
-        \node[cycdo, right=of t]        (u) {Predict};
-        \draw[flow] (c) -- (p);
-        \draw[flow] (p) -- (t);
-        \draw[flow] (t) -- (u);
-    \end{tikzpicture}
-    \end{center}
-
-    \vspace{3mm}
-    \begin{block}{Why training and testing sets are split}
-        A model evaluated only on the data it \alert{memorized} tells
-        you nothing about how it performs on new measurements --- always
-        hold out a test set.
-    \end{block}
-\end{frame}
-
-\begin{frame}{Three Types of Machine Learning}
-    \leavevmode
-    \small
-    \begin{columns}[t]
-        \begin{column}{.33\textwidth}
-            \begin{block}{Supervised}
-                \scriptsize Learns from \alert{labeled} training data.
-                \emph{E.g.} regression, classification.
-            \end{block}
-        \end{column}
-        \begin{column}{.33\textwidth}
-            \begin{block}{Unsupervised}
-                \scriptsize Learns from \alert{unlabeled} data, finding
-                patterns on its own.
-            \end{block}
-        \end{column}
-        \begin{column}{.33\textwidth}
-            \begin{block}{Reinforcement}
-                \scriptsize Learns through \alert{feedback}, reinforcing
-                correct responses.
-            \end{block}
-        \end{column}
-    \end{columns}
-
-    \vspace{3mm}
-    {\small This course's examples are all \alert{supervised} ---
-    regression and decision-tree classification.}
-\end{frame}
 
 \begin{frame}{Where This Leaves You}
     \leavevmode
     \small
     \begin{itemize}
-        \item The \alert{core path} --- inspect, summarize, visualize,
+        \item The \alert{core path} --- inspect, summarise, visualise,
               fit a simple model --- is what every engineering dataset
-              needs, regardless of whether machine learning is involved.
-        \item \texttt{LinearRegression} and
-              \texttt{DecisionTreeClassifier} are two simple, inspectable
-              starting points, not the final word.
-        \item Neither can be trusted outside the range of data it was
-              trained on: machine learning is \alert{one more
-              engineering tool}, not a substitute for understanding the
-              problem.
+              needs.
+        \item A mean far from the median is the first sign of an
+              outlier; the IQR rule \emph{flags} unusual readings, but
+              only an investigation decides what to do with them.
+        \item \textbf{Next:} Chapter 15, \emph{A First Look at Machine
+              Learning}, builds on this path.
     \end{itemize}
 
     \vspace{4mm}
