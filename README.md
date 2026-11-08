@@ -43,10 +43,10 @@ cd scripts/chapter08
 python3 04_a_simple_series_circuit.py
 ```
 
-`scripts/run_all.py` runs them all and reports which execute standalone; 160 do.
+`scripts/run_all.py` runs them all and reports which execute standalone; 161 do.
 The rest continue an earlier listing or wait on `input()`. The helper modules
 the book imports by name (`mesh_solver.py`, `stability_check.py`, and others)
-are included. See [`scripts/README.md`](scripts/README.md) for the full index
+are included, and so is every data file the listings read. See [`scripts/README.md`](scripts/README.md) for the full index
 and the data files.
 
 Tested with Python 3.10, NumPy 2.2, SciPy 1.15, pandas 2.3, Matplotlib 3.10 and

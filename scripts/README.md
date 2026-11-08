@@ -48,12 +48,12 @@ files with `git checkout -- scripts/chapter10/`.
 
 | Status | Count | Meaning |
 |---|---|---|
-| ok | 160 | Runs clean on its own. |
+| ok | 161 | Runs clean on its own. |
 | needs earlier listing | 43 | Continues an earlier listing; needs names defined there. |
 | needs input | 8 | Calls `input()`, so it waits for the user. |
 | raises by design | 4 | Deliberately raises, to demonstrate an error. |
 | teaching failure | 1 | Fails on purpose to show a scope error. |
-| needs a data file | 2 | See the notes in the index below. |
+| needs a data file | 1 | The cheat-sheet placeholder `d.csv`. |
 
 ## Checked against the book
 
@@ -82,9 +82,12 @@ and scikit-learn 1.7. Chapter 13 needs NumPy 2.0 or later for
 | `sensor_calibration.xlsx` | Ch 12 --- sensor calibration fit |
 | `internetusage.xlsx` | Ch 12 --- internet-usage polynomial fit |
 | `waterusage.xlsx` | Ch 12 --- water-usage R² comparison |
+| `dataTemp1.csv`, `daypersample.txt` | Ch 14 --- temperature statistics for three cities |
+| `employees.csv` | Ch 14 --- pandas overview (1000 employee records) |
 
-The Chapter 14 files `dataTemp1.csv`, `daypersample.txt` and `employees.csv`
-are not yet included.
+All the data files the listings read are included. The Chapter 14 files were
+recovered from the course archive and reproduce the book's printed output
+exactly.
 
 Reading the `.xlsx` files needs `openpyxl` (`pip install openpyxl`).
 
@@ -349,7 +352,7 @@ Reading the `.xlsx` files needs `openpyxl` (`pip install openpyxl`).
 | `06_calculating_the_mean_of_the_entire_matrix_us.py` | yes |  |
 | `07_temperature_data_analysis_with_python_np_zeros.py` | -- |  |
 | `08_temperature_data_analysis_with_python_plt_plot.py` | -- |  |
-| `09_temperature_data_analysis_with_python_pd_read_csv.py` | yes | needs a data file; needs `dataTemp1.csv` and `daypersample.txt` (not yet in the repository) |
+| `09_temperature_data_analysis_with_python_pd_read_csv.py` | yes |  |
 | `10_numpy_sorting_examples_np_array.py` | yes |  |
 | `11_numpy_sorting_examples_np_sort.py` | yes | needs earlier listing |
 | `12_numpy_sorting_examples_listing.py` | yes | needs earlier listing |
