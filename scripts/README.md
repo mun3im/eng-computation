@@ -91,6 +91,22 @@ exactly.
 
 Reading the `.xlsx` files needs `openpyxl` (`pip install openpyxl`).
 
+### Additional course data files
+
+These files come from the original course materials. The book's listings do
+not read them, but they are kept with the chapter they belong to, for
+exercises and for anyone following the original course.
+
+| File | Folder | Contents |
+|---|---|---|
+| `GreekLetterHexTable.pkl` | `chapter10/` | The Greek-letter conversion table (Ch 10), saved with `pickle` |
+| `left.xlsx` | `chapter12/` | Wavelength--energy measurements for polynomial curve-fitting exercises |
+| `loadfactor.xlsx` | `chapter13/` | A daily load profile (time intervals and load), for load-factor calculations |
+| `Employee_Data_Exercise.xlsx` | `chapter14/` | Small employee table for pandas exercises |
+| `Simple_Table_Exercise.xlsx` | `chapter14/` | Four-row table for pandas read/write exercises |
+| `scientific_data.xlsx` | `chapter14/` | Two measurements and a category column, for grouping exercises |
+| `dataTemp1.mat` | `chapter14/` | MATLAB version of `dataTemp1.csv` |
+
 ## Index
 
 ### `appendixA/`
