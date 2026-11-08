@@ -1,6 +1,5 @@
 """
-Interpolation, Curve Fitting and Calibration - Interpolation Methods
-Example: Comparing Interpolation Methods
+Interpolation, Curve Fitting and Calibration - Comparing Interpolation Methods
 """
 
 import numpy as np

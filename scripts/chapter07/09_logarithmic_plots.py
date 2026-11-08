@@ -1,6 +1,5 @@
 """
-Data Visualization - Specialized Plots
-Subsection: Logarithmic Plots
+Data Visualisation - Logarithmic Plots
 """
 
 import numpy as np
@@ -13,14 +12,14 @@ plt.subplot(2, 1, 1)
 plt.plot(L, '-bo')
 plt.xticks(np.arange(6), Occasion)
 plt.xlabel('Occasion')
-plt.ylabel('Loudness (Watt)')
+plt.ylabel('Intensity I/I0')
 plt.title('Normal Plot')
 
 plt.subplot(2, 1, 2)
 plt.semilogy(L, '-bo')
 plt.xticks(np.arange(6), Occasion)
 plt.xlabel('Occasion')
-plt.ylabel('Loudness (Watt)')
+plt.ylabel('Intensity I/I0')
 plt.title('Log Plot')
 
 plt.tight_layout()

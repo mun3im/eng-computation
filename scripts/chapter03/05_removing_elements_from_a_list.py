@@ -1,6 +1,5 @@
 """
-Numbers, Variables and Units - Collections: Holding Several Values
-Subsection: Removing Elements from a List
+Numbers, Variables and Units - Removing Elements from a List
 """
 
 # Removing a string by value

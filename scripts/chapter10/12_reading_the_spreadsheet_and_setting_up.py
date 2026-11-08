@@ -1,6 +1,5 @@
 """
-Measurements, Files and Spreadsheets - Case Study: Mesh Circuits
-Subsection: Reading the Spreadsheet and Setting Up
+Measurements, Files and Spreadsheets - Reading the Spreadsheet and Setting Up
 """
 
 import pandas as pd

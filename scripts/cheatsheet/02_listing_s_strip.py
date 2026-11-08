@@ -1,6 +1,5 @@
 """
-cheatsheet
-Source: cheatsheet.tex, line 57
+Cheat Sheet - Listing
 """
 
 s = "Hello"

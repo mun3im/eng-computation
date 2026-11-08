@@ -1,6 +1,25 @@
 """
-Your First Python Programs - Data Types
-Subsection: Reading the Values from the Console
+Your First Python Programs - Reading the Values from the Console
+
+Output as printed in the book:
+    Supply voltage V (volts): 12
+    R1 (ohms): 100
+    R2 (ohms): 220
+    R3 (ohms): 330
+
+    --- Series ---
+    Total resistance: 650.0 ohms
+    Current:          18.462 mA
+    V across R1:      1.846 V
+    V across R2:      4.062 V
+    V across R3:      6.092 V
+
+    --- Parallel ---
+    Total resistance: 56.90 ohms
+    Total current:    210.909 mA
+    Current in R1:    120.000 mA
+    Current in R2:    54.545 mA
+    Current in R3:    36.364 mA
 """
 
 # Read the circuit values from the user

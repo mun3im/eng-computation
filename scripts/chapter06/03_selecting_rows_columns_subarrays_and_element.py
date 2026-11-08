@@ -1,26 +1,25 @@
 """
-Arrays and Vectorized Computation - Subscripting Notation in NumPy
-Example: Selecting Rows, Columns, Subarrays, and Elements with Different Step Sizes
+Arrays and Vectorised Computation - Selecting Rows, Columns, Subarrays, and Elements with Different Step Sizes
 
 Output as printed in the book:
     First Row:
     [1 2 3]
-    
+
     First Column:
     [1 4 7]
-    
+
     Subarray (0:2, 1:3):
     [[2 3]
      [5 6]]
-    
+
     array[0:0:1] - Selecting from index 0 to 0 (exclusive):
     []
-    
+
     array[::1] - Selecting every element:
     [[1 2 3]
      [4 5 6]
      [7 8 9]]
-    
+
     Every Second Row:
     [[1 2 3]
      [7 8 9]]

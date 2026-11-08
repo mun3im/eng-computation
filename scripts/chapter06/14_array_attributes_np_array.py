@@ -1,6 +1,5 @@
 """
-Arrays and Vectorized Computation - Array (Element-wise) Operations
-Example: - Array Attributes
+Arrays and Vectorised Computation - Array Attributes
 
 Output as printed in the book:
     Array A:

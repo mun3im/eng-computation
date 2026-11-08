@@ -1,14 +1,12 @@
 """
-Arrays and Vectorized Computation - Subscripting Notation in NumPy
-Subsection: Slicing and Vectorization in NumPy
-Example: Selecting a Range of Rows and Flattening a 2D Array
+Arrays and Vectorised Computation - Selecting a Range of Rows and Flattening a 2D Array
 
 Output as printed in the book:
     A[j:k] - Selects rows from index j to k-1:
     [[ 50  60  70  80]
      [ 90 100 110 120]]
-    
-    A[:] - Selects all elements of A, treating it as a single vector:
+
+    A.flatten() - All elements of A as a single vector:
     [ 10  20  30  40  50  60  70  80  90 100 110 120 130 140 150 160]
 """
 
@@ -28,6 +26,6 @@ print(selected_rows)
 
 # Example 8: Selects all elements of A, treating it as a single vector
 single_vector = A.flatten()  # Flattens the array into a 1D vector
-print("\nA[:] - Selects all elements of A, treating it as a single vector:")
+print("\nA.flatten() - All elements of A as a single vector:")
 print(single_vector)
 # Output: [10, 20, ..., 160]

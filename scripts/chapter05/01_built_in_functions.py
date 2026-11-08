@@ -1,6 +1,5 @@
 """
-Functions and Reusable Calculations - Pre-Defined Python Functions
-Subsection: Built-in Functions
+Functions and Reusable Calculations - Built-in Functions
 
 Output as printed in the book:
     4

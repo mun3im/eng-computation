@@ -1,7 +1,5 @@
 """
-Handling Imperfect Engineering Data - Missing Data and Outliers
-Subsection: Handling Missing Data
-Example: Handling Missing Data and Interpolation
+Handling Imperfect Engineering Data - Handling Missing Data and Interpolation
 """
 
 # Create subplots (top: original data with NaN values, bottom: data after filling NaN values)

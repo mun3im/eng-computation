@@ -1,6 +1,5 @@
 """
-Data Visualization - Plot Formatting
-Subsection: 2-D Plot with Several Plot Properties
+Data Visualisation - 2-D Plot with Several Plot Properties
 """
 
 import numpy as np

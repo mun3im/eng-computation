@@ -1,6 +1,5 @@
 """
-Functions and Reusable Calculations - Testing Functions
-Subsection: Simple Function Test
+Functions and Reusable Calculations - Simple Function Test
 """
 
 def add(a, b):

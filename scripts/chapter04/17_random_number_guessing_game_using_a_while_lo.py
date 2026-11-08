@@ -1,7 +1,5 @@
 """
-Decisions and Repetition - Loops
-Subsection: The break Statement
-Example: Random Number Guessing Game using a while Loop and break Statement
+Decisions and Repetition - Random Number Guessing Game using a while Loop and break Statement
 
 Output as printed in the book:
     Guess the number: 2
@@ -9,7 +7,7 @@ Output as printed in the book:
     Guess the number: 5
     Guess the number: 6
     Guess the number: 1
-    You got it right after 5 trys!
+    You got it right after 5 tries!
 """
 
 import random  # Import the random module to generate random numbers
@@ -24,5 +22,5 @@ while True:
     n += 1  # Increment the attempt count
     # Check if the guessed number is correct
     if guess == x:
-        print(f'You got it right after {n} try{"s" if n > 1 else ""}!')
+        print(f'You got it right after {n} tr{"ies" if n > 1 else "y"}!')
         break  # Exit the loop when the correct guess is made

@@ -1,6 +1,5 @@
 """
-cheatsheet
-Source: cheatsheet.tex, line 93
+Cheat Sheet - Listing
 """
 
 import numpy as np

@@ -1,7 +1,13 @@
 """
-Interpolation, Curve Fitting and Calibration - Curve Fitting Using Polynomials
-Subsection: Data Modelling
-Example: Polynomial Curve Fitting with R-Squared Evaluation for Water Usage Prediction
+Interpolation, Curve Fitting and Calibration - Polynomial Curve Fitting with R-Squared Evaluation for Water Usage Prediction
+
+Output as printed in the book:
+    R-SQUARED VALUES:
+    Polynomial Order 1 = 0.9743
+    Polynomial Order 2 = 0.9750
+    Polynomial Order 3 = 0.9947
+    Polynomial Order 4 = 0.9947
+    Polynomial Order 5 = 0.9961
 """
 
 # Calculate and print R-squared values

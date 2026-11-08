@@ -1,6 +1,5 @@
 """
-Numbers, Variables and Units - Collections: Holding Several Values
-Subsection: Sorting a List
+Numbers, Variables and Units - Sorting a List
 """
 
 # Sorting strings in alphabetical order

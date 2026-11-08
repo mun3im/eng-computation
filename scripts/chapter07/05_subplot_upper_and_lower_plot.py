@@ -1,6 +1,5 @@
 """
-Data Visualization - Subplots
-Subsection: Subplot: Upper and Lower Plot
+Data Visualisation - Subplot: Upper and Lower Plot
 """
 
 import numpy as np

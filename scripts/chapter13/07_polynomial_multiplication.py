@@ -1,7 +1,8 @@
 """
-Numerical Calculus and System Models - Polynomials and System Models
-Subsection: Polynomial Multiplication
-Example: Polynomial Multiplication
+Numerical Calculus and System Models - Polynomial Multiplication
+
+Output as printed in the book:
+    [ 2  7 10  8]
 """
 
 import numpy as np

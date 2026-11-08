@@ -1,21 +1,19 @@
 """
-Arrays and Vectorized Computation - Subscripting Notation in NumPy
-Subsection: Subscripting: Using the Colon Operator in NumPy
-Example: Selecting Columns, Rows, and Subarrays
+Arrays and Vectorised Computation - Selecting Columns, Rows, and Subarrays
 
 Output as printed in the book:
     A[:, j] - Selects the jth column of A:
     [ 20  60 100 140]
-    
+
     A[i, :] - Selects the ith row of A:
     [10 20 30 40]
-    
+
     A[:, :] - Selects all elements of A:
     [[ 10  20  30  40]
      [ 50  60  70  80]
      [ 90 100 110 120]
      [130 140 150 160]]
-    
+
     A[:, j:k] - Selects all rows in columns from j to k-1:
     [[ 20  30]
      [ 60  70]

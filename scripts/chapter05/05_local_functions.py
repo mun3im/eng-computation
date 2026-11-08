@@ -1,6 +1,5 @@
 """
-Functions and Reusable Calculations - User-Defined Functions
-Subsection: Local Functions
+Functions and Reusable Calculations - Local Functions
 """
 
 def process_order(quantity, price_per_item):

@@ -1,6 +1,5 @@
 """
-Interpolation, Curve Fitting and Calibration - Increasing Signal Detail
-Example: Comparison of Interpolation Methods for Signal Processing (Digital-to-Analog Converter)
+Interpolation, Curve Fitting and Calibration - Comparison of Interpolation Methods for Signal Processing (Digital-to-Analog Converter)
 """
 
 # Create subplots for stem plots using plt.subplot

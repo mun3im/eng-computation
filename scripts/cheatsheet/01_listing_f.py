@@ -1,6 +1,5 @@
 """
-cheatsheet
-Source: cheatsheet.tex, line 31
+Cheat Sheet - Listing
 """
 
 x = 10          # var

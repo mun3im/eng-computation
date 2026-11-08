@@ -1,6 +1,5 @@
 """
-cheatsheet
-Source: cheatsheet.tex, line 127
+Cheat Sheet - Listing
 """
 
 np.diff(y)       # diffs

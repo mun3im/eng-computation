@@ -1,6 +1,5 @@
 """
-Data Visualization - Specialized Plots
-Subsection: Stem Plot: Discrete Signals
+Data Visualisation - Stem Plot: Discrete Signals
 """
 
 import numpy as np

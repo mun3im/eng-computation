@@ -1,7 +1,8 @@
 """
-Numerical Calculus and System Models - Polynomials and System Models
-Subsection: Polynomial Evaluation
-Example: Polynomial Evaluation
+Numerical Calculus and System Models - Polynomial Evaluation
+
+Output as printed in the book:
+    P(3) = 31
 """
 
 import numpy as np

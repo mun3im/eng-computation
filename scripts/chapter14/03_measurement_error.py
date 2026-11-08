@@ -1,6 +1,5 @@
 """
-Engineering Statistics and Data Analysis - Understanding Engineering Measurements
-Subsection: Measurement Error
+Engineering Statistics and Data Analysis - Measurement Error
 
 Output as printed in the book:
     Absolute error: 0.243 ohms

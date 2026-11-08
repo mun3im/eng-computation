@@ -1,6 +1,5 @@
 """
-Data Visualization - Statistical Plots
-Subsection: Scatter Box Plot
+Data Visualisation - Scatter Box Plot
 """
 
 import numpy as np

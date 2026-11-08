@@ -1,15 +1,13 @@
 """
-Arrays and Vectorized Computation - Creating and Accessing Arrays
-Subsection: Understanding Vectors in NumPy: 1D and 2D Representations
-Example: Creating and Printing Vectors in NumPy
+Arrays and Vectorised Computation - Creating and Printing Vectors in NumPy
 
 Output as printed in the book:
     Row Vector (1D):
     [1 2 3]
-    
+
     Row Vector (2D):
     [[1 2 3]]
-    
+
     Column Vector (2D):
     [[1]
      [2]

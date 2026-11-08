@@ -1,6 +1,5 @@
 """
-Engineering Statistics and Data Analysis - Data Analysis
-Subsection: Prescriptive Analytics
+Engineering Statistics and Data Analysis - Prescriptive Analytics
 """
 
 # Very basic decision rule

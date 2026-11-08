@@ -1,6 +1,5 @@
 """
-Arrays and Vectorized Computation - Array (Element-wise) Operations
-Example: - Element-wise Addition, Subtraction, Multiplication, Division, and Power
+Arrays and Vectorised Computation - Element-wise Addition, Subtraction, Multiplication, Division, and Power
 
 Output as printed in the book:
     Array A:

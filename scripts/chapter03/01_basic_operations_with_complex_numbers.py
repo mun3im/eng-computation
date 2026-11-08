@@ -1,6 +1,5 @@
 """
-Numbers, Variables and Units - Beyond Simple Numbers
-Subsection: Basic Operations with Complex Numbers
+Numbers, Variables and Units - Basic Operations with Complex Numbers
 """
 
 c1 = 3 + 4j

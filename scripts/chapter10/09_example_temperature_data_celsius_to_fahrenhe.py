@@ -1,6 +1,24 @@
 """
-Measurements, Files and Spreadsheets - Reading and Writing Spreadsheets
-Subsection: Example: Temperature Data (Celsius to Fahrenheit)
+Measurements, Files and Spreadsheets - Example: Temperature Data (Celsius to Fahrenheit)
+
+Output as printed in the book:
+    Celsius to Fahrenheit Conversion:
+    23°C       73.40°F
+    23°C       73.40°F
+    23°C       73.40°F
+    24°C       75.20°F
+    26°C       78.80°F
+    28°C       82.40°F
+    29°C       84.20°F
+    28°C       82.40°F
+    28°C       82.40°F
+    26°C       78.80°F
+    25°C       77.00°F
+    24°C       75.20°F
+    24°C       75.20°F
+    23°C       73.40°F
+    23°C       73.40°F
+    23°C       73.40°F
 """
 
 import pandas as pd

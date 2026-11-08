@@ -1,6 +1,5 @@
 """
-Numbers, Variables and Units - Engineering Units and Dimensions
-Subsection: Working Consistently in Base Units
+Numbers, Variables and Units - Working Consistently in Base Units
 
 Output as printed in the book:
     Time constant: 1.0 s

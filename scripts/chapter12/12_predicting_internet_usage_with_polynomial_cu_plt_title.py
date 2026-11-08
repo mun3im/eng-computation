@@ -1,7 +1,10 @@
 """
-Interpolation, Curve Fitting and Calibration - Curve Fitting Using Polynomials
-Subsection: Data Trends
-Example: Predicting Internet Usage with Polynomial Curve Fitting
+Interpolation, Curve Fitting and Calibration - Predicting Internet Usage with Polynomial Curve Fitting
+
+Output as printed in the book:
+    Predicted internet usage (hours) for months 7, 8, 9 (1st Order Polynomial): [169.72       201.55428571 233.38857143]
+    Predicted internet usage (hours) for months 7, 8, 9 (2nd Order Polynomial): [244.52       340.46857143 452.44571429]
+    Predicted internet usage (hours) for months 7, 8, 9 (3rd Order Polynomial): [244.33333333 339.96190476 451.41904762]
 """
 
 # Adjust title, labels, and grid

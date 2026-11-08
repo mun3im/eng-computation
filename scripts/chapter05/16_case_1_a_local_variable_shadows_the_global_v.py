@@ -1,6 +1,9 @@
 """
-Functions and Reusable Calculations - Variable Scope
-Subsection: Case 1: A Local Variable Shadows the Global Variable
+Functions and Reusable Calculations - Case 1: A Local Variable Shadows the Global Variable
+
+Output as printed in the book:
+    Inside function, count = 5
+    Outside function, count = 0
 """
 
 count = 0  # global variable

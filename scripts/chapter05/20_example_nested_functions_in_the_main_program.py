@@ -1,6 +1,10 @@
 """
-Functions and Reusable Calculations - Variable Scope
-Subsection: Example: Nested Functions in the Main Program File
+Functions and Reusable Calculations - Example: Nested Functions in the Main Program File
+
+Output as printed in the book:
+    Inside nested_function: Top-Level A (black) Nested B (yellow)
+    Inside top_function: Top-Level A (black)
+    Outside (main): Global A (blue) Global B (blue)
 """
 
 # main_program.py

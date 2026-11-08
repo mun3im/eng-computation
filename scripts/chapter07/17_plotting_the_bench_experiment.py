@@ -1,5 +1,5 @@
 """
-Data Visualization - Plotting the Bench Experiment
+Data Visualisation - Plotting the Bench Experiment
 """
 
 import pandas as pd

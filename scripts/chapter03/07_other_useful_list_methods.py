@@ -1,6 +1,5 @@
 """
-Numbers, Variables and Units - Collections: Holding Several Values
-Subsection: Other Useful List Methods
+Numbers, Variables and Units - Other Useful List Methods
 """
 
 # Joining list elements into a single string

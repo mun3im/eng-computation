@@ -1,6 +1,5 @@
 """
-Functions and Reusable Calculations - Using Functions from External Files
-Subsection: Structure of a Python Program
+Functions and Reusable Calculations - Structure of a Python Program
 """
 
 def helper_function():

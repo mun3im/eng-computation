@@ -1,6 +1,5 @@
 """
-Data Visualization - Statistical Plots
-Subsection: Basic Box Plot
+Data Visualisation - Basic Box Plot
 """
 
 import numpy as np

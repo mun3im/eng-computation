@@ -1,6 +1,5 @@
 """
-Decisions and Repetition - Decisions
-Subsection: Multiple Conditions with if-elif-else
+Decisions and Repetition - Multiple Conditions with if-elif-else
 
 Output as printed in the book:
     Input a value: 1
@@ -26,5 +25,7 @@ elif d > 0 and a != 0:
     x1 = (-b + (d**0.5)) / (2 * a)
     x2 = (-b - (d**0.5)) / (2 * a)
     print(f'The roots are: {x1} and {x2}')
+elif a != 0:
+    print('Complex roots')
 else:
-    print('Complex root')
+    print('Not a quadratic: a = 0')

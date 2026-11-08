@@ -1,6 +1,5 @@
 """
-cheatsheet
-Source: cheatsheet.tex, line 171
+Cheat Sheet - Listing
 """
 
 import matplotlib.pyplot as plt

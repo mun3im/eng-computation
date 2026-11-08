@@ -1,6 +1,5 @@
 """
-Interpolation, Curve Fitting and Calibration - Evaluating Unknown Values
-Example: Air Pollutant Index (API) Calculation During a Haze Crisis
+Interpolation, Curve Fitting and Calibration - Air Pollutant Index (API) Calculation During a Haze Crisis
 """
 
 import numpy as np
@@ -22,11 +21,15 @@ def API_interpolation(km):
     # Use np.atleast_1d to convert any input to a 1D array
     km = np.atleast_1d(km)
 
+    # Outside the route, np.interp would silently return the end values
+    if np.any((km < distances[0]) | (km > distances[-1])):
+        raise ValueError('km must be between 0 and 30')
+
     # Extract API values for the requested km points
     result = {}
-    for k in km.astype(int):  # Ensure indices are integers
-        result[k] = round(interpolated_api[k], 2)
-        print(f"API value at km {k} is {result[k]}")
+    for k in km:  # interpolate at the exact distance requested
+        result[k] = round(float(np.interp(k, distances, api_values)), 2)
+        print(f"API value at km {k:g} is {result[k]}")
 
     # Plotting the data
     plt.figure()

@@ -1,6 +1,5 @@
 """
-Data Visualization - Subplots
-Subsection: Subplot: RC Circuit Example
+Data Visualisation - Subplot: RC Circuit Example
 """
 
 import numpy as np

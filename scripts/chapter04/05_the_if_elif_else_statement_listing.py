@@ -1,6 +1,5 @@
 """
-Decisions and Repetition - Decisions
-Subsection: The if-elif-else Statement
+Decisions and Repetition - The if-elif-else Statement
 """
 
 if condition_1:

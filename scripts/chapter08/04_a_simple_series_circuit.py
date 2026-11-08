@@ -28,7 +28,7 @@ Z_total = Z_R + Z_L
 
 # 5. Output results
 print(f"Resistor Impedance:  {Z_R:.1f} Ohms")
-print(f"Inductor Impedance:  {Z_L:.2f}j Ohms")
+print(f"Inductor Impedance:  {Z_L.imag:.2f}j Ohms")
 print(f"Total Impedance (Z): {Z_total.real:.1f} + {Z_total.imag:.2f}j Ohms")
 print(f"Impedance Magnitude: {np.abs(Z_total):.2f} Ohms")
 print(f"Phase Angle (theta): {np.degrees(np.angle(Z_total)):.1f} degrees")

@@ -1,16 +1,15 @@
 """
-Matrices and Circuit Equations - Complex Number Arithmetic
-Example: - Conjugate Transpose vs.\ Pure Transpose
+Matrices and Circuit Equations - Conjugate Transpose vs. Pure Transpose
 
 Output as printed in the book:
     Array a:
     [[1.+1.j 2.+2.j]
      [3.+3.j 4.+4.j]]
-    
+
     Conjugate Transpose of a (a.conj().T):
     [[1.-1.j 3.-3.j]
      [2.-2.j 4.-4.j]]
-    
+
     Pure Transpose of a (a.T):
     [[1.+1.j 3.+3.j]
      [2.+2.j 4.+4.j]]

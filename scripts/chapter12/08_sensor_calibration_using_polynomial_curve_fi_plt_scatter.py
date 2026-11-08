@@ -1,7 +1,8 @@
 """
-Interpolation, Curve Fitting and Calibration - Curve Fitting Using Polynomials
-Subsection: Sensor Calibration
-Example: Sensor Calibration Using Polynomial Curve Fitting
+Interpolation, Curve Fitting and Calibration - Sensor Calibration Using Polynomial Curve Fitting
+
+Output as printed in the book:
+    T(V) = 14.74V + -9.33
 """
 
 # Plot the data and the fitted curve

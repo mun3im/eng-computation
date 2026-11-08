@@ -1,6 +1,5 @@
 """
-Functions and Reusable Calculations - Pre-Defined Python Functions
-Subsection: Library Functions
+Functions and Reusable Calculations - Library Functions
 """
 
 # 1. math.sqrt() - Computes the square root of a number

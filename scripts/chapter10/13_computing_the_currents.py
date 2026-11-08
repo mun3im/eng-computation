@@ -1,6 +1,5 @@
 """
-Measurements, Files and Spreadsheets - Case Study: Mesh Circuits
-Subsection: Computing the Currents
+Measurements, Files and Spreadsheets - Computing the Currents
 """
 
 # Iterate over each row in the NumPy array to compute currents
@@ -26,5 +25,8 @@ for row in data:
         # Append the computed currents to the lists
         I1_list.append(I[0])
         I2_list.append(I[1])
-    except Exception as e:
-        print(f"An error occurred while processing row {row}: {e}")
+    except (np.linalg.LinAlgError, ValueError) as e:
+        # Store NaN so that every later result stays on its own row
+        print(f"Row {row} could not be solved: {e}")
+        I1_list.append(np.nan)
+        I2_list.append(np.nan)

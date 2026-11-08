@@ -1,6 +1,5 @@
 """
-Numbers, Variables and Units - Beyond Simple Numbers
-Subsection: Creating Strings
+Numbers, Variables and Units - Creating Strings
 """
 
 # Single quotes

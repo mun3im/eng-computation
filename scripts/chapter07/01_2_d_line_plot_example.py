@@ -1,6 +1,5 @@
 """
-Data Visualization - 2-D Line Plots
-Subsection: 2-D Line Plot Example
+Data Visualisation - 2-D Line Plot Example
 """
 
 import numpy as np

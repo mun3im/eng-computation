@@ -1,6 +1,5 @@
 """
-Data Visualization - Statistical Plots
-Subsection: Histogram
+Data Visualisation - Histogram
 """
 
 import numpy as np

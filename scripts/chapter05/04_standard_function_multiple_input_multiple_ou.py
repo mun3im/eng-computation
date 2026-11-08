@@ -1,6 +1,5 @@
 """
-Functions and Reusable Calculations - User-Defined Functions
-Subsection: Standard Function: Multiple Input, Multiple Output
+Functions and Reusable Calculations - Standard Function: Multiple Input, Multiple Output
 """
 
 def calculate(a, b):

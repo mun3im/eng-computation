@@ -1,6 +1,8 @@
 """
-Decisions and Repetition - Decisions
-Subsection: The if-elif-else Statement
+Decisions and Repetition - The if-elif-else Statement
+
+Output as printed in the book:
+    non-neg
 """
 
 x = 2

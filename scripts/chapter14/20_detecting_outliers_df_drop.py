@@ -1,7 +1,5 @@
 """
-Engineering Statistics and Data Analysis - Data Cleaning and Preprocessing
-Subsection: Identifying and Handling Outliers with pandas
-Example: Detecting Outliers
+Engineering Statistics and Data Analysis - Detecting Outliers
 
 Output as printed in the book:
     Final DataFrame after replacing NaN with the median:
@@ -14,6 +12,9 @@ Output as printed in the book:
     5  ADC-06     20.0
     6  ADC-07      2.0
 """
+
+# Replace the NaN (the flagged outlier) with the median
+df['Samples'] = df['Samples'].fillna(median_value)
 
 # Drop the 'Outlier' column
 # Remove the 'Outlier' column from the DataFrame

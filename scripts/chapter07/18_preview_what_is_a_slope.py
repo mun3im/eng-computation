@@ -1,5 +1,5 @@
 """
-Data Visualization - Preview: What Is a Slope?
+Data Visualisation - Preview: What Is a Slope?
 
 Output as printed in the book:
     Average slope between x=0 and x=1: 1.0

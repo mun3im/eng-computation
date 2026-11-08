@@ -1,6 +1,14 @@
 """
-Decisions and Repetition - Boolean Foundations
-Subsection: Example - Operator Precedence in Practice
+Decisions and Repetition - Example - Operator Precedence in Practice
+
+Output as printed in the book:
+    Expression 1 ((a + b) * c): 21
+    Expression 2 (a ** b + c): 28
+    Expression 3 (~a + b): -4
+    Expression 4 (a * b / c): 3.3333333333333335
+    Expression 5 (a + b - c): 4
+    Expression 6 (a < b and b > c): False
+    Expression 7 (a | b and c): 3
 """
 
 # Precedence of Operators in Python

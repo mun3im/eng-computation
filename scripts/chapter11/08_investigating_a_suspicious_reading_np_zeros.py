@@ -1,7 +1,5 @@
 """
-Handling Imperfect Engineering Data - Missing Data and Outliers
-Subsection: What Is an Outlier?
-Example: Investigating a Suspicious Reading
+Handling Imperfect Engineering Data - Investigating a Suspicious Reading
 """
 
 # Having concluded (from the steps above) that sample 18 is a sensor fault,

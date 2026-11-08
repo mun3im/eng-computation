@@ -1,6 +1,5 @@
 """
-Functions and Reusable Calculations - Questions
-Subsection: Programming Questions
+Functions and Reusable Calculations - Programming Questions
 """
 
 def is_palindrome(word):

@@ -1,6 +1,5 @@
 """
-Numbers, Variables and Units - Beyond Simple Numbers
-Subsection: String Methods
+Numbers, Variables and Units - String Methods
 """
 
 text = " Python Programming "

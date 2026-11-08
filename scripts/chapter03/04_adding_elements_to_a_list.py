@@ -1,6 +1,5 @@
 """
-Numbers, Variables and Units - Collections: Holding Several Values
-Subsection: Adding Elements to a List
+Numbers, Variables and Units - Adding Elements to a List
 """
 
 # Adding a single string using append

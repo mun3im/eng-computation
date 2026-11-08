@@ -1,6 +1,9 @@
 """
-Functions and Reusable Calculations - Variable Scope
-Subsection: Example: Nested Functions Inside a Module
+Functions and Reusable Calculations - Example: Nested Functions Inside a Module
+
+Output as printed in the book:
+    Inside module_nested: Module A (green) Module B (red)
+    Inside module_top: Module A (green)
 """
 
 # my_module.py

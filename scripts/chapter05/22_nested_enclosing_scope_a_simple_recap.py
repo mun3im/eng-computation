@@ -1,6 +1,5 @@
 """
-Functions and Reusable Calculations - Variable Scope
-Subsection: Nested (Enclosing) Scope: A Simple Recap
+Functions and Reusable Calculations - Nested (Enclosing) Scope: A Simple Recap
 """
 
 def outer():

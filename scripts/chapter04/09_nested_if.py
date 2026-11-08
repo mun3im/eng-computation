@@ -1,6 +1,11 @@
 """
-Decisions and Repetition - Decisions
-Subsection: Nested if
+Decisions and Repetition - Nested if
+
+Output as printed in the book:
+    Input a value: 2
+    Input b value: 3
+    Input c value: 1
+    The roots are: -0.5 and -1.0
 """
 
 # Input values for a, b, and c
@@ -24,5 +29,11 @@ if a != 0:
     else:
         print('Complex root')
 else:
-    x1 = -c / b
-    print(f'The root is: {x1}')
+    # a = 0: the equation is bx + c = 0
+    if b != 0:
+        x1 = -c / b
+        print(f'The root is: {x1}')
+    elif c != 0:
+        print('No solution')
+    else:
+        print('Every x is a solution')

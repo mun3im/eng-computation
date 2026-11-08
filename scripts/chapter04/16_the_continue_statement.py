@@ -1,6 +1,5 @@
 """
-Decisions and Repetition - Loops
-Subsection: The continue Statement
+Decisions and Repetition - The continue Statement
 
 Output as printed in the book:
     Divisible by 7: 7

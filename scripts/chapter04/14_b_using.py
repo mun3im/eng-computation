@@ -1,7 +1,5 @@
 """
-Decisions and Repetition - Loops
-Subsection: Returning Vectors as Output
-Example: b (using +=
+Decisions and Repetition - b (using +=).
 
 Output as printed in the book:
     Q: [0.0, 1.0575, 1.9908, 2.8144]

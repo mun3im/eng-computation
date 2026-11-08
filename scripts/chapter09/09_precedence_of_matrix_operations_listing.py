@@ -1,7 +1,5 @@
 """
-Matrices and Circuit Equations - Worked Matrix Examples
-Subsection: Matrix Precedence
-Example: Precedence of Matrix Operations
+Matrices and Circuit Equations - Precedence of Matrix Operations
 
 Output as printed in the book:
     Precedence 1 (Transpose before Multiplication - A.T @ B):

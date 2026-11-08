@@ -1,7 +1,5 @@
 """
-Engineering Statistics and Data Analysis - pandas for Data Analytics
-Subsection: DataFrames
-Example: Creating a DataFrame
+Engineering Statistics and Data Analysis - Creating a DataFrame
 
 Output as printed in the book:
         Sensor  Readings

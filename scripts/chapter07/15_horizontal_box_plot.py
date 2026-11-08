@@ -1,6 +1,5 @@
 """
-Data Visualization - Statistical Plots
-Subsection: Horizontal Box Plot
+Data Visualisation - Horizontal Box Plot
 """
 
 import numpy as np

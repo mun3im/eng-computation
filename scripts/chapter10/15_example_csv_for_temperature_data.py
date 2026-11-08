@@ -1,6 +1,5 @@
 """
-Measurements, Files and Spreadsheets - CSV Files
-Subsection: Example: CSV for Temperature Data
+Measurements, Files and Spreadsheets - Example: CSV for Temperature Data
 """
 
 import pandas as pd
@@ -15,7 +14,7 @@ file_path = os.path.join(current_dir, 'tempData.csv')
 data = pd.read_csv(file_path, header=None)
 
 # Example: use the second row, columns 2 onwards (like .iloc[1, 1:] in Excel)
-temp_c = data.iloc[1, 1:]
+temp_c = pd.to_numeric(data.iloc[1, 1:])
 
 # Convert Celsius to Fahrenheit
 temp_f = temp_c * 9/5 + 32

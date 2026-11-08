@@ -1,6 +1,11 @@
 """
-Decisions and Repetition - Decisions
-Subsection: Multiple Conditions with if-else
+Decisions and Repetition - Multiple Conditions with if-else
+
+Output as printed in the book:
+    Input a value: 20
+    Input b value: 20
+    Input c value: 30
+    Different root
 """
 
 # Input values for a, b, and c

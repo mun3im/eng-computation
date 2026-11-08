@@ -1,7 +1,5 @@
 """
-Decisions and Repetition - Loops
-Subsection: for Loop
-Example: Compound Interest Calculation using a for Loop
+Decisions and Repetition - Compound Interest Calculation using a for Loop
 
 Output as printed in the book:
     n = 2, B = 116.64

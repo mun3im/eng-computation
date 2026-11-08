@@ -1,6 +1,5 @@
 """
-Functions and Reusable Calculations - Variable Scope
-Subsection: Scope Errors Can Be Masked
+Functions and Reusable Calculations - Scope Errors Can Be Masked
 """
 
 x = 10  # global variable

@@ -1,6 +1,5 @@
 """
-Data Visualization - Plot Formatting
-Subsection: Multiple Plots on a Single Graph
+Data Visualisation - Multiple Plots on a Single Graph
 """
 
 import numpy as np

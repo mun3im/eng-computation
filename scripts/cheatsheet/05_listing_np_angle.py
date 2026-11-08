@@ -1,6 +1,5 @@
 """
-cheatsheet
-Source: cheatsheet.tex, line 157
+Cheat Sheet - Listing
 """
 
 z = 3 + 4j

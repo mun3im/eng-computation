@@ -1,7 +1,5 @@
 """
-Handling Imperfect Engineering Data - Missing Data and Outliers
-Subsection: What Is an Outlier?
-Example: Investigating a Suspicious Reading
+Handling Imperfect Engineering Data - Investigating a Suspicious Reading
 """
 
 import numpy as np
@@ -9,7 +7,8 @@ import matplotlib.pyplot as plt
 
 # Bench temperature log (deg C), sampled once per second, with one suspicious sample
 t = np.arange(0, 30, 1.0)
-temp = 25 + 1.5 * np.sin(0.2 * t) + np.random.normal(0, 0.1, t.size)
+rng = np.random.default_rng(1)   # fixed seed: same 'noise' every run
+temp = 25 + 1.5 * np.sin(0.2 * t) + rng.normal(0, 0.1, t.size)
 temp[18] = 45.8  # a single sample looks far too high
 
 fig, ax = plt.subplots(figsize=(8, 4))

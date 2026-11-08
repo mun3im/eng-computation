@@ -1,22 +1,20 @@
 """
-Python Reference - Special Characters
-Subsection: Fun to Try: A Degree-to-Radian Table
-Source: appendices/appendixA.tex, line 415
+Python Reference - Fun to Try: A Degree-to-Radian Table
 """
 
 # Creates a table of degrees to radians
-degree_start = float(input('What starting value of degree would you like? '))
-degree_final = float(input('What final value of degree would you like? '))
-incr = float(input('What table increment would you like? '))
+degree_start = int(input('Starting angle in whole degrees: '))
+degree_final = int(input('Final angle in whole degrees: '))
+incr = int(input('Table increment in whole degrees: '))
 
 # Create the degree list from start to final with the given increment
-degree = list(range(int(degree_start), int(degree_final) + 1, int(incr)))
+degree = list(range(degree_start, degree_final + 1, incr))
 radian = [deg / 180 for deg in degree]
 
 # Display the header
 print('A table of degrees to radians')
-print(f' deg°       π rad')
+print('   deg°     π rad')
 
 # Print each value formatted
 for d, r in zip(degree, radian):
-    print(f'{d:6.2f}°     {r:10.4f}π')
+    print(f'{d:6.2f}°     {r:.4f}π')

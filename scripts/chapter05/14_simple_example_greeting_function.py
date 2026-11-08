@@ -1,6 +1,5 @@
 """
-Functions and Reusable Calculations - Using Functions from External Files
-Subsection: Simple Example: Greeting Function
+Functions and Reusable Calculations - Simple Example: Greeting Function
 """
 
 def greet(name):

@@ -1,11 +1,10 @@
 """
-Arrays and Vectorized Computation - Vectorizing Formulas
-Example: - Compound Interest
+Arrays and Vectorised Computation - Compound Interest
 
 Output as printed in the book:
     Single value calculation:
     B1 = 236.7364
-    
+
     Vectorized calculation with multiple values:
     B2 = [ 236.7364  473.4727 1183.6818 2367.3637 9469.4547]
 """

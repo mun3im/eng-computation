@@ -1,6 +1,15 @@
 """
-Decisions and Repetition - Boolean Foundations
-Subsection: Example - Relational Operators
+Decisions and Repetition - Example - Relational Operators
+
+Output as printed in the book:
+    a = 5
+    b = 10
+    a < b: True
+    a <= b: True
+    a == b: False
+    a != b: True
+    a > b: False
+    a >= b: False
 """
 
 # Relational Operators in Python

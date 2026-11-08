@@ -18,4 +18,4 @@ print(f"Best-fit line: y = {m:.2f}x + {b:.2f}")
 
 # Evaluate the fitted line at the original x values (or any new ones)
 y_fit = np.polyval([m, b], x)
-print("Fitted values:", y_fit)
+print("Fitted values:", np.round(y_fit, 2))

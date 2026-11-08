@@ -1,6 +1,5 @@
 """
-Interpolation, Curve Fitting and Calibration - Increasing Signal Detail
-Example: Enhancing ECG Signal Accuracy with Spline Interpolation
+Interpolation, Curve Fitting and Calibration - Enhancing ECG Signal Accuracy with Spline Interpolation
 """
 
 import os

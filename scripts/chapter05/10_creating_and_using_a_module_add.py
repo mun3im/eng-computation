@@ -1,6 +1,5 @@
 """
-Functions and Reusable Calculations - Using Functions from External Files
-Subsection: Creating and Using a Module
+Functions and Reusable Calculations - Creating and Using a Module
 """
 
 # math_operations.py - This is your module

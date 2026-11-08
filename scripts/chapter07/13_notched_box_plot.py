@@ -1,6 +1,5 @@
 """
-Data Visualization - Statistical Plots
-Subsection: Notched Box Plot
+Data Visualisation - Notched Box Plot
 """
 
 import numpy as np

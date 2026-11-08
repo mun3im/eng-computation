@@ -1,6 +1,5 @@
 """
-Arrays and Vectorized Computation - Vectorizing Formulas
-Example: - Vertical Displacement
+Arrays and Vectorised Computation - Vertical Displacement
 
 Output as printed in the book:
     Elapsed time (t): [0 1 2 3 4 5]

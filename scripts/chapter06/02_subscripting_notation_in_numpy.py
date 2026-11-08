@@ -1,5 +1,5 @@
 """
-Arrays and Vectorized Computation - Subscripting Notation in NumPy
+Arrays and Vectorised Computation - Subscripting Notation in NumPy
 """
 
 import numpy as np

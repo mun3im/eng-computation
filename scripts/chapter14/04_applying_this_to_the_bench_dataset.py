@@ -1,6 +1,5 @@
 """
-Engineering Statistics and Data Analysis - Understanding Engineering Measurements
-Subsection: Applying This to the Bench Dataset
+Engineering Statistics and Data Analysis - Applying This to the Bench Dataset
 
 Output as printed in the book:
     Mean:   28.28 C

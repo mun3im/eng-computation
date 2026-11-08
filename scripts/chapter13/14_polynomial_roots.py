@@ -1,7 +1,8 @@
 """
-Numerical Calculus and System Models - Polynomials and System Models
-Subsection: Polynomial Roots
-Example: Polynomial Roots
+Numerical Calculus and System Models - Polynomial Roots
+
+Output as printed in the book:
+    Roots of the polynomial are: [ 2. -2. -1.]
 """
 
 import numpy as np

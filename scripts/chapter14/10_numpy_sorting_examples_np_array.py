@@ -1,11 +1,9 @@
 """
-Engineering Statistics and Data Analysis - Data Sorting
-Subsection: Sorting in NumPy
-Example: NumPy Sorting Examples
+Engineering Statistics and Data Analysis - NumPy Sorting Examples
 
 Output as printed in the book:
     Sorted 1D Array: [2 3 6 7 8]
-    
+
     Sorted 2D Array by Columns (ascending):
      [[3 2 2]
      [6 5 7]]

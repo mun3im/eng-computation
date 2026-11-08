@@ -1,6 +1,5 @@
 """
-Interpolation, Curve Fitting and Calibration - Curve Fitting Using Polynomials
-Subsection: EE Focus: Measuring the Time Constant of the Bench Circuit
+Interpolation, Curve Fitting and Calibration - EE Focus: Measuring the Time Constant of the Bench Circuit
 
 Output as printed in the book:
     Fitted slope:      -2.12766 per second

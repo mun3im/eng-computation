@@ -1,6 +1,5 @@
 """
-Data Visualization - Subplots
-Subsection: Subplot: Quadrant
+Data Visualisation - Subplot: Quadrant
 """
 
 import numpy as np

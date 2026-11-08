@@ -1,6 +1,5 @@
 """
-Numbers, Variables and Units - Engineering Units and Dimensions
-Subsection: Scientific Notation in Python
+Numbers, Variables and Units - Scientific Notation in Python
 """
 
 R = 4.7e3      # 4.7 x 10^3  = 4700 ohms      (4.7 kilohms)

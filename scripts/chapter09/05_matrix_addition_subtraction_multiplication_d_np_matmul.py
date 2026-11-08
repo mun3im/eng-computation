@@ -1,6 +1,5 @@
 """
-Matrices and Circuit Equations - Worked Matrix Examples
-Example: - Matrix Addition, Subtraction, Multiplication, Division, Power, and Transpose
+Matrices and Circuit Equations - Matrix Addition, Subtraction, Multiplication, Division, Power, and Transpose
 
 Output as printed in the book:
     Matrix Multiplication (A @ B):

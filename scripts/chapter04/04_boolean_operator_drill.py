@@ -1,6 +1,5 @@
 """
-Decisions and Repetition - Boolean Foundations
-Subsection: Boolean Operator Drill
+Decisions and Repetition - Boolean Operator Drill
 """
 
 x = 3 > 2

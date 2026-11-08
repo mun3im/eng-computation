@@ -1,5 +1,5 @@
 """
-Matrices and Circuit Equations - What ``Solving'' a Matrix Equation Means
+Matrices and Circuit Equations - What "Solving" a Matrix Equation Means
 """
 
 import numpy as np

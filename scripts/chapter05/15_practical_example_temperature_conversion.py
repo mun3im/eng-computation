@@ -1,6 +1,5 @@
 """
-Functions and Reusable Calculations - Using Functions from External Files
-Subsection: Practical Example: Temperature Conversion
+Functions and Reusable Calculations - Practical Example: Temperature Conversion
 """
 
 import numpy as np

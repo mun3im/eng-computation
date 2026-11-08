@@ -1,6 +1,5 @@
 """
-Data Visualization - Statistical Plots
-Subsection: Grouped Box Plot
+Data Visualisation - Grouped Box Plot
 """
 
 import numpy as np

@@ -1,7 +1,5 @@
 """
-Interpolation, Curve Fitting and Calibration - Curve Fitting Using Polynomials
-Subsection: Data Trends
-Example: Predicting Internet Usage with Polynomial Curve Fitting
+Interpolation, Curve Fitting and Calibration - Predicting Internet Usage with Polynomial Curve Fitting
 """
 
 # Evaluate the average using the polynomial coefficients for months 1 to 6
